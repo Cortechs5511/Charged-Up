@@ -4,11 +4,12 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.*;
 import frc.robot.commands.drive.AutoAlign;
 import frc.robot.commands.drive.Flip;
 import frc.robot.commands.drive.SetSpeed;
+import frc.robot.commands.drive.StartAutoAlign;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
@@ -34,7 +35,7 @@ public class RobotContainer {
                 //.onTrue(drive.setMaxPower(0.5)).onFalse(drive.setMaxPower(1.0));
 
         new JoystickButton(oi.leftStick, 1)
-        .toggleOnTrue(new AutoAlign(drive));
+        .toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
     }
 
     public Command getAutonomousCommand() {

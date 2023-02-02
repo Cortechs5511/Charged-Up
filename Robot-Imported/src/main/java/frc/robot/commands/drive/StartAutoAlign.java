@@ -6,31 +6,25 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
 
-public class AutoAlign extends CommandBase {
+public class StartAutoAlign extends CommandBase {
     private final Drive drive;
-    private PIDController levelPID = new PIDController(0.007,0,0.002);
-    public AutoAlign(Drive subsystem) {
+    public StartAutoAlign(Drive subsystem) {
         drive = subsystem;
         addRequirements(subsystem);
     }
 
     @Override
     public void initialize() {
-        levelPID.setSetpoint(0.0);
+
     }
 
     @Override
     public void execute() {
-            double angle = drive.getPitch();
-            double output = levelPID.calculate(angle);
+        if (Math.abs(drive.getPitch()) < 16) {
+            drive.setPower(-0.3, -0.3);          
+        } else {
+        drive.setPower(0,0); }
 
-
-            if (Math.abs(angle) < 8) {
-                drive.setPower(0, 0);
-            } else {
-                output = Math.max(-0.3, Math.min(0.3, output));
-                drive.setPower(-output, -output);
-            }
     }
     @Override
     public void end(boolean interrupted) {
@@ -39,7 +33,10 @@ public class AutoAlign extends CommandBase {
 
     @Override
     public boolean isFinished() {
+        if (Math.abs(drive.getPitch()) >= 16) {
+            return true;
+        } else {
             return false;
         }
     }
-
+}

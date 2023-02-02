@@ -60,8 +60,12 @@ public class Drive extends SubsystemBase {
         return gyro.getPitch();
     }
 
+    public void gyroReset() {
+        gyro.reset();
+    }
     public double getYaw() {
         return gyro.getYaw();
+
     }
     public double getLeftPosition() {
         return leftEncoder.getPosition();
