@@ -3,12 +3,12 @@ package frc.robot.commands.drive;
 import frc.robot.subsystems.Drive;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
-
+import edu.wpi.first.wpilibj.Timer;
 
 public class AutoAlign extends CommandBase {
     private final Drive drive;
     private PIDController levelPID = new PIDController(0.007,0,0.002);
+    private Timer timer = new Timer();
     public AutoAlign(Drive subsystem) {
         drive = subsystem;
         addRequirements(subsystem);
@@ -39,7 +39,12 @@ public class AutoAlign extends CommandBase {
 
     @Override
     public boolean isFinished() {
-            return false;
+            timer.start();
+            if (Math.abs(drive.getPitch()) < 8 && timer.hasElapsed(3.0)) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
