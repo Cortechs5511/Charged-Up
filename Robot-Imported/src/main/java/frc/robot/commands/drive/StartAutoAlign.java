@@ -20,7 +20,7 @@ public class StartAutoAlign extends CommandBase {
 
     @Override
     public void execute() {
-        if (Math.abs(drive.getPitch()) < 16) {
+        if (Math.abs(drive.getPitch()) < 18) {
             drive.setPower(-0.3, -0.3);          
         } else {
         drive.setPower(0,0); }
@@ -33,7 +33,7 @@ public class StartAutoAlign extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (Math.abs(drive.getPitch()) >= 16) {
+        if (Math.abs(drive.getPitch()) >= 18) {
             return true;
         } else {
             return false;

@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class AutoAlign extends CommandBase {
     private final Drive drive;
-    private PIDController levelPID = new PIDController(0.007,0,0.002);
+    private PIDController levelPID = new PIDController(0.005,0,0.002);
     private Timer timer = new Timer();
     public AutoAlign(Drive subsystem) {
         drive = subsystem;
@@ -25,7 +25,7 @@ public class AutoAlign extends CommandBase {
             double output = levelPID.calculate(angle);
 
 
-            if (Math.abs(angle) < 8) {
+            if (Math.abs(angle) < 7) {
                 drive.setPower(0, 0);
             } else {
                 output = Math.max(-0.3, Math.min(0.3, output));
@@ -39,12 +39,7 @@ public class AutoAlign extends CommandBase {
 
     @Override
     public boolean isFinished() {
-            timer.start();
-            if (Math.abs(drive.getPitch()) < 8 && timer.hasElapsed(3.0)) {
-                return true;
-            } else {
-                return false;
-            }
+            return false;
         }
     }
 
