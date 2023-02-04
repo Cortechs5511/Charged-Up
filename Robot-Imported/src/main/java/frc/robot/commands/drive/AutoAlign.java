@@ -3,12 +3,10 @@ package frc.robot.commands.drive;
 import frc.robot.subsystems.Drive;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.Timer;
 
 public class AutoAlign extends CommandBase {
     private final Drive drive;
-    private PIDController levelPID = new PIDController(0.005,0,0.002);
-    private Timer timer = new Timer();
+    private PIDController levelPID = new PIDController(0.006,0,0.003);
     public AutoAlign(Drive subsystem) {
         drive = subsystem;
         addRequirements(subsystem);
