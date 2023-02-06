@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
@@ -112,20 +113,20 @@ public class Drive extends SubsystemBase {
     /**
      * Resets odometry for auto
      */
-    /* public void resetOdometry() {
+     public void resetOdometry() {
         leftEncoder.setPosition(0);
         rightEncoder.setPosition(0);
-        odometry.resetPosition(new Pose2d(), Rotation2d.fromDegrees(gyro.getYaw()));
-    } */
+        odometry.resetPosition(Rotation2d.fromDegrees(gyro.getYaw()), leftEncoder.getPosition(), rightEncoder.getPosition(), new Pose2d());
+    } 
 
     /**
      * Returns Pose2D of robot odometry
      * 
      * @return Pose2D robot position (x, y) in meters
      */
-    /* public Pose2d getPose() {
+     public Pose2d getPose() {
         return odometry.getPoseMeters();
-    } */
+    } 
 
     /**
      * Sets drivetrain inversion flag to opposite of existing value
