@@ -1,43 +1,42 @@
 package frc.robot;
 
-import java.util.*;
-
-import com.pathplanner.lib.*;
-import com.pathplanner.lib.auto.RamseteAutoBuilder;
-import com.pathplanner.lib.commands.FollowPathWithEvents;
-
-import edu.wpi.first.wpilibj.XboxController;
+import java.io.IOException;
+import java.nio.file.Path;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.RamseteController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.*;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.drive.AutoAlign;
 import frc.robot.commands.drive.Flip;
 import frc.robot.commands.drive.SetSpeed;
 import frc.robot.commands.drive.StartAutoAlign;
-import frc.robot.commands.drive.TrajectoryFollower;
 
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
-    private SendableChooser<AutoRoutine> chooser = new SendableChooser<>();
+    private SendableChooser<Command> chooser = new SendableChooser<>();
 
     private final Drive drive = new Drive();
     private final OI oi = OI.getInstance();
-
-    enum AutoRoutine {
-        WaitCommand, Score1Pick1Balance, StartAlign
-    }
 
     public RobotContainer() {
         drive.setDefaultCommand(new SetSpeed(drive));
         configureButtonBindings();
 
-        chooser.addOption("Wait Command", AutoRoutine.WaitCommand);
-        chooser.addOption("Test auto", AutoRoutine.Score1Pick1Balance);
-        chooser.addOption("idklol", AutoRoutine.StartAlign);
+        chooser.addOption("Test auto", trajectoryFollower("output/Score 1, Pick 1, Balance.wpilib.json",drive,true));
+        chooser.addOption("idklol", new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
         Shuffleboard.getTab("Autonomous Selection").add(chooser);
     }
 
@@ -50,27 +49,38 @@ public class RobotContainer {
         .toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
     }
 
-    public Command getAutonomousCommand() {
-        var pathGroup1 = PathPlanner.loadPathGroup("Score 1, Pick 1, Balance", new PathConstraints(0.2, 0.2));
-
-        HashMap <String, Command> eventMap = new HashMap<>();
-
-        eventMap.put("StartBalance", new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
+    public Command trajectoryFollower(String filename, Drive drive, boolean reset) {
+        Trajectory trajectory;
+        try {
+            Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(filename);
+            trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+            System.out.println("hi");
+        } catch (IOException exception) {
+            DriverStation.reportError("Unable to open trajectory" + filename, exception.getStackTrace());
+            System.out.println("Unable to read from file" + filename);
+            return new InstantCommand();
+        }
         
-        AutoRoutine choice = chooser.getSelected();
-        Command selected;
+        RamseteCommand ramseteCommand = new RamseteCommand(trajectory, drive::getPose,
+        new RamseteController(2, 0.7),
+        new SimpleMotorFeedforward(DriveConstants.Ks, DriveConstants.Kv,
+                DriveConstants.Ka),
+        DriveConstants.DRIVE_KINEMATICS, drive::getWheelSpeeds,
+        new PIDController(DriveConstants.Kp, 0, 0),
+        new PIDController(DriveConstants.Kp, 0, 0),
+        drive::setVolts, drive);
 
-        switch (choice) {
-            case Score1Pick1Balance:
-                selected = TrajectoryFollower.getPath(pathGroup1.get(0), drive, true);
-                break;
-            case StartAlign:
-                selected = new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive)));
-                break;
-            default:
-                selected = new WaitCommand(1.0);
-                break;
-            
-    } return selected;
-}
+        if (reset) {
+            SmartDashboard.putString("Auto status", "working");
+            return new SequentialCommandGroup(new InstantCommand(() -> drive.reset(trajectory.getInitialPose())), ramseteCommand);
+        } else{
+            SmartDashboard.putString("Auto status", "working");
+            return ramseteCommand;
+        }
+        
+    }
+
+    public Command getAutonomousCommand() {
+        return chooser.getSelected();
+    }
 }

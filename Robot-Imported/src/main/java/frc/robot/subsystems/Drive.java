@@ -119,6 +119,13 @@ public class Drive extends SubsystemBase {
         odometry.resetPosition(Rotation2d.fromDegrees(gyro.getYaw()), leftEncoder.getPosition(), rightEncoder.getPosition(), new Pose2d());
     } 
 
+    public void reset(Pose2d pose) {
+            leftEncoder.setPosition(0);
+            rightEncoder.setPosition(0);
+            odometry.resetPosition(Rotation2d.fromDegrees(gyro.getYaw()), leftEncoder.getPosition(), rightEncoder.getPosition(), pose);
+        }
+
+        
     /**
      * Returns Pose2D of robot odometry
      * 
