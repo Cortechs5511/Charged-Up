@@ -10,13 +10,18 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.commands.drive.Zero;
 
 public class Drive extends SubsystemBase {
+    private static final double DRIVE_TO_M = 0.0497;
+    private static final double DRIVE_TO_V = .01;
     private final CANSparkMax leftLeader = createDriveController(DriveConstants.LEFT_LEADER_ID, false);
     private final CANSparkMax leftFollower = createDriveController(DriveConstants.LEFT_FOLLOWER_ID, false);
 
@@ -40,11 +45,12 @@ public class Drive extends SubsystemBase {
         leftFollower.follow(leftLeader);
         rightFollower.follow(rightLeader);
 
-        leftEncoder.setPosition(0);
-        rightEncoder.setPosition(0);
-
-
-        gyro.reset();
+        leftEncoder.setPositionConversionFactor(DRIVE_TO_M);
+        rightEncoder.setPositionConversionFactor(DRIVE_TO_M);
+        leftEncoder.setVelocityConversionFactor(DRIVE_TO_V);
+        rightEncoder.setVelocityConversionFactor(DRIVE_TO_V);
+        zero();
+        SmartDashboard.putData("zero" , new Zero(this)) ;
     }
 
     public void arcadeDrive(double moveSpeed, double rotateSpeed) {
@@ -56,7 +62,11 @@ public class Drive extends SubsystemBase {
      * 
      * @return double encoder sensed position, meters
      */
-
+    public void zero() {
+        leftEncoder.setPosition(0);
+        rightEncoder.setPosition(0);
+        gyro.reset();
+    }
     public double getPitch() {
         return gyro.getPitch();
     }
@@ -88,7 +98,7 @@ public class Drive extends SubsystemBase {
      * @return double encoder velocity, meters per second
      */
     public double getLeftVelocity() {
-        return leftEncoder.getVelocity();
+        return leftEncoder.getVelocity() ;
     }
 
     /**

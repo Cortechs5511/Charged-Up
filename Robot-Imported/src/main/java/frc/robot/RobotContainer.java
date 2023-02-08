@@ -66,8 +66,8 @@ public class RobotContainer {
         new SimpleMotorFeedforward(DriveConstants.Ks, DriveConstants.Kv,
                 DriveConstants.Ka),
         DriveConstants.DRIVE_KINEMATICS, drive::getWheelSpeeds,
-        new PIDController(DriveConstants.Kp, 0, 0),
-        new PIDController(DriveConstants.Kp, 0, 0),
+        new PIDController(DriveConstants.Kp / 10, 0, 0),
+        new PIDController(DriveConstants.Kp / 10, 0, 0),
         drive::setVolts, drive);
 
         if (reset) {
@@ -79,6 +79,12 @@ public class RobotContainer {
         }
         
     }
+    public void diagnostics() {
+        SmartDashboard.putNumber("leftDistance", drive.getLeftPosition());
+        SmartDashboard.putNumber("rightDistance", drive.getRightPosition());
+        SmartDashboard.putNumber("leftVelocity", drive.getLeftVelocity());
+        SmartDashboard.putNumber("rightVelocity", drive.getRightVelocity());
+      }
 
     public Command getAutonomousCommand() {
         return chooser.getSelected();

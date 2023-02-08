@@ -27,6 +27,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
+        robotContainer.diagnostics();
     }
 
     @Override
@@ -41,6 +42,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousPeriodic() {
+        robotContainer.diagnostics();
     }
 
     @Override
@@ -52,6 +54,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
+        robotContainer.diagnostics();
         if (Constants.DIAGNOSTICS) {
             NetworkTableInstance.getDefault().flush();
         }
