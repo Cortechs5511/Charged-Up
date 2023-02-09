@@ -38,7 +38,7 @@ public class Drive extends SubsystemBase {
     private boolean inverted = false;
 
 
-    DifferentialDrive differentialDrive = new DifferentialDrive(leftLeader, rightLeader);
+    private final DifferentialDrive differentialDrive = new DifferentialDrive(leftLeader, rightLeader);
 
 
     public  Drive() {
@@ -191,6 +191,7 @@ public class Drive extends SubsystemBase {
     public void setVolts(double leftVolts, double rightVolts) {
         leftLeader.setVoltage(leftVolts);
         rightLeader.setVoltage(rightVolts);
+        differentialDrive.feed();
     }
 
     /**

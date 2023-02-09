@@ -35,7 +35,7 @@ public class RobotContainer {
         drive.setDefaultCommand(new SetSpeed(drive));
         configureButtonBindings();
 
-        chooser.addOption("Test auto", trajectoryFollower("output/Score 1, Pick 1, Balance.wpilib.json",drive,true));
+        chooser.addOption("Test auto", trajectoryFollower("pathplanner/generatedJSON/Score 1, Pick 1, Balance.wpilib.json",drive,true));
         chooser.addOption("idklol", new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
         Shuffleboard.getTab("Autonomous Selection").add(chooser);
     }
@@ -66,8 +66,8 @@ public class RobotContainer {
         new SimpleMotorFeedforward(DriveConstants.Ks, DriveConstants.Kv,
                 DriveConstants.Ka),
         DriveConstants.DRIVE_KINEMATICS, drive::getWheelSpeeds,
-        new PIDController(DriveConstants.Kp / 10, 0, 0),
-        new PIDController(DriveConstants.Kp / 10, 0, 0),
+        new PIDController(DriveConstants.Kp, 0, 0),
+        new PIDController(DriveConstants.Kp, 0, 0),
         drive::setVolts, drive);
 
         if (reset) {
