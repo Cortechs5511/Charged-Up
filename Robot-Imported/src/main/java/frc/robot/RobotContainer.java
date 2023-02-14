@@ -22,7 +22,6 @@ import frc.robot.commands.drive.AutoAlign;
 import frc.robot.commands.drive.Flip;
 import frc.robot.commands.drive.SetSpeed;
 import frc.robot.commands.drive.StartAutoAlign;
-
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
@@ -47,6 +46,7 @@ public class RobotContainer {
 
         new JoystickButton(oi.leftStick, 1)
         .toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
+
     }
 
     public Command trajectoryFollower(String filename, Drive drive, boolean reset) {
@@ -62,12 +62,12 @@ public class RobotContainer {
         }
         
         RamseteCommand ramseteCommand = new RamseteCommand(trajectory, drive::getPose,
-        new RamseteController(2, 0.7),
+        new RamseteController(),
         new SimpleMotorFeedforward(DriveConstants.Ks, DriveConstants.Kv,
                 DriveConstants.Ka),
         DriveConstants.DRIVE_KINEMATICS, drive::getWheelSpeeds,
-        new PIDController(DriveConstants.Kp/10, 0, 0),
-        new PIDController(DriveConstants.Kp/10, 0, 0),
+        new PIDController(DriveConstants.Kp, 0, 0),
+        new PIDController(DriveConstants.Kp, 0, 0),
         drive::setVolts, drive);
 
         if (reset) {
@@ -88,5 +88,9 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
         return chooser.getSelected();
+    }
+
+    public Drive getDrive() {
+        return drive;
     }
 }

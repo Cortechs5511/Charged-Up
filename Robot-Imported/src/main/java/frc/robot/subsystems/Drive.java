@@ -10,10 +10,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
@@ -33,7 +31,7 @@ public class Drive extends SubsystemBase {
     private double maxPower = 1.0;
 
     private final AHRS gyro = new AHRS(Port.kMXP);
-    private final DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(new Rotation2d(0), maxPower, maxPower);
+    private final DifferentialDriveOdometry odometry;
 
     private boolean inverted = false;
 
@@ -51,6 +49,8 @@ public class Drive extends SubsystemBase {
         rightEncoder.setVelocityConversionFactor(DRIVE_TO_V);
         zero();
         SmartDashboard.putData("zero" , new Zero(this)) ;
+        odometry = new DifferentialDriveOdometry(gyro.getRotation2d(), maxPower, maxPower);
+        odometry.resetPosition(gyro.getRotation2d(),leftEncoder.getPosition(),rightEncoder.getPosition(), new Pose2d());
     }
 
     public void arcadeDrive(double moveSpeed, double rotateSpeed) {
@@ -66,6 +66,7 @@ public class Drive extends SubsystemBase {
         leftEncoder.setPosition(0);
         rightEncoder.setPosition(0);
         gyro.reset();
+        gyro.calibrate();
     }
     public double getPitch() {
         return gyro.getPitch();
@@ -132,7 +133,7 @@ public class Drive extends SubsystemBase {
     public void reset(Pose2d pose) {
             leftEncoder.setPosition(0);
             rightEncoder.setPosition(0);
-            odometry.resetPosition(Rotation2d.fromDegrees(gyro.getYaw()), leftEncoder.getPosition(), rightEncoder.getPosition(), pose);
+            odometry.resetPosition(gyro.getRotation2d(), leftEncoder.getPosition(), rightEncoder.getPosition(), pose);
         }
 
         
@@ -176,9 +177,11 @@ public class Drive extends SubsystemBase {
         if (!inverted) {
             leftLeader.set(leftSpeed * maxPower);
             rightLeader.set(rightSpeed * maxPower);
+            differentialDrive.feed();
         } else {
             rightLeader.set(-leftSpeed * maxPower);
             leftLeader.set(-rightSpeed * maxPower);
+            differentialDrive.feed();
         }
     }
 
@@ -234,11 +237,13 @@ public class Drive extends SubsystemBase {
 
     @Override
     public void periodic() {
-        odometry.update(new Rotation2d(Math.IEEEremainder(gyro.getYaw(), 360)), leftEncoder.getPosition(),
+        odometry.update(gyro.getRotation2d(), leftEncoder.getPosition(),
                 rightEncoder.getPosition());
         SmartDashboard.putNumber("Drivetrain/Pitch", gyro.getPitch());
         SmartDashboard.putNumber("Drivetrain/Yaw", gyro.getYaw());
         SmartDashboard.putNumber("Drivetrain/Roll", gyro.getRoll());
+        SmartDashboard.putNumber("Drivetrain/GyroHeadin", gyro.getRotation2d().getDegrees());
+
 
         if (Constants.DIAGNOSTICS) {
             SmartDashboard.putNumber("Drivetrain/Left Position", getLeftPosition());

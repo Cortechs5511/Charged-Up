@@ -45,6 +45,10 @@ public class OI {
         return rightStick.getX();
     }
 
+    public double getLeftX() {
+        return leftStick.getX();
+    }
+
     public double getRightY() {
         return rightStick.getY();
     }
@@ -186,6 +190,16 @@ public class OI {
 
         return rightX;
     }
+
+    public double getLeftXDeadband() {
+        double leftX = getLeftX();
+        if (Math.abs(leftX) < OIConstants.DEADBAND) {
+            return 0;
+        }
+
+        return leftX;
+    }
+
 
     public double getRightYDeadband() {
         double rightY = getRightY();

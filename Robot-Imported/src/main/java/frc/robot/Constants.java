@@ -13,9 +13,9 @@ public final class Constants {
 
     public static class DriveConstants {
         public static final int LEFT_LEADER_ID = 10;
-        public static final int LEFT_FOLLOWER_ID = 11;
+        public static final int LEFT_FOLLOWER_ID = 51;
         public static final int RIGHT_LEADER_ID = 20;
-        public static final int RIGHT_FOLLOWER_ID = 21;
+        public static final int RIGHT_FOLLOWER_ID = 11;
 
         public static final double VOLTAGE_COMPENSATION = 11;
         public static final IdleMode IDLE_MODE = IdleMode.kBrake;

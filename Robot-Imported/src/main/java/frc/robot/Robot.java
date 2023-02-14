@@ -33,6 +33,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         autonomousCommand = robotContainer.getAutonomousCommand();
+        robotContainer.getDrive().zero();
         SmartDashboard.putString("AutoCommand", String.valueOf(autonomousCommand));
 
         if (autonomousCommand != null) {
@@ -47,6 +48,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        robotContainer.getDrive().zero();
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
