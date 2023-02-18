@@ -48,7 +48,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        robotContainer.getDrive().zero();
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
