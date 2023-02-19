@@ -62,4 +62,7 @@ public final class Constants {
         public static final int LIMELIGHT_TOGGLE_BUTTON = 8;
     }
 
+    public static class PneumaticsConstants {
+        public static final int PNEUMATICS_MODULE_ID = 17;
+    }
 }
