@@ -62,4 +62,9 @@ public final class Constants {
         public static final int LIMELIGHT_TOGGLE_BUTTON = 8;
     }
 
+    public static class LimelightConstants {
+        public static final double ORIGIN_TO_LIMELIGHT_X = Units.inchesToMeters(8.0);
+        public static final double ORIGIN_TO_LIMELIGHT_Y = Units.inchesToMeters(-4.5);
+        public static final double ORIGIN_TO_TAG_FINAL = Units.inchesToMeters(22);
+    }
 }

@@ -18,20 +18,25 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.*;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.OIConstants;
 import frc.robot.commands.drive.AutoAlign;
 import frc.robot.commands.drive.Flip;
 import frc.robot.commands.drive.SetSpeed;
 import frc.robot.commands.drive.StartAutoAlign;
+import frc.robot.commands.drive.Limelight.GoToTag;
+import frc.robot.commands.drive.Limelight.LimelightDisplay;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
     private SendableChooser<Command> chooser = new SendableChooser<>();
 
     private final Drive drive = new Drive();
+    private final Limelight limelight = new Limelight();
     private final OI oi = OI.getInstance();
 
     public RobotContainer() {
         drive.setDefaultCommand(new SetSpeed(drive));
+        limelight.setDefaultCommand(new LimelightDisplay(limelight));
         configureButtonBindings();
 
         chooser.addOption("Test auto", trajectoryFollower("pathplanner/generatedJSON/Score 1, Pick 1, Balance.wpilib.json",drive,true));
@@ -46,6 +51,9 @@ public class RobotContainer {
 
         new JoystickButton(oi.leftStick, 1)
         .toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
+
+        new JoystickButton(oi.rightStick, 1)
+        .toggleOnTrue(new GoToTag(drive, limelight, 0));
 
     }
 
