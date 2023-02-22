@@ -18,10 +18,7 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.*;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.commands.drive.AutoAlign;
-import frc.robot.commands.drive.Flip;
-import frc.robot.commands.drive.SetSpeed;
-import frc.robot.commands.drive.StartAutoAlign;
+import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
@@ -37,6 +34,9 @@ public class RobotContainer {
         chooser.addOption("Test auto", trajectoryFollower("pathplanner/generatedJSON/Score 1, Pick 1, Balance.wpilib.json",drive,true));
         chooser.addOption("idklol", new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
         Shuffleboard.getTab("Autonomous Selection").add(chooser);
+
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).leftBumper().onTrue(new toggleGripper());
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).rightBumper().onTrue(new toggleExtender());
     }
 
     private void configureButtonBindings() {

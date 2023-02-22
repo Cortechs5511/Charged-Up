@@ -31,7 +31,6 @@ public class Claw extends SubsystemBase{
         extenderSolenoid.set(kReverse);
         extenderState = false;
         gripperState = false;
-        
     }
 
     @Override
@@ -47,39 +46,5 @@ public class Claw extends SubsystemBase{
     SmartDashboard.putBoolean("Gripper State", gripperState);
     SmartDashboard.putBoolean("Extender State", extenderState);
     
-    }
-    
-    public void toggleGripperSolenoid() {
-        gripperSolenoid.toggle();
-        gripperState = !gripperState;
-    }
-    
-    public void toggleExtenderSolenoid() {
-        extenderSolenoid.toggle();
-        extenderState = !extenderState;
-    }
-
-    public boolean getCompressorEnabled() {
-        return compressorEnabled;
-    }
-    
-    public boolean getGripperState() {
-        return gripperState;
-    }
-    
-    public boolean getExtenderState() {
-        return extenderState;
-    }
-    
-    public Compressor getCompressor() {
-        return pcmCompressor;
-    }
-    
-    public DoubleSolenoid getGripperSolenoid() {
-        return gripperSolenoid;
-    }
-    
-    public DoubleSolenoid getExtenderSolenoid() {
-        return extenderSolenoid;
     }
 }
