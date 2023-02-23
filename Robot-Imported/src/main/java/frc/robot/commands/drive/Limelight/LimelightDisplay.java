@@ -18,7 +18,7 @@ public class LimelightDisplay extends CommandBase {
 
     @Override
     public void execute() {
-        SmartDashboard.putNumber("Limelight/Latency", limelight.getLatency());
+        //SmartDashboard.putNumber("Limelight/Latency", limelight.getLatency());
     }
 
     @Override

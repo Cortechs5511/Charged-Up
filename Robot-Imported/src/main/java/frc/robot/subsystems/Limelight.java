@@ -48,7 +48,7 @@ public class Limelight extends SubsystemBase {
         return table.getEntry("botpose_targetspace").getDoubleArray(new double[6])[5];
     }
     public double getLatency() {
-        return table.getEntry("botpose_targetspace").getDoubleArray(new double[6])[6];
+        return table.getEntry("botpose").getDoubleArray(new double[6])[6];
     }
 
     public boolean hasTargets () {
