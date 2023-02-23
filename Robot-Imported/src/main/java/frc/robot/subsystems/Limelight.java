@@ -15,14 +15,7 @@ public class Limelight extends SubsystemBase {
     private final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     private final double[] botPose = table.getEntry("botpose_targetspace").getDoubleArray(new double[6]);
     private final double[] tagId = table.getEntry("tid").getDoubleArray(new double[6]);
-
-
-    // public final double CAMERA_HEIGHT_METERS;
-
-    // public final double CAMERA_PITCH_RADIANS;
-
-
-            
+        
     public Limelight() {
 
     }
