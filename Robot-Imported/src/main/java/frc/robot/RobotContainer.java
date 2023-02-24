@@ -17,6 +17,7 @@ import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -117,15 +118,14 @@ public class RobotContainer {
     public Command getCommand(Drive drive, Limelight limelight, Double sideOffset) {
         var startingPose = new Pose2d(0,0, new Rotation2d());
         
-
         if (limelight.hasTargets() == false) {
             return new InstantCommand();
         } else {
-            double yaw = limelight.getPitch();
-            double xLL = limelight.getZ();
+            double rotate = limelight.getPitch();
+            double xLL = -limelight.getZ();
             double yLL = -limelight.getX();
             
-            Rotation2d robotFinalToRobotInitial = new Rotation2d(Units.degreesToRadians(yaw)-Math.PI);
+            Rotation2d robotFinalToRobotInitial = new Rotation2d(Units.degreesToRadians(rotate));
 
             Translation2d originFinalToTag = new Translation2d(LimelightConstants.ORIGIN_TO_TAG_FINAL, Units.inchesToMeters(sideOffset));
 
@@ -140,9 +140,18 @@ public class RobotContainer {
             Translation2d finalTranslation = originToTag.minus(originFinalToTag.rotateBy(robotFinalToRobotInitial));
 
             SmartDashboard.putNumber("Limelight/rotate", robotFinalToRobotInitial.getDegrees());
+            SmartDashboard.putNumber("Limelight/translateX", finalTranslation.getX());
+            SmartDashboard.putNumber("Limelight/translateY", finalTranslation.getX());
 
 
-            Pose2d endingPose = new Pose2d(finalTranslation.getX(), finalTranslation.getY(), robotFinalToRobotInitial);
+
+
+            Pose2d endingPose = new Pose2d(finalTranslation.getX(), finalTranslation.getY(), new Rotation2d());
+
+            SmartDashboard.putString("Limelight/Endingpose", endingPose.toString());
+            SmartDashboard.putString("Limelight/Startpose", startingPose.toString());
+
+            drive.turnByAngle(robotFinalToRobotInitial.getDegrees());
 
             var interiorWaypoints = new ArrayList<Translation2d>();
             interiorWaypoints.add(new Translation2d(endingPose.getX() / 3.0, endingPose.getY() / 3.0));
@@ -175,5 +184,6 @@ public class RobotContainer {
 
         }
     }
+    }
     
-}
+

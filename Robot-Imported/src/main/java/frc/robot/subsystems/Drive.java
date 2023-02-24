@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -57,6 +58,20 @@ public class Drive extends SubsystemBase {
         differentialDrive.arcadeDrive(moveSpeed, rotateSpeed);
 
     } 
+
+    public void turnByAngle(double angle) {
+        PIDController turnController = new PIDController(0.03, 0, 0);
+        turnController.setSetpoint(angle);
+        turnController.setTolerance(1.0);
+        double output = turnController.calculate(getPose().getRotation().getDegrees());
+
+        output = Math.max(-0.3, Math.min(0.3, output));
+        setPower(-output, -output);
+
+
+
+
+    }
     /**
      * Get position of left encoder
      * 
@@ -243,6 +258,7 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putNumber("Drivetrain/Yaw", gyro.getYaw());
         SmartDashboard.putNumber("Drivetrain/Roll", gyro.getRoll());
         SmartDashboard.putNumber("Drivetrain/GyroHeadin", gyro.getRotation2d().getDegrees());
+        SmartDashboard.putString("Drivetrain/Pose", getPose().toString());
 
 
         if (Constants.DIAGNOSTICS) {

@@ -50,9 +50,9 @@
 //         } else {
 //             double yaw = limelight.getPitch();
 //             double xLL = limelight.getZ();
-//             double yLL = limelight.getX();
+//             double yLL = -limelight.getX();
             
-//             Rotation2d robotFinalToRobotInitial = new Rotation2d(yaw - Math.PI);
+//             Rotation2d robotFinalToRobotInitial = new Rotation2d(Units.degreesToRadians(yaw));
 
 //             Translation2d originFinalToTag = new Translation2d(LimelightConstants.ORIGIN_TO_TAG_FINAL, Units.inchesToMeters(sideOffset));
 
@@ -66,7 +66,9 @@
 
 //             Translation2d finalTranslation = originToTag.minus(originFinalToTag.rotateBy(robotFinalToRobotInitial));
 
-//             SmartDashboard.putString("Limelight/Align", "2");
+            
+//             SmartDashboard.putNumber("Limelight/rotate", robotFinalToRobotInitial.getDegrees());
+//             SmartDashboard.putNumber("Limelight/InitialRotate", drive.getPose().getRotation().getDegrees());
 
 
 //             Pose2d endingPose = new Pose2d(finalTranslation.getX(), finalTranslation.getY(), robotFinalToRobotInitial);

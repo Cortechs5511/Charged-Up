@@ -47,9 +47,9 @@ public class Limelight extends SubsystemBase {
     public double getYaw() {
         return table.getEntry("botpose_targetspace").getDoubleArray(new double[6])[5];
     }
-    public double getLatency() {
-        return table.getEntry("botpose").getDoubleArray(new double[6])[6];
-    }
+    // public double getLatency() {
+    //     return table.getEntry("botpose").getDoubleArray(new double[6])[6];
+    // }
 
     public boolean hasTargets () {
         if (table.getEntry("tv").getDouble(0) == 1) {
@@ -68,7 +68,7 @@ public class Limelight extends SubsystemBase {
             SmartDashboard.putNumber("Limelight/Roll", getRoll());
             SmartDashboard.putNumber("Limelight/Pitch", getPitch());
             SmartDashboard.putNumber("Limelight/yaw", getYaw());
-            SmartDashboard.putNumber("Limelight/Latency", getLatency());
+            //SmartDashboard.putNumber("Limelight/Latency", getLatency());
     }
 }
 
