@@ -59,19 +59,9 @@ public class Drive extends SubsystemBase {
 
     } 
 
-    public void turnByAngle(double angle) {
-        PIDController turnController = new PIDController(0.03, 0, 0);
-        turnController.setSetpoint(angle);
-        turnController.setTolerance(1.0);
-        double output = turnController.calculate(getPose().getRotation().getDegrees());
-
-        output = Math.max(-0.3, Math.min(0.3, output));
-        setPower(-output, -output);
 
 
 
-
-    }
     /**
      * Get position of left encoder
      * 

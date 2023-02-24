@@ -33,6 +33,7 @@ import frc.robot.commands.drive.AutoAlign;
 import frc.robot.commands.drive.Flip;
 import frc.robot.commands.drive.SetSpeed;
 import frc.robot.commands.drive.StartAutoAlign;
+import frc.robot.commands.drive.TurnByAngle;
 //import frc.robot.commands.drive.Limelight.GoToTag;
 import frc.robot.commands.drive.Limelight.LimelightDisplay;
 import frc.robot.subsystems.*;
@@ -63,7 +64,7 @@ public class RobotContainer {
         .toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
 
         new JoystickButton(oi.rightStick, 1)
-        .toggleOnTrue(getCommand(drive, limelight, 0.0));
+        .toggleOnTrue(new SequentialCommandGroup(new TurnByAngle(drive, -limelight.getPitch()).andThen(getCommand(drive, limelight, 0.0))));
 
     }
 
@@ -150,8 +151,6 @@ public class RobotContainer {
 
             SmartDashboard.putString("Limelight/Endingpose", endingPose.toString());
             SmartDashboard.putString("Limelight/Startpose", startingPose.toString());
-
-            drive.turnByAngle(robotFinalToRobotInitial.getDegrees());
 
             var interiorWaypoints = new ArrayList<Translation2d>();
             interiorWaypoints.add(new Translation2d(endingPose.getX() / 3.0, endingPose.getY() / 3.0));
