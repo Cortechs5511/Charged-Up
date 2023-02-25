@@ -17,6 +17,7 @@ import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -30,6 +31,7 @@ import edu.wpi.first.wpilibj2.command.button.*;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.arm.setArmPower;
 import frc.robot.commands.drive.AutoAlign;
 import frc.robot.commands.drive.Flip;
 import frc.robot.commands.drive.SetSpeed;
@@ -42,11 +44,13 @@ public class RobotContainer {
     private SendableChooser<Command> chooser = new SendableChooser<>();
 
     private final Drive drive = new Drive();
+    private final Arm arm = new Arm();
     private final Limelight limelight = new Limelight();
     private final OI oi = OI.getInstance();
 
     public RobotContainer() {
         drive.setDefaultCommand(new SetSpeed(drive));
+        arm.setDefaultCommand(new setArmPower(arm));
         //limelight.setDefaultCommand(new LimelightDisplay(limelight));
         configureButtonBindings();
 
@@ -66,7 +70,6 @@ public class RobotContainer {
         new JoystickButton(oi.rightStick, 1)
         .toggleOnTrue(alignCommand(drive, limelight, 0.0));
         //.toggleOnTrue(new SequentialCommandGroup(new TurnByAngle(drive, -limelight.getPitch()).andThen(getCommand(drive, limelight, 0.0))));
-
     }
 
     public Command trajectoryFollower(String filename, Drive drive, boolean reset) {
