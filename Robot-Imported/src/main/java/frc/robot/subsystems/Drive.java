@@ -6,12 +6,12 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -240,6 +240,12 @@ public class Drive extends SubsystemBase {
         return encoder;
     }
 
+    public static Field2d returnField() {
+        Field2d field = new Field2d();
+        return field;
+
+    }
+
     @Override
     public void periodic() {
         odometry.update(gyro.getRotation2d(), leftEncoder.getPosition(),
@@ -249,6 +255,7 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putNumber("Drivetrain/Roll", gyro.getRoll());
         SmartDashboard.putNumber("Drivetrain/GyroHeadin", gyro.getRotation2d().getDegrees());
         SmartDashboard.putString("Drivetrain/Pose", getPose().toString());
+        SmartDashboard.putData("Drivetrain/Field", returnField());
 
 
         if (Constants.DIAGNOSTICS) {

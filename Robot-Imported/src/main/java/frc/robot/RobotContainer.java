@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -34,7 +35,6 @@ import frc.robot.commands.drive.Flip;
 import frc.robot.commands.drive.SetSpeed;
 import frc.robot.commands.drive.StartAutoAlign;
 import frc.robot.commands.drive.TurnByAngle;
-//import frc.robot.commands.drive.Limelight.GoToTag;
 import frc.robot.commands.drive.Limelight.LimelightDisplay;
 import frc.robot.subsystems.*;
 
@@ -64,7 +64,8 @@ public class RobotContainer {
         .toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
 
         new JoystickButton(oi.rightStick, 1)
-        .toggleOnTrue(new SequentialCommandGroup(new TurnByAngle(drive, -limelight.getPitch()).andThen(getCommand(drive, limelight, 0.0))));
+        .toggleOnTrue(alignCommand(drive, limelight, 0.0));
+        //.toggleOnTrue(new SequentialCommandGroup(new TurnByAngle(drive, -limelight.getPitch()).andThen(getCommand(drive, limelight, 0.0))));
 
     }
 
@@ -116,9 +117,10 @@ public class RobotContainer {
 
 
 
-    public Command getCommand(Drive drive, Limelight limelight, Double sideOffset) {
+    public Command alignCommand(Drive drive, Limelight limelight, Double sideOffset) {
         var startingPose = new Pose2d(0,0, new Rotation2d());
         
+
         if (limelight.hasTargets() == false) {
             return new InstantCommand();
         } else {
@@ -140,14 +142,14 @@ public class RobotContainer {
 
             Translation2d finalTranslation = originToTag.minus(originFinalToTag.rotateBy(robotFinalToRobotInitial));
 
-            SmartDashboard.putNumber("Limelight/rotate", robotFinalToRobotInitial.getDegrees());
+            SmartDashboard.putNumber("Limelight/rotate", -limelight.getPitch());
             SmartDashboard.putNumber("Limelight/translateX", finalTranslation.getX());
             SmartDashboard.putNumber("Limelight/translateY", finalTranslation.getX());
 
 
 
 
-            Pose2d endingPose = new Pose2d(finalTranslation.getX(), finalTranslation.getY(), new Rotation2d());
+            Pose2d endingPose = new Pose2d(-finalTranslation.getX(), finalTranslation.getY(), new Rotation2d());
 
             SmartDashboard.putString("Limelight/Endingpose", endingPose.toString());
             SmartDashboard.putString("Limelight/Startpose", startingPose.toString());
@@ -166,10 +168,12 @@ public class RobotContainer {
                 config);
 
             drive.reset(trajectory.getInitialPose());
-            SmartDashboard.putNumber("Limelight/InitialRotate", drive.getPose().getRotation().getDegrees());
+            drive.gyroReset();
 
-            SmartDashboard.putString("Limelight/Align", "3");
-            
+        
+            // Push the trajectory to Field2d.
+            drive.returnField().getObject("traj").setTrajectory(trajectory);
+
             RamseteCommand ramseteCommand = new RamseteCommand(trajectory, drive::getPose,
             new RamseteController(),
             new SimpleMotorFeedforward(DriveConstants.Ks, DriveConstants.Kv, DriveConstants.Ka),
