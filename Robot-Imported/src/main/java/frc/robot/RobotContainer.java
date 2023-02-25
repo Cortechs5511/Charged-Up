@@ -30,6 +30,7 @@ import edu.wpi.first.wpilibj2.command.button.*;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.arm.setArmPower;
 import frc.robot.commands.drive.AutoAlign;
 import frc.robot.commands.drive.Flip;
 import frc.robot.commands.drive.SetSpeed;
@@ -42,11 +43,13 @@ public class RobotContainer {
     private SendableChooser<Command> chooser = new SendableChooser<>();
 
     private final Drive drive = new Drive();
+    private final Arm arm = new Arm();
     private final Limelight limelight = new Limelight();
     private final OI oi = OI.getInstance();
 
     public RobotContainer() {
         drive.setDefaultCommand(new SetSpeed(drive));
+        arm.setDefaultCommand(new setArmPower(arm));
         //limelight.setDefaultCommand(new LimelightDisplay(limelight));
         configureButtonBindings();
 
@@ -149,7 +152,7 @@ public class RobotContainer {
 
 
 
-            Pose2d endingPose = new Pose2d(-finalTranslation.getX(), finalTranslation.getY(), new Rotation2d());
+            Pose2d endingPose = new Pose2d(finalTranslation.getX(), finalTranslation.getY(), new Rotation2d());
 
             SmartDashboard.putString("Limelight/Endingpose", endingPose.toString());
             SmartDashboard.putString("Limelight/Startpose", startingPose.toString());
@@ -168,11 +171,9 @@ public class RobotContainer {
                 config);
 
             drive.reset(trajectory.getInitialPose());
-            drive.gyroReset();
-
         
             // Push the trajectory to Field2d.
-            drive.returnField().getObject("traj").setTrajectory(trajectory);
+            drive.getField2d().getObject("traj").setTrajectory(trajectory);
 
             RamseteCommand ramseteCommand = new RamseteCommand(trajectory, drive::getPose,
             new RamseteController(),

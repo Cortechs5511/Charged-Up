@@ -39,6 +39,8 @@ public class Drive extends SubsystemBase {
 
     private final DifferentialDrive differentialDrive = new DifferentialDrive(leftLeader, rightLeader);
 
+    private final Field2d field = new Field2d();
+
 
     public  Drive() {
         leftFollower.follow(leftLeader);
@@ -52,6 +54,7 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putData("zero" , new Zero(this)) ;
         odometry = new DifferentialDriveOdometry(gyro.getRotation2d(), maxPower, maxPower);
         odometry.resetPosition(gyro.getRotation2d(),leftEncoder.getPosition(),rightEncoder.getPosition(), new Pose2d());
+        SmartDashboard.putData("Drivetrain/Field", field);
     }
 
     public void arcadeDrive(double moveSpeed, double rotateSpeed) {
@@ -80,12 +83,22 @@ public class Drive extends SubsystemBase {
     public void gyroReset() {
         gyro.reset();
     }
+    
     public double getYaw() {
         return gyro.getYaw();
 
     }
+
     public double getLeftPosition() {
         return leftEncoder.getPosition();
+    }
+
+    /**
+     * Getter for field2d
+     * @return Field2d field
+     */
+    public Field2d getField2d() {
+        return field;
     }
 
     /**
@@ -240,12 +253,6 @@ public class Drive extends SubsystemBase {
         return encoder;
     }
 
-    public static Field2d returnField() {
-        Field2d field = new Field2d();
-        return field;
-
-    }
-
     @Override
     public void periodic() {
         odometry.update(gyro.getRotation2d(), leftEncoder.getPosition(),
@@ -255,7 +262,7 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putNumber("Drivetrain/Roll", gyro.getRoll());
         SmartDashboard.putNumber("Drivetrain/GyroHeadin", gyro.getRotation2d().getDegrees());
         SmartDashboard.putString("Drivetrain/Pose", getPose().toString());
-        SmartDashboard.putData("Drivetrain/Field", returnField());
+        field.setRobotPose(getPose());
 
 
         if (Constants.DIAGNOSTICS) {

@@ -54,41 +54,15 @@ public class OI {
     }
 
     /**
-     * Returns power for left climber 
+     * Returns power for arm 
      * 1 or 1 if stick is past deadband in both directions
      * 0 if stick is within deadband
      * 
      * @return double controller left joystick power
      */
-    public double getLeftClimberPower() {
-        double power = controller.getRawAxis(1);
-
-        if (power > OIConstants.DEADBAND * 2) {
-            return 1;
-        } else if (power < OIConstants.DEADBAND * -2) {
-            return -1;
-        } else {
-            return 0;
-        }
-    }
-
-    /**
-     * Returns power for right climber with deadband
-     * 1 or 1 if stick is past deadband in both directions
-     * 0 if stick is within deadband
-     * 
-     * @return double controller left joystick power
-     */
-    public double getRightClimberPower() {
+    public double getArmPower() {
         double power = controller.getRawAxis(5);
-
-        if (power > OIConstants.DEADBAND * 2) {
-            return 1;
-        } else if (power < OIConstants.DEADBAND * -2) {
-            return -1;
-        } else {
-            return 0;
-        }
+        return power;
     }
 
     /**
