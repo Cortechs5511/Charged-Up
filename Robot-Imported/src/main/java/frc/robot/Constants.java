@@ -77,4 +77,8 @@ public final class Constants {
         public static final double RAMP_RATE = 0.05;
         public static final IdleMode IDLE_MODE = IdleMode.kBrake;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> ecc6e08d479b12293b4235537aaabe0c5175f218

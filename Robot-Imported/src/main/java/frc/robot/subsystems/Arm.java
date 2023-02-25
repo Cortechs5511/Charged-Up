@@ -87,4 +87,8 @@ public class Arm extends SubsystemBase {
             SmartDashboard.putNumber("Arm/Right Current", rightLeader.getOutputCurrent());
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> ecc6e08d479b12293b4235537aaabe0c5175f218

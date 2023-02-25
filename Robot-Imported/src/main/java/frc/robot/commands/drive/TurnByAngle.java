@@ -40,9 +40,9 @@ public class TurnByAngle extends CommandBase {
             // if to the right of target + same margin as above
             // output -= feed forward
 
-            if (drive.getYaw() < (turnController.getSetpoint()+5)) {
+            if (drive.getYaw() < (turnController.getSetpoint()-5)) {
                 output += feedForward;
-            } else if (drive.getYaw() > (turnController.getSetpoint() -5)) {
+            } else if (drive.getYaw() > (turnController.getSetpoint() +5)) {
                 output -= feedForward;
             }
 

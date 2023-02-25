@@ -24,4 +24,8 @@ public class setArmPower extends CommandBase {
         arm.setPower(oi.getArmPower());
        //drive.setPower(oi.getLeftYDeadband(), oi.getRightYDeadband());
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> ecc6e08d479b12293b4235537aaabe0c5175f218
