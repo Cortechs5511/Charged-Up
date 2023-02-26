@@ -58,6 +58,7 @@ public class RobotContainer {
         chooser.addOption("Test auto", trajectoryFollower("pathplanner/generatedJSON/Score 1, Pick 1, Balance.wpilib.json",drive,true));
         chooser.addOption("idklol", new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
         Shuffleboard.getTab("Autonomous Selection").add(chooser);
+
     }
 
     private void configureButtonBindings() {
