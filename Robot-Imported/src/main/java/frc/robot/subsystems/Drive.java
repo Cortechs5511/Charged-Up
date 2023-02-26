@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -38,6 +39,8 @@ public class Drive extends SubsystemBase {
 
     private final DifferentialDrive differentialDrive = new DifferentialDrive(leftLeader, rightLeader);
 
+    private final Field2d field = new Field2d();
+
 
     public  Drive() {
         leftFollower.follow(leftLeader);
@@ -51,12 +54,17 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putData("zero" , new Zero(this)) ;
         odometry = new DifferentialDriveOdometry(gyro.getRotation2d(), maxPower, maxPower);
         odometry.resetPosition(gyro.getRotation2d(),leftEncoder.getPosition(),rightEncoder.getPosition(), new Pose2d());
+        SmartDashboard.putData("Drivetrain/Field", field);
     }
 
     public void arcadeDrive(double moveSpeed, double rotateSpeed) {
         differentialDrive.arcadeDrive(moveSpeed, rotateSpeed);
 
     } 
+
+
+
+
     /**
      * Get position of left encoder
      * 
@@ -75,12 +83,22 @@ public class Drive extends SubsystemBase {
     public void gyroReset() {
         gyro.reset();
     }
+    
     public double getYaw() {
         return gyro.getYaw();
 
     }
+
     public double getLeftPosition() {
         return leftEncoder.getPosition();
+    }
+
+    /**
+     * Getter for field2d
+     * @return Field2d field
+     */
+    public Field2d getField2d() {
+        return field;
     }
 
     /**
@@ -243,6 +261,8 @@ public class Drive extends SubsystemBase {
         SmartDashboard.putNumber("Drivetrain/Yaw", gyro.getYaw());
         SmartDashboard.putNumber("Drivetrain/Roll", gyro.getRoll());
         SmartDashboard.putNumber("Drivetrain/GyroHeadin", gyro.getRotation2d().getDegrees());
+        SmartDashboard.putString("Drivetrain/Pose", getPose().toString());
+        field.setRobotPose(getPose());
 
 
         if (Constants.DIAGNOSTICS) {

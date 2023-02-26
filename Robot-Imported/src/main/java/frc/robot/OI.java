@@ -54,115 +54,17 @@ public class OI {
     }
 
     /**
-     * Returns power for left climber 
+     * Returns power for arm 
      * 1 or 1 if stick is past deadband in both directions
      * 0 if stick is within deadband
      * 
      * @return double controller left joystick power
      */
-    public double getLeftClimberPower() {
-        double power = controller.getRawAxis(1);
-
-        if (power > OIConstants.DEADBAND * 2) {
-            return 1;
-        } else if (power < OIConstants.DEADBAND * -2) {
-            return -1;
-        } else {
-            return 0;
-        }
-    }
-
-    /**
-     * Returns power for right climber with deadband
-     * 1 or 1 if stick is past deadband in both directions
-     * 0 if stick is within deadband
-     * 
-     * @return double controller left joystick power
-     */
-    public double getRightClimberPower() {
+    public double getArmPower() {
         double power = controller.getRawAxis(5);
-
-        if (power > OIConstants.DEADBAND * 2) {
-            return 1;
-        } else if (power < OIConstants.DEADBAND * -2) {
-            return -1;
-        } else {
-            return 0;
-        }
+        return power;
     }
 
-    /**
-     * Returns state of intake binding as a double
-     
-     * @return int 1 if outtake is pressed, else 0
-     */
-    public int getOuttake() {
-        if (controller.getAButton()) {
-            return 1;
-        }
-        return 0;
-    }
-
-    /**
-     * Returns state of outtake binding as a bool 
-     * 
-     * @return int 1 if intake is pressed else, 0
-     */
-    public int getIntake() {
-        return (controller.getYButton() /*|| controller.getXButton() || controller.getBButton()*/) ? 1 : 0;
-    }
-
-    /**
-     * Returns state of wrist up binding as a double
-     *
-     * @return double 1 if wrist up is pressed, else 0
-     */
-    public double getWristUp() {
-        if (controller.getRawAxis(OIConstants.WRIST_UP_AXIS) > 0.5) {
-            return 1;
-        }
-        return 0;
-    }
-
-    /**
-     * Returns state of wrist down binding as a double
-     *
-     * @return double 1 if wrist down is pressed, else 0
-     */
-    public double getWristDown() {
-        if (controller.getRawAxis(OIConstants.WRIST_DOWN_AXIS) > 0.5) {
-            return 1;
-        }
-        return 0;
-    }
-
-    /**
-     * Returns feeder up bind
-     * 
-     * @return double 1 if feeder up is pushed
-     */
-    public double getFeederUp() {
-        if (controller.getPOV() == 0) {
-            return 1;
-        }
-        return 0;
-    }
-
-    /**
-     * Returns feeder down bind
-     * 
-     * @return double 1 if feeder down is pushed
-     */
-    public double getFeederDown() {
-        if (controller.getPOV() == 180) {
-            return 1;
-        }
-        return 0;
-    }
-
-    public boolean getShooterPriority() {
-        return leftStick.getTrigger() && rightStick.getTrigger();
-    }
     /**
      * Returns the value of left joystick with values within deadband truncated
      *

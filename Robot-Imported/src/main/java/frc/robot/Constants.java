@@ -1,7 +1,5 @@
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
@@ -26,6 +24,17 @@ public final class Constants {
         public static final double WHEEL_DIAMETER = Units.inchesToMeters(6);
         public static final double ENCODER_TO_METERS = WHEEL_DIAMETER / GEARING;
         public static final double DRIVE_VELOCITY_TOLERANCE = 1;
+
+        public static final double ALIGN_INIT_ANGLE = 18.0;
+        public static final double ALIGN_PID_P = 0.006;
+        public static final double ALIGN_PID_I = 0.0;
+        public static final double ALIGN_PID_D = 0.003;
+
+        public static final double TURNCONTROLLER_PID_P = 0.01;
+        public static final double TURNCONTROLLER_PID_I = 0.0;
+        public static final double TURNCONTROLLER_PID_D = 0.0;
+        public static final double TURNCONTROLLER_FEEDFORWARD = 0.1;
+
 
         public static final double PID_MIN_OUTPUT = 0;
         public static final double PID_MAX_OUTPUT = 0;
@@ -55,8 +64,6 @@ public final class Constants {
 
         public static final double DEADBAND = 0.05;
 
-        public static final int WRIST_UP_AXIS = 2;
-        public static final int WRIST_DOWN_AXIS = 3;
         public static final int FLIP_BUTTON = 2;
         public static final int HALF_SPEED_BUTTON = 2;
         public static final int LIMELIGHT_TOGGLE_BUTTON = 8;
@@ -64,5 +71,25 @@ public final class Constants {
 
     public static class PneumaticsConstants {
         public static final int PNEUMATICS_MODULE_ID = 17;
+        
+    public static class LimelightConstants {
+        public static final double ORIGIN_TO_LIMELIGHT_X = Units.inchesToMeters(2.0);
+        public static final double ORIGIN_TO_LIMELIGHT_Y = Units.inchesToMeters(-4.5);
+        public static final double ORIGIN_TO_TAG_FINAL = Units.inchesToMeters(22);
+    }
+
+    public static class ArmConstants {
+        public static final int LEFT_ID = 30;
+        public static final int RIGHT_ID = 31;
+        public static final int EXTENDER_ID = 50;
+
+        public static final double VOLTAGE_COMPENSATION = 3;
+        public static final int CURRENT_LIMIT = 40;
+        public static final double RAMP_RATE = 0.05;
+        public static final IdleMode IDLE_MODE = IdleMode.kBrake;
+    }
+
+    public static class ClawConstants {
+        
     }
 }

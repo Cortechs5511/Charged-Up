@@ -1,12 +1,13 @@
 package frc.robot.commands.drive;
 
+import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.Drive;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class AutoAlign extends CommandBase {
     private final Drive drive;
-    private PIDController levelPID = new PIDController(0.006,0,0.003);
+    private PIDController levelPID = new PIDController(DriveConstants.ALIGN_PID_P, DriveConstants.ALIGN_PID_I, DriveConstants.ALIGN_PID_D);
     public AutoAlign(Drive subsystem) {
         drive = subsystem;
         addRequirements(subsystem);
