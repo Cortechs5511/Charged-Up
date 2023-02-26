@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.*;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.LimelightConstants;
+import frc.robot.Constants.OIConstants;
 import frc.robot.commands.arm.extendArm;
 import frc.robot.commands.arm.setArmPower;
 import frc.robot.commands.drive.AutoAlign;
@@ -34,11 +35,14 @@ import frc.robot.commands.drive.Flip;
 import frc.robot.commands.drive.SetSpeed;
 import frc.robot.commands.drive.StartAutoAlign;
 import frc.robot.subsystems.*;
+import frc.robot.commands.claw.toggleExtender;
+import frc.robot.commands.claw.toggleGripper;
 
 public class RobotContainer {
     private SendableChooser<Command> chooser = new SendableChooser<>();
 
     private final Drive drive = new Drive();
+    private final Claw claw = new Claw();
     private final Arm arm = new Arm();
     private final Extender extender = new Extender();
     private final Limelight limelight = new Limelight();
@@ -67,6 +71,9 @@ public class RobotContainer {
         new JoystickButton(oi.rightStick, 1)
         .toggleOnTrue(alignCommand(drive, limelight, 0.0));
         //.toggleOnTrue(new SequentialCommandGroup(new TurnByAngle(drive, -limelight.getPitch()).andThen(getCommand(drive, limelight, 0.0))));
+
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).leftBumper().onTrue(new toggleGripper(claw));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).rightBumper().onTrue(new toggleExtender(claw));
     }
 
     public Command trajectoryFollower(String filename, Drive drive, boolean reset) {
