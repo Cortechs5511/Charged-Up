@@ -17,10 +17,7 @@ import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -30,14 +27,12 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.*;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.LimelightConstants;
-import frc.robot.Constants.OIConstants;
+import frc.robot.commands.arm.extendArm;
 import frc.robot.commands.arm.setArmPower;
 import frc.robot.commands.drive.AutoAlign;
 import frc.robot.commands.drive.Flip;
 import frc.robot.commands.drive.SetSpeed;
 import frc.robot.commands.drive.StartAutoAlign;
-import frc.robot.commands.drive.TurnByAngle;
-import frc.robot.commands.drive.Limelight.LimelightDisplay;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
@@ -45,13 +40,15 @@ public class RobotContainer {
 
     private final Drive drive = new Drive();
     private final Arm arm = new Arm();
+    private final Extender extender = new Extender();
     private final Limelight limelight = new Limelight();
     private final OI oi = OI.getInstance();
 
     public RobotContainer() {
         drive.setDefaultCommand(new SetSpeed(drive));
         arm.setDefaultCommand(new setArmPower(arm));
-        //limelight.setDefaultCommand(new LimelightDisplay(limelight));
+        extender.setDefaultCommand(new extendArm(extender));
+      //limelight.setDefaultCommand(new LimelightDisplay(limelight));
         configureButtonBindings();
 
         chooser.addOption("Test auto", trajectoryFollower("pathplanner/generatedJSON/Score 1, Pick 1, Balance.wpilib.json",drive,true));

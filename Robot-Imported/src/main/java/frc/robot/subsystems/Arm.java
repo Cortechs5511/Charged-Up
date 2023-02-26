@@ -12,9 +12,11 @@ import frc.robot.Constants.ArmConstants;
 public class Arm extends SubsystemBase {
     private final CANSparkMax leftLeader = createArmController(ArmConstants.LEFT_ID, false);
     private final CANSparkMax rightLeader = createArmController(ArmConstants.RIGHT_ID, true);
+    //private final CANSparkMax extender = createArmController(ArmConstants.EXTENDER_ID, false);
 
     private final RelativeEncoder leftEncoder = createEncoder(leftLeader);
     private final RelativeEncoder rightEncoder = createEncoder(rightLeader);
+    //private final RelativeEncoder extenderEncoder = createEncoder(extender);
     private double maxPower = 1.0;
     
 
@@ -35,6 +37,10 @@ public class Arm extends SubsystemBase {
         return rightEncoder.getPosition();
     }
 
+    // public double getExtenderPostion() {
+    //     return extenderEncoder.getPosition();
+    // }
+
     public double getLeftVelocity() {
         return leftEncoder.getVelocity() ;
     }
@@ -43,10 +49,18 @@ public class Arm extends SubsystemBase {
         return rightEncoder.getVelocity();
     }
 
+    // public double getExtenderVelocity() {
+    //     return extenderEncoder.getVelocity();
+    // }
+
     public void setPower(double speed) {
         rightLeader.set(speed * maxPower);
         leftLeader.set(speed * maxPower);
     }
+
+    // public void setExtendPower(double power) {
+    //     extender.set(power*maxPower);
+    // }
 
     private CANSparkMax createArmController(int port, boolean isInverted) {
         CANSparkMax controller = new CANSparkMax(port, MotorType.kBrushless);
@@ -87,8 +101,4 @@ public class Arm extends SubsystemBase {
             SmartDashboard.putNumber("Arm/Right Current", rightLeader.getOutputCurrent());
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> ecc6e08d479b12293b4235537aaabe0c5175f218

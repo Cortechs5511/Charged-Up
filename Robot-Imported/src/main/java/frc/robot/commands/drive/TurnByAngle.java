@@ -1,7 +1,6 @@
 package frc.robot.commands.drive;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -10,9 +9,9 @@ import frc.robot.subsystems.Drive;
 
 public class TurnByAngle extends CommandBase {
     private final Drive drive;
-    private PIDController turnController = new PIDController(0.01, 0, 0);
+    private PIDController turnController = new PIDController(DriveConstants.TURNCONTROLLER_PID_P, 0, 0);
     private final double angle;
-    double feedForward = 0.1;
+    double feedForward = DriveConstants.TURNCONTROLLER_FEEDFORWARD;
 
     public TurnByAngle(Drive drive, final double angle) {
         this.drive = drive;

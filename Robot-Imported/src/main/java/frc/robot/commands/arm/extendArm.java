@@ -1,17 +1,17 @@
 package frc.robot.commands.arm;
 
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Extender;
 import frc.robot.OI;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
-public class setArmPower extends CommandBase {
-    private final Arm arm;
+public class extendArm extends CommandBase {
+    private final Extender extender;
     private final OI oi = OI.getInstance();
 
 
-    public setArmPower(Arm subsystem) {
-        arm = subsystem;
+    public extendArm(Extender subsystem) {
+        extender = subsystem;
         addRequirements(subsystem);
     }
 
@@ -21,6 +21,6 @@ public class setArmPower extends CommandBase {
 
     @Override
     public void execute() {
-        arm.setPower(oi.getArmPower());    
-    }
+        extender.setExtendPower(oi.controller.getLeftY());
+}
 }
