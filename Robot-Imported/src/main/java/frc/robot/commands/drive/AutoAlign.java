@@ -20,7 +20,7 @@ public class AutoAlign extends CommandBase {
 
     @Override
     public void execute() {
-            double angle = drive.getPitch();
+            double angle = drive.getYaw();
             double output = levelPID.calculate(angle);
 
 

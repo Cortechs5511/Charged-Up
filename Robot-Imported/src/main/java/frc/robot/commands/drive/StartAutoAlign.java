@@ -20,7 +20,7 @@ public class StartAutoAlign extends CommandBase {
 
     @Override
     public void execute() {
-        if (Math.abs(drive.getPitch()) < DriveConstants.ALIGN_INIT_ANGLE) {
+        if (Math.abs(drive.getYaw()) < DriveConstants.ALIGN_INIT_ANGLE) {
             drive.setPower(-0.35, -0.35);          
         } else {
         drive.setPower(0,0); }
@@ -33,7 +33,7 @@ public class StartAutoAlign extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (Math.abs(drive.getPitch()) >= DriveConstants.ALIGN_INIT_ANGLE) {
+        if (Math.abs(drive.getYaw()) >= DriveConstants.ALIGN_INIT_ANGLE) {
             return true;
         } else {
             return false;
