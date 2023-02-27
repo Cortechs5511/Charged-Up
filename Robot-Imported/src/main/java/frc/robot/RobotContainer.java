@@ -35,6 +35,10 @@ import frc.robot.commands.drive.Flip;
 import frc.robot.commands.drive.SetSpeed;
 import frc.robot.commands.drive.StartAutoAlign;
 import frc.robot.subsystems.*;
+import frc.robot.commands.claw.extenderForward;
+import frc.robot.commands.claw.extenderReverse;
+import frc.robot.commands.claw.gripperForward;
+import frc.robot.commands.claw.gripperReverse;
 import frc.robot.commands.claw.toggleExtender;
 import frc.robot.commands.claw.toggleGripper;
 
@@ -73,8 +77,12 @@ public class RobotContainer {
         .toggleOnTrue(alignCommand(drive, limelight, 0.0));
         //.toggleOnTrue(new SequentialCommandGroup(new TurnByAngle(drive, -limelight.getPitch()).andThen(getCommand(drive, limelight, 0.0))));
 
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).leftBumper().onTrue(new toggleGripper(claw));
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).rightBumper().onTrue(new toggleExtender(claw));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().onTrue(new gripperForward(claw));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).b().onTrue(new gripperReverse(claw));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).y().onTrue(new extenderForward(claw));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().onTrue(new extenderReverse(claw));
+        // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().onTrue(new toggleGripper(claw));
+        // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).y().onTrue(new toggleExtender(claw));
     }
 
     public Command trajectoryFollower(String filename, Drive drive, boolean reset) {

@@ -42,6 +42,28 @@ public class Claw extends SubsystemBase{
       extenderState = !extenderState;
     }
 
+    public void setGripper(boolean channel) {
+      if (channel) {
+        gripperSolenoid.set(kForward);
+        gripperState = true;
+      }
+      else {
+        gripperSolenoid.set(kReverse);
+        gripperState = false;
+      }
+    }
+
+    public void setExtender(boolean channel) {
+      if (channel) {
+        extenderSolenoid.set(kForward);
+        extenderState = true;
+      }
+      else {
+        extenderSolenoid.set(kReverse);
+        extenderState = false;
+      }
+    }
+
     @Override
     public void periodic() {
     // This method will be called once per scheduler run
