@@ -32,15 +32,15 @@ public class Claw extends SubsystemBase{
         gripperState = false;
     }
 
-    public void gripperToggle() {
-      gripperSolenoid.toggle();
-      gripperState = !gripperState;
-    }
+    // public void gripperToggle() {
+    //   gripperSolenoid.toggle();
+    //   gripperState = !gripperState;
+    // }
 
-    public void extenderToggle() {
-      extenderSolenoid.toggle();
-      extenderState = !extenderState;
-    }
+    // public void extenderToggle() {
+    //   extenderSolenoid.toggle();
+    //   extenderState = !extenderState;
+    // }
 
     public void setGripper(boolean channel) {
       if (channel) {

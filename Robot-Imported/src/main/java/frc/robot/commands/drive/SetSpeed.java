@@ -20,8 +20,8 @@ public class SetSpeed extends CommandBase {
 
     @Override
     public void execute() {
-        drive.arcadeDrive(oi.getLeftYDeadband(), oi.getRightXDeadband());
-       //drive.setPower(oi.getLeftYDeadband(), oi.getRightYDeadband());
+        // drive.arcadeDrive(oi.getLeftYDeadband(), oi.getRightXDeadband());
+       drive.setPower(oi.getLeftYDeadband(), oi.getRightYDeadband());
     }
 
     @Override

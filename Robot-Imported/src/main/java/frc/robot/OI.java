@@ -61,7 +61,7 @@ public class OI {
      * @return double controller left joystick power
      */
     public double getArmPower() {
-        double power = controller.getRawAxis(5);
+        double power = controller.getRawAxis(1)-0.05;
         return power;
     }
 

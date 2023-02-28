@@ -21,6 +21,6 @@ public class extendArm extends CommandBase {
 
     @Override
     public void execute() {
-        extender.setExtendPower(oi.controller.getLeftY());
+        extender.setExtendPower(oi.controller.getRightY());
 }
 }
