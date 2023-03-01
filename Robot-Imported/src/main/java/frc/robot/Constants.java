@@ -94,6 +94,8 @@ public final class Constants {
 
         public static final double EXTEND_Kp = 0;
         public static final double EXTEND_Kd = 0;
+
+        public static final double HIGH_CONE_ROTATIONS = 0.35;
     }
 
     public static class ClawConstants {

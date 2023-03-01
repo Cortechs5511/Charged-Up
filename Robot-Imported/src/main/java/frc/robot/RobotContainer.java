@@ -39,6 +39,7 @@ import frc.robot.commands.claw.extenderForward;
 import frc.robot.commands.claw.extenderReverse;
 import frc.robot.commands.claw.gripperForward;
 import frc.robot.commands.claw.gripperReverse;
+import frc.robot.commands.arm.scoreHighCone;
 
 public class RobotContainer {
     private SendableChooser<Command> chooser = new SendableChooser<>();
@@ -76,12 +77,12 @@ public class RobotContainer {
         //.toggleOnTrue(new SequentialCommandGroup(new TurnByAngle(drive, -limelight.getPitch()).andThen(getCommand(drive, limelight, 0.0))));
 
         // Claw commands, open claw, grab cube, grab cone
-        // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().onTrue(new gripperReverse(claw));
-        // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().onTrue(new extenderReverse(claw));
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).leftBumper().onTrue(new gripperForward(claw));
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).leftTrigger().onTrue(new extenderForward(claw));
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).rightBumper().onTrue(new gripperReverse(claw));
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).rightTrigger().onTrue(new extenderReverse(claw));
+        
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().onTrue(new scoreHighCone(arm));
     }
 
     public Command trajectoryFollower(String filename, Drive drive, boolean reset) {

@@ -5,6 +5,8 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.DutyCycle;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
@@ -16,6 +18,7 @@ public class Arm extends SubsystemBase {
 
     private final RelativeEncoder leftEncoder = createEncoder(leftLeader);
     private final RelativeEncoder rightEncoder = createEncoder(rightLeader);
+    private final DutyCycleEncoder absoluteEncoder = new DutyCycleEncoder(0);
     //private final RelativeEncoder extenderEncoder = createEncoder(extender);
     private double maxPower = 1.0;
     
@@ -27,6 +30,7 @@ public class Arm extends SubsystemBase {
     public void zero() {
         leftEncoder.setPosition(0);
         rightEncoder.setPosition(0);
+        absoluteEncoder.reset();
     }
     
     public double getLeftPosition() {
@@ -35,6 +39,10 @@ public class Arm extends SubsystemBase {
 
     public double getRightPosition() {
         return rightEncoder.getPosition();
+    }
+
+    public double getRotations() {
+        return absoluteEncoder.get();
     }
 
     // public double getExtenderPostion() {
@@ -90,6 +98,7 @@ public class Arm extends SubsystemBase {
         if (Constants.DIAGNOSTICS) {
             SmartDashboard.putNumber("Arm/Left Position", getLeftPosition());
             SmartDashboard.putNumber("Arm/Right Position", getRightPosition());
+            SmartDashboard.putNumber("Rotations", getRotations());
 
             SmartDashboard.putNumber("Arm/Left Velocity", getLeftVelocity());
             SmartDashboard.putNumber("Arm/Right Velocity", getRightVelocity());
