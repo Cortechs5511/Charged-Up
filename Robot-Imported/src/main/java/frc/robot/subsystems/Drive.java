@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -75,7 +76,9 @@ public class Drive extends SubsystemBase {
         rightEncoder.setPosition(0);
         gyro.reset();
         gyro.calibrate();
+        
     }
+
     public double getPitch() {
         return gyro.getPitch();
     }
@@ -89,6 +92,9 @@ public class Drive extends SubsystemBase {
 
     }
 
+    public double getRoll() {
+        return gyro.getRoll();
+    }
     public double getLeftPosition() {
         return leftEncoder.getPosition();
     }

@@ -45,6 +45,10 @@ public class Arm extends SubsystemBase {
         return absoluteEncoder.get();
     }
 
+    public double getRadians() {
+        return (2*Math.PI*absoluteEncoder.get());
+    }
+
     // public double getExtenderPostion() {
     //     return extenderEncoder.getPosition();
     // }
@@ -98,7 +102,8 @@ public class Arm extends SubsystemBase {
         if (Constants.DIAGNOSTICS) {
             SmartDashboard.putNumber("Arm/Left Position", getLeftPosition());
             SmartDashboard.putNumber("Arm/Right Position", getRightPosition());
-            SmartDashboard.putNumber("Rotations", getRotations());
+            SmartDashboard.putNumber("Arm/Rotations", getRotations());
+            SmartDashboard.putNumber("Arm/Radians", getRadians());
 
             SmartDashboard.putNumber("Arm/Left Velocity", getLeftVelocity());
             SmartDashboard.putNumber("Arm/Right Velocity", getRightVelocity());

@@ -17,7 +17,7 @@ public class scoreHighCone extends CommandBase {
     @Override
     public void execute() {
         while(arm.getRotations() < ArmConstants.HIGH_CONE_ROTATIONS) {
-            arm.setPower(1);
+            arm.setPower(0.5);
         }
     }
 }
