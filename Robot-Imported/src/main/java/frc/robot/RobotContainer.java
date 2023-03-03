@@ -36,10 +36,12 @@ import frc.robot.commands.drive.Flip;
 import frc.robot.commands.drive.SetSpeed;
 import frc.robot.commands.drive.StartAutoAlign;
 import frc.robot.subsystems.*;
+import frc.robot.commands.claw.closeClaw;
 import frc.robot.commands.claw.extenderForward;
 import frc.robot.commands.claw.extenderReverse;
 import frc.robot.commands.claw.gripperForward;
 import frc.robot.commands.claw.gripperReverse;
+import frc.robot.commands.claw.openClaw;
 import frc.robot.commands.arm.scoreHighCone;
 
 public class RobotContainer {
@@ -79,10 +81,13 @@ public class RobotContainer {
         //.toggleOnTrue(new SequentialCommandGroup(new TurnByAngle(drive, -limelight.getPitch()).andThen(getCommand(drive, limelight, 0.0))));
 
         // Claw commands, open claw, grab cube, grab cone
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).leftBumper().onTrue(new gripperForward(claw));
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).leftTrigger().onTrue(new extenderForward(claw));
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).rightBumper().onTrue(new gripperReverse(claw));
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).rightTrigger().onTrue(new extenderReverse(claw));
+        // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().onTrue(new gripperForward(claw));
+        // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).b().onTrue(new extenderForward(claw));
+        // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).b().onTrue(new gripperReverse(claw));
+        // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().onTrue(new extenderReverse(claw));
+
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).b().onTrue(new openClaw(claw));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().onTrue(new closeClaw(claw));
         
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().onTrue(new scoreHighCone(arm));
     }
