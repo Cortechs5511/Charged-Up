@@ -15,16 +15,16 @@ public class AutoAlign extends CommandBase {
 
     @Override
     public void initialize() {
-        levelPID.setSetpoint(87);
+        levelPID.setSetpoint(0);
     }
 
     @Override
     public void execute() {
-            double angle = drive.getRoll();
+            double angle = drive.getPitch();
             double output = levelPID.calculate(angle);
 
 
-            if (Math.abs(angle) > 82) {
+            if (Math.abs(angle) < 7) {
                 drive.setPower(0, 0);
             } else {
                 output = Math.max(-0.3, Math.min(0.3, output));

@@ -16,8 +16,22 @@ public class scoreHighCone extends CommandBase {
 
     @Override
     public void execute() {
-        while(arm.getRotations() < ArmConstants.HIGH_CONE_ROTATIONS) {
-            arm.setPower(0.5);
+        if(Math.abs(arm.getArmPosition()) < ArmConstants.HIGH_CONE_ROTATIONS) {
+            arm.setPower(-0.5);
+        }
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        arm.setPower(0);
+    }
+
+    @Override 
+    public boolean isFinished() {
+        if (Math.abs(arm.getArmPosition()) >= ArmConstants.HIGH_CONE_ROTATIONS) {
+            return true;
+        } else{
+        return false;
         }
     }
 }

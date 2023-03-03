@@ -25,28 +25,36 @@ public class Arm extends SubsystemBase {
 
     public Arm() {
         zero();
+        //leftEncoder.setPositionConversionFactor((1/81));
+        //rightEncoder.setPositionConversionFactor((1/81));
     }
     
     public void zero() {
         leftEncoder.setPosition(0);
         rightEncoder.setPosition(0);
-        absoluteEncoder.reset();
+        //absoluteEncoder.setPositionOffset(0.734);
     }
     
+    public double getArmPosition() {
+        return absoluteEncoder.getAbsolutePosition()-0.735;
+    }
+
     public double getLeftPosition() {
-        return leftEncoder.getPosition();
+        return (leftEncoder.getPosition()/81);
     }
 
     public double getRightPosition() {
-        return rightEncoder.getPosition();
+        return (rightEncoder.getPosition()/81);
     }
-
-    public double getRotations() {
-        return absoluteEncoder.get();
-    }
-
     public double getRadians() {
-        return (2*Math.PI*absoluteEncoder.get());
+        return getArmPosition()*2*Math.PI;
+    }
+    public double getRightRadians() {
+        return (2*Math.PI*getRightPosition());
+        }
+
+    public double getLeftRadians() {
+        return (2*Math.PI*getLeftPosition());
     }
 
     // public double getExtenderPostion() {
@@ -102,8 +110,11 @@ public class Arm extends SubsystemBase {
         if (Constants.DIAGNOSTICS) {
             SmartDashboard.putNumber("Arm/Left Position", getLeftPosition());
             SmartDashboard.putNumber("Arm/Right Position", getRightPosition());
-            SmartDashboard.putNumber("Arm/Rotations", getRotations());
-            SmartDashboard.putNumber("Arm/Radians", getRadians());
+            SmartDashboard.putNumber("Arm/RighRadians", getRightRadians());
+            SmartDashboard.putNumber("Arm/LeftRadians", getLeftRadians());
+            SmartDashboard.putNumber("Arm/TRUE Radians", getRadians());
+
+            SmartDashboard.putNumber("Arm/Absolute Encoder Value", getArmPosition());
 
             SmartDashboard.putNumber("Arm/Left Velocity", getLeftVelocity());
             SmartDashboard.putNumber("Arm/Right Velocity", getRightVelocity());

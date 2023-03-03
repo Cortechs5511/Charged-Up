@@ -25,10 +25,10 @@ public final class Constants {
         public static final double ENCODER_TO_METERS = WHEEL_DIAMETER / GEARING;
         public static final double DRIVE_VELOCITY_TOLERANCE = 1;
 
-        public static final double ALIGN_INIT_ANGLE = -77;
+        public static final double ALIGN_INIT_ANGLE = 18;
         public static final double ALIGN_PID_P = 0.006;
         public static final double ALIGN_PID_I = 0.0;
-        public static final double ALIGN_PID_D = 0.0;
+        public static final double ALIGN_PID_D = 0.001;
 
         public static final double TURNCONTROLLER_PID_P = 0.01;
         public static final double TURNCONTROLLER_PID_I = 0.0;
@@ -98,7 +98,7 @@ public final class Constants {
         public static final double EXTEND_Kp = 0;
         public static final double EXTEND_Kd = 0;
 
-        public static final double HIGH_CONE_ROTATIONS = 0.35;
+        public static final double HIGH_CONE_ROTATIONS = 0.25;
     }
 
     public static class ClawConstants {

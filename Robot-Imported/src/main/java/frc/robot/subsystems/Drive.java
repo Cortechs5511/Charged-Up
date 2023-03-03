@@ -209,6 +209,13 @@ public class Drive extends SubsystemBase {
         }
     }
 
+    public double getLeftPower() {
+        return leftLeader.get();
+    }
+
+    public double getRightPower() {
+        return leftLeader.get();
+    }
     /**
      * Sets desired output voltage for drivetrain
      * 
@@ -263,9 +270,10 @@ public class Drive extends SubsystemBase {
     public void periodic() {
         odometry.update(gyro.getRotation2d(), leftEncoder.getPosition(),
                 rightEncoder.getPosition());
-        SmartDashboard.putNumber("Drivetrain/Pitch", gyro.getPitch());
-        SmartDashboard.putNumber("Drivetrain/Yaw", gyro.getYaw());
-        SmartDashboard.putNumber("Drivetrain/Roll", gyro.getRoll());
+        SmartDashboard.putNumber("Drivetrain/Power", getLeftPower());
+        SmartDashboard.putNumber("Drivetrain/Pitch", getPitch());
+        SmartDashboard.putNumber("Drivetrain/Yaw", getYaw());
+        SmartDashboard.putNumber("Drivetrain/Roll", getRoll());
         SmartDashboard.putNumber("Drivetrain/GyroHeadin", gyro.getRotation2d().getDegrees());
         SmartDashboard.putString("Drivetrain/Pose", getPose().toString());
         field.setRobotPose(getPose());

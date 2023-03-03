@@ -71,8 +71,8 @@ public class RobotContainer {
                 //.onTrue(drive.setMaxPower(0.5)).onFalse(drive.setMaxPower(1.0));
 
         new JoystickButton(oi.leftStick, 1)
-        .toggleOnTrue(new AutoAlign(drive));
-        //.toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
+        //.toggleOnTrue(new AutoAlign(drive));
+        .toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
 
         new JoystickButton(oi.rightStick, 1)
         .toggleOnTrue(alignCommand(drive, limelight, 0.0));
