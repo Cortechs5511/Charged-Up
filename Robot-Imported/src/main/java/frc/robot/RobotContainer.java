@@ -79,10 +79,10 @@ public class RobotContainer {
         //.toggleOnTrue(new SequentialCommandGroup(new TurnByAngle(drive, -limelight.getPitch()).andThen(getCommand(drive, limelight, 0.0))));
 
         // Claw commands, open claw, grab cube, grab cone
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).leftBumper().onTrue(new SequentialCommandGroup(new gripperForward(claw).andThen(new extenderReverse(claw))));
-        //new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).leftTrigger().onTrue(new extenderForward(claw));
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).rightBumper().onTrue(new SequentialCommandGroup(new gripperReverse(claw).andThen(new extenderForward(claw))));
-       // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).rightTrigger().onTrue(new extenderReverse(claw));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).leftBumper().onTrue(new gripperForward(claw));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).leftTrigger().onTrue(new extenderForward(claw));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).rightBumper().onTrue(new gripperReverse(claw));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).rightTrigger().onTrue(new extenderReverse(claw));
         
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().onTrue(new scoreHighCone(arm));
     }

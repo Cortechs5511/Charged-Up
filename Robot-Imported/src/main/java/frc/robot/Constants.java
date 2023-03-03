@@ -92,7 +92,11 @@ public final class Constants {
         public static final double ROTATE_Kp = 0;
         public static final double ROTATE_Kd = 0;
 
-        public static final double ROTATE_Kg = 0;
+        public static final double ROTATE_Kg = 2.66;
+        public static final double ROTATE_Ks = 0;
+        public static final double ROTATE_Kv = 0;
+        public static final double ROTATE_Ka = 0;
+
 
 
         public static final double EXTEND_Kp = 0;
