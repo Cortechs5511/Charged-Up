@@ -34,6 +34,7 @@ import frc.robot.commands.arm.setArmPower;
 import frc.robot.commands.arm.stowArm;
 import frc.robot.commands.drive.AutoAlign;
 import frc.robot.commands.drive.Flip;
+import frc.robot.commands.drive.SetMaxPower;
 import frc.robot.commands.drive.SetSpeed;
 import frc.robot.commands.drive.StartAutoAlign;
 import frc.robot.subsystems.*;
@@ -63,7 +64,7 @@ public class RobotContainer {
         configureButtonBindings();
 
         chooser.addOption
-        ("score", 
+        ("Score+Balance", 
         new SequentialCommandGroup(new scoreHighCone(arm).andThen(new openClaw(claw)).andThen(new closeClaw(claw)).andThen
         (new stowArm(arm)).andThen(trajectoryFollower("pathplanner/generatedJSON/Leave+Balance.wpilib.json",drive,true)
         .andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))))));
@@ -71,19 +72,22 @@ public class RobotContainer {
         chooser.addOption("Only auto balance", new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
         Shuffleboard.getTab("Autonomous Selection").add(chooser);
 
+        chooser.addOption("Score+Auto mobility", new SequentialCommandGroup(new scoreHighCone(arm).andThen(new openClaw(claw)).andThen(new closeClaw(claw)).andThen
+        (new stowArm(arm)).andThen(trajectoryFollower("pathplanner/generatedJSON/Auto mobility.wpilib.json", drive, true))));
+
     }
  
     private void configureButtonBindings() {
         new JoystickButton(oi.leftStick, Constants.OIConstants.FLIP_BUTTON).onTrue(new Flip(drive));
-        //new JoystickButton(oi.rightStick, Constants.OIConstants.HALF_SPEED_BUTTON)
-                //.onTrue(drive.setMaxPower(0.5)).onFalse(drive.setMaxPower(1.0));
+        new JoystickButton(oi.rightStick, Constants.OIConstants.HALF_SPEED_BUTTON)
+                .onTrue(new SetMaxPower(drive, 0.5)).onFalse(new SetMaxPower(drive, 1.0));
 
         new JoystickButton(oi.leftStick, 1)
         //.toggleOnTrue(new AutoAlign(drive));
         .toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
 
-        new JoystickButton(oi.rightStick, 1)
-        .toggleOnTrue(alignCommand(drive, limelight, 0.0));
+        //new JoystickButton(oi.rightStick, 1)
+        //.toggleOnTrue(alignCommand(drive, limelight, 0.0));
         //.toggleOnTrue(new SequentialCommandGroup(new TurnByAngle(drive, -limelight.getPitch()).andThen(getCommand(drive, limelight, 0.0))));
 
         // Claw commands, open claw, grab cube, grab cone
@@ -92,10 +96,11 @@ public class RobotContainer {
         // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).b().onTrue(new gripperReverse(claw));
         // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().onTrue(new extenderReverse(claw));
 
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).b().onTrue(new openClaw(claw));
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().onTrue(new closeClaw(claw));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).rightTrigger().onTrue(new openClaw(claw));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).leftTrigger().onTrue(new closeClaw(claw));
         
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().onTrue(new scoreHighCone(arm));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).y().onTrue(new scoreHighCone(arm));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().onTrue(new stowArm(arm));
     }
 
     public Command trajectoryFollower(String filename, Drive drive, boolean reset) {
