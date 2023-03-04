@@ -19,6 +19,8 @@ private final double angle;
 public void execute() {
     if(Math.abs(arm.getArmPosition()) < angle) {
         arm.setPower(-1.5);
+    }else{
+        arm.setPower(0);
     }
 }
 
