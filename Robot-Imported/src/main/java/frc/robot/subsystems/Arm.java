@@ -20,7 +20,7 @@ public class Arm extends SubsystemBase {
     private final RelativeEncoder rightEncoder = createEncoder(rightLeader);
     private final DutyCycleEncoder absoluteEncoder = new DutyCycleEncoder(0);
     //private final RelativeEncoder extenderEncoder = createEncoder(extender);
-    private double maxPower = 1.0;
+    private double maxPower = 0.5;
     
 
     public Arm() {

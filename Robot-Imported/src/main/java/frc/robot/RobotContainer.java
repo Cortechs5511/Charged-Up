@@ -63,7 +63,7 @@ public class RobotContainer {
         configureButtonBindings();
 
         chooser.addOption
-        ("Leave + Auto Balance", 
+        ("score", 
         new SequentialCommandGroup(new scoreHighCone(arm).andThen(new openClaw(claw)).andThen(new closeClaw(claw)).andThen
         (new stowArm(arm)).andThen(trajectoryFollower("pathplanner/generatedJSON/Leave+Balance.wpilib.json",drive,true)
         .andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))))));
