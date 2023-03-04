@@ -102,7 +102,12 @@ public final class Constants {
         public static final double EXTEND_Kp = 0;
         public static final double EXTEND_Kd = 0;
 
-        public static final double HIGH_CONE_ROTATIONS = 0.25;
+        public static final double HIGH_CONE_ROTATIONS = 0.23;
+        public static final double SUBSTATION_ROTATIONS = 0.21;
+        public static final double EXTENDABLE_ROTATIONS = 0.2;
+        public static final double INITIAL_ROTATE = 0.05;
+
+        public static final double AUTON_EXTEND_POS = -0.2;
     }
 
     public static class ClawConstants {

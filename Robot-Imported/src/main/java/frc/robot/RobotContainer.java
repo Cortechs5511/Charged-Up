@@ -26,13 +26,19 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.*;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.arm.armExtend;
+import frc.robot.commands.arm.autonExtend;
+import frc.robot.commands.arm.autonRetract;
 import frc.robot.commands.arm.extendArm;
+import frc.robot.commands.arm.scoreCone;
 import frc.robot.commands.arm.setArmPower;
 import frc.robot.commands.arm.stowArm;
 import frc.robot.commands.drive.AutoAlign;
+import frc.robot.commands.drive.DriveForTime;
 import frc.robot.commands.drive.Flip;
 import frc.robot.commands.drive.SetMaxPower;
 import frc.robot.commands.drive.SetSpeed;
@@ -65,18 +71,22 @@ public class RobotContainer {
 
         chooser.addOption
         ("Score+Balance", 
-        new SequentialCommandGroup(new scoreHighCone(arm).andThen(new openClaw(claw)).andThen(new closeClaw(claw)).andThen
-        (new stowArm(arm)).andThen(trajectoryFollower("pathplanner/generatedJSON/Leave+Balance.wpilib.json",drive,true)
+        (new SequentialCommandGroup(new armExtend(extender, 0.8)).andThen(new closeClaw(claw)).andThen(new scoreHighCone(arm, ArmConstants.HIGH_CONE_ROTATIONS)).andThen(new autonExtend(extender)).andThen(new openClaw(claw)).andThen(new stowArm(arm))
+        .andThen(trajectoryFollower("pathplanner/generatedJSON/Leave+Balance.wpilib.json",drive,true)
         .andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))))));
 
-        chooser.addOption ("Leave+Balance", trajectoryFollower("pathplanner/generatedJSON/Leave+Balance.wpilib.json",drive,true)
+        chooser.addOption ("Leave+Balance (no score)", trajectoryFollower("pathplanner/generatedJSON/Leave+Balance.wpilib.json",drive,true)
         .andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
 
         chooser.addOption("Only auto balance", new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
-        Shuffleboard.getTab("Autonomous Selection").add(chooser);
 
-        chooser.addOption("Score+Auto mobility", new SequentialCommandGroup(new scoreHighCone(arm).andThen(new openClaw(claw)).andThen(new closeClaw(claw)).andThen
-        (new stowArm(arm)).andThen(trajectoryFollower("pathplanner/generatedJSON/Auto mobility.wpilib.json", drive, true))));
+        chooser.addOption("Auto mobility (side auto)", trajectoryFollower("pathplanner/generatedJSON/Auto mobility.wpilib.json", drive, true));
+        //chooser.addOption("Score+Auto mobility", new SequentialCommandGroup(new armExtend(extender, 0.3)).andThen(new scoreHighCone(arm, ArmConstants.INITIAL_ROTATE)).andThen(new closeClaw(claw)).andThen(new scoreHighCone(arm, ArmConstants.EXTENDABLE_ROTATIONS).andThen(new autonExtend(extender)).andThen(new scoreHighCone(arm, ArmConstants.HIGH_CONE_ROTATIONS)).andThen(new DriveForTime(drive, 0.5)).andThen(new openClaw(claw)).andThen(new autonRetract(extender)).andThen
+        //(new stowArm(arm)).andThen(trajectoryFollower("pathplanner/generatedJSON/Auto mobility.wpilib.json", drive, true))));
+
+
+        chooser.addOption("test", (new SequentialCommandGroup(new armExtend(extender, 0.8)).andThen(new closeClaw(claw)).andThen(new scoreHighCone(arm, ArmConstants.HIGH_CONE_ROTATIONS)).andThen(new autonExtend(extender)).andThen(new openClaw(claw)).andThen(new stowArm(arm))));
+        Shuffleboard.getTab("Autonomous Selection").add(chooser);
 
     }
  
@@ -89,7 +99,8 @@ public class RobotContainer {
         //.toggleOnTrue(new AutoAlign(drive));
         .toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
 
-        //new JoystickButton(oi.rightStick, 1)
+        new JoystickButton(oi.rightStick, 1)
+        .toggleOnTrue(new SequentialCommandGroup(new armExtend(extender, 0.8)).andThen(new closeClaw(claw)).andThen(new scoreHighCone(arm, ArmConstants.HIGH_CONE_ROTATIONS)).andThen(new openClaw(claw)).andThen(new stowArm(arm)));
         //.toggleOnTrue(alignCommand(drive, limelight, 0.0));
         //.toggleOnTrue(new SequentialCommandGroup(new TurnByAngle(drive, -limelight.getPitch()).andThen(getCommand(drive, limelight, 0.0))));
 
@@ -102,8 +113,10 @@ public class RobotContainer {
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).rightTrigger().onTrue(new openClaw(claw));
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).leftTrigger().onTrue(new closeClaw(claw));
         
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).y().onTrue(new scoreHighCone(arm));
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().onTrue(new stowArm(arm));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).y().whileTrue(new scoreCone(arm, ArmConstants.HIGH_CONE_ROTATIONS));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().whileTrue(new scoreCone(arm, ArmConstants.SUBSTATION_ROTATIONS));
+
+
     }
 
     public Command trajectoryFollower(String filename, Drive drive, boolean reset) {
