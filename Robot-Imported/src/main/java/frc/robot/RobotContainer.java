@@ -31,6 +31,7 @@ import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.arm.extendArm;
 import frc.robot.commands.arm.setArmPower;
+import frc.robot.commands.arm.stowArm;
 import frc.robot.commands.drive.AutoAlign;
 import frc.robot.commands.drive.Flip;
 import frc.robot.commands.drive.SetSpeed;
@@ -61,12 +62,17 @@ public class RobotContainer {
       //limelight.setDefaultCommand(new LimelightDisplay(limelight));
         configureButtonBindings();
 
-        chooser.addOption("Test auto", trajectoryFollower("pathplanner/generatedJSON/Score 1, Pick 1, Balance.wpilib.json",drive,true));
-        chooser.addOption("idklol", new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
+        chooser.addOption
+        ("Leave + Auto Balance", 
+        new SequentialCommandGroup(new scoreHighCone(arm).andThen(new openClaw(claw)).andThen(new closeClaw(claw)).andThen
+        (new stowArm(arm)).andThen(trajectoryFollower("pathplanner/generatedJSON/Leave+Balance.wpilib.json",drive,true)
+        .andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))))));
+
+        chooser.addOption("Only auto balance", new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
         Shuffleboard.getTab("Autonomous Selection").add(chooser);
 
     }
-
+ 
     private void configureButtonBindings() {
         new JoystickButton(oi.leftStick, Constants.OIConstants.FLIP_BUTTON).onTrue(new Flip(drive));
         //new JoystickButton(oi.rightStick, Constants.OIConstants.HALF_SPEED_BUTTON)
