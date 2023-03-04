@@ -25,6 +25,7 @@ public class Arm extends SubsystemBase {
 
     public Arm() {
         zero();
+        SmartDashboard.putNumber("Arm/Maxpower", 0.5);
         //leftEncoder.setPositionConversionFactor((1/81));
         //rightEncoder.setPositionConversionFactor((1/81));
     }
@@ -106,6 +107,7 @@ public class Arm extends SubsystemBase {
 
     @Override
     public void periodic() {
+        SmartDashboard.getNumber("Arm/Maxpower", maxPower);
        
         if (Constants.DIAGNOSTICS) {
             SmartDashboard.putNumber("Arm/Left Position", getLeftPosition());
