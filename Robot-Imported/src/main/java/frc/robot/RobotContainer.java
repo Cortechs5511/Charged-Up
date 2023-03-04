@@ -69,6 +69,9 @@ public class RobotContainer {
         (new stowArm(arm)).andThen(trajectoryFollower("pathplanner/generatedJSON/Leave+Balance.wpilib.json",drive,true)
         .andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))))));
 
+        chooser.addOption ("Leave+Balance", trajectoryFollower("pathplanner/generatedJSON/Leave+Balance.wpilib.json",drive,true)
+        .andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
+
         chooser.addOption("Only auto balance", new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
         Shuffleboard.getTab("Autonomous Selection").add(chooser);
 
