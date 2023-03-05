@@ -114,8 +114,8 @@ public class RobotContainer {
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).rightTrigger().onTrue(new openClaw(claw));
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).leftTrigger().onTrue(new closeClaw(claw));
         
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).y().whileTrue(new scoreCone(arm, ArmConstants.HIGH_CONE_ROTATIONS));
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().whileTrue(new scoreCone(arm, ArmConstants.SUBSTATION_ROTATIONS));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).y().toggleOnTrue(new scoreCone(arm, ArmConstants.HIGH_CONE_ROTATIONS));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().toggleOnTrue(new scoreCone(arm, ArmConstants.SUBSTATION_ROTATIONS));
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().whileTrue(Commands.run(() -> arm.setPower(-2*Math.cos(arm.getRadians())), arm));
 
 
