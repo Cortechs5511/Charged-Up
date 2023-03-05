@@ -62,7 +62,7 @@ public class Extender extends SubsystemBase {
 
     @Override
     public void periodic() {
-       
+        SmartDashboard.putNumber("Arm/Extension", getExtenderPostion());
         if (Constants.DIAGNOSTICS) {
             SmartDashboard.putNumber("Arm/Extension", getExtenderPostion());
         }

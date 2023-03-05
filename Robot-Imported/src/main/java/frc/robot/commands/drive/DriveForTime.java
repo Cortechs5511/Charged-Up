@@ -2,26 +2,34 @@ package frc.robot.commands.drive;
 
 import frc.robot.OI;
 import frc.robot.subsystems.Drive;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class SetSpeed extends CommandBase {
+public class DriveForTime extends CommandBase {
     @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
     private final Drive drive;
+    private final Timer timer = new Timer();
+    private final double time;
     private final OI oi = OI.getInstance();
 
-    public SetSpeed(Drive subsystem) {
-        drive = subsystem;
-        addRequirements(subsystem);
+    public DriveForTime(Drive drive, double time) {
+        this.drive = drive;
+        this.time = time;
+        addRequirements(drive);
     }
 
     @Override
     public void initialize() {
+        timer.reset();
     }
 
     @Override
     public void execute() {
-        // drive.arcadeDrive(oi.getLeftYDeadband(), oi.getRightXDeadband());
-       drive.setPower(oi.getLeftYDeadband(), oi.getRightYDeadband());
+        if (timer.hasElapsed(time)) {
+            drive.setPower(-0.2, -0.2);
+        } else {
+            drive.setPower(0,0);
+        }
     }
 
     @Override
@@ -31,6 +39,6 @@ public class SetSpeed extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return timer.hasElapsed(time);
     }
 }

@@ -2,8 +2,9 @@ package frc.robot.commands.claw;
 
 import frc.robot.subsystems.Claw;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class openClaw extends CommandBase {
+public class openClaw extends InstantCommand {
     private final Claw claw;
 
     public openClaw(Claw subsystem) {
@@ -12,8 +13,13 @@ public class openClaw extends CommandBase {
     }
 
     @Override
-    public void execute() {
-        claw.setExtender(true);
-        claw.setGripper(false);
+    public void initialize() {
+        claw.setGripper(true);
+        claw.setExtender(false);
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        
     }
 }

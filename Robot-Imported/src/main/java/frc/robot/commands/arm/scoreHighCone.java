@@ -8,16 +8,18 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class scoreHighCone extends CommandBase {
     private final Arm arm;
+    private double angle;
 
-    public scoreHighCone(Arm subsystem) {
-        arm = subsystem;
-        addRequirements(subsystem);
+    public scoreHighCone(Arm arm, double angle) {
+        this.arm = arm;
+        this.angle = angle;
+        addRequirements(arm);
     }
 
     @Override
     public void execute() {
-        if(Math.abs(arm.getArmPosition()) < ArmConstants.HIGH_CONE_ROTATIONS) {
-            arm.setPower(-0.5);
+        if(Math.abs(arm.getArmPosition()) < angle) {
+            arm.setPower(-1.5);
         }
     }
 
@@ -28,10 +30,7 @@ public class scoreHighCone extends CommandBase {
 
     @Override 
     public boolean isFinished() {
-        if (Math.abs(arm.getArmPosition()) >= ArmConstants.HIGH_CONE_ROTATIONS) {
-            return true;
-        } else{
-        return false;
-        }
+         return Math.abs(arm.getArmPosition()) >= angle;
+        
     }
 }

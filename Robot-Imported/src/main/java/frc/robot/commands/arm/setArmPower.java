@@ -23,11 +23,11 @@ public class setArmPower extends CommandBase {
 
     @Override
     public void execute() {
-       // if (oi.getArmPower() != 0){
+       //if (oi.getArmPower() != 0){
         arm.setPower(oi.getArmPower());
-        //} else {
-       // arm.setPower(-0.2*Math.cos(Math.abs(arm.getRadians())));
-    //   }
+     //   } else {
+      //arm.setPower(-2*Math.cos(Math.abs(arm.getRadians())));
+     //  }
         SmartDashboard.putNumber("OI/Arm Power", oi.getArmPower());
         SmartDashboard.putNumber("OI/K", oi.getArmPower()/Math.cos(Math.abs(arm.getRadians())));
     }
