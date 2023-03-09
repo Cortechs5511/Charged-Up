@@ -114,8 +114,9 @@ public class RobotContainer {
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).rightTrigger().onTrue(new openClaw(claw));
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).leftTrigger().onTrue(new closeClaw(claw));
         
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).y().toggleOnTrue(new scoreCone(arm, ArmConstants.HIGH_CONE_ROTATIONS));
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().toggleOnTrue(new scoreCone(arm, ArmConstants.SUBSTATION_ROTATIONS));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).b().onTrue(new scoreCone(arm, ArmConstants.MID_CONE_ROTATIONS, -0.45));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).y().onTrue(new scoreCone(arm, ArmConstants.HIGH_CONE_ROTATIONS, -0.78));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().onTrue(new stowArm(arm));
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().whileTrue(Commands.run(() -> arm.setPower(-2*Math.cos(arm.getRadians())), arm));
 
 
@@ -171,54 +172,10 @@ public class RobotContainer {
 
 
     public Command alignCommand(Drive drive, Limelight limelight, Double sideOffset) {
-        var startingPose = new Pose2d(0,0, new Rotation2d());
         
-
-        if (limelight.hasTargets() == false) {
-            return new InstantCommand();
-        } else {
-            double rotate = limelight.getPitch();
-            double xLL = -limelight.getZ();
-            double yLL = -limelight.getX();
+            limelight.setSideOffset(sideOffset);
             
-            Rotation2d robotFinalToRobotInitial = new Rotation2d(Units.degreesToRadians(rotate));
-
-            Translation2d originFinalToTag = new Translation2d(LimelightConstants.ORIGIN_TO_TAG_FINAL, Units.inchesToMeters(sideOffset));
-
-            Translation2d limelightToTag = new Translation2d(xLL, yLL);
-
-            Translation2d originToLimelight = new Translation2d(
-            LimelightConstants.ORIGIN_TO_LIMELIGHT_X, 
-            LimelightConstants.ORIGIN_TO_LIMELIGHT_Y);
-
-            Translation2d originToTag = limelightToTag.plus(originToLimelight);
-
-            Translation2d finalTranslation = originToTag.minus(originFinalToTag.rotateBy(robotFinalToRobotInitial));
-
-            SmartDashboard.putNumber("Limelight/rotate", -limelight.getPitch());
-            SmartDashboard.putNumber("Limelight/translateX", finalTranslation.getX());
-            SmartDashboard.putNumber("Limelight/translateY", finalTranslation.getX());
-
-
-
-
-            Pose2d endingPose = new Pose2d(finalTranslation.getX(), finalTranslation.getY(), new Rotation2d());
-
-            SmartDashboard.putString("Limelight/Endingpose", endingPose.toString());
-            SmartDashboard.putString("Limelight/Startpose", startingPose.toString());
-
-            var interiorWaypoints = new ArrayList<Translation2d>();
-            interiorWaypoints.add(new Translation2d(endingPose.getX() / 3.0, endingPose.getY() / 3.0));
-            interiorWaypoints.add(new Translation2d(2.0 * endingPose.getX() / 3.0, 2.0 * endingPose.getY() / 3.0));
-
-            TrajectoryConfig config = new TrajectoryConfig(0.5, 0.25);
-            config.setReversed(false);
-            
-            var trajectory = TrajectoryGenerator.generateTrajectory(
-                startingPose,
-                interiorWaypoints,
-                endingPose,
-                config);
+            Trajectory trajectory = limelight.getTrajectory();
 
             drive.reset(trajectory.getInitialPose());
         
@@ -237,7 +194,7 @@ public class RobotContainer {
             return ramseteCommand;
 
         }
-    }
+    
     }
     
 

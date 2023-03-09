@@ -21,7 +21,6 @@ public class TurnByAngle extends CommandBase {
 
     @Override
     public void initialize() {
-        drive.gyroReset();
         drive.reset(new Pose2d());
         turnController.setTolerance(1.0);
         turnController.enableContinuousInput(-180, 180);
@@ -30,7 +29,7 @@ public class TurnByAngle extends CommandBase {
     @Override
     public void execute() {
         turnController.setSetpoint(angle);
-        SmartDashboard.putNumber("Limelight/RobotRotation", drive.getYaw());
+        SmartDashboard.putNumber("Limelight/RobotRotation", drive.getPose().getRotation().getDegrees());
         SmartDashboard.putNumber("Limelight/Turn Setpoint", turnController.getSetpoint());
 
             double output = turnController.calculate(drive.getPose().getRotation().getDegrees());
@@ -39,11 +38,11 @@ public class TurnByAngle extends CommandBase {
             // if to the right of target + same margin as above
             // output -= feed forward
 
-            if (drive.getYaw() < (turnController.getSetpoint()-5)) {
-                output += feedForward;
-            } else if (drive.getYaw() > (turnController.getSetpoint() +5)) {
-                output -= feedForward;
-            }
+            // if (drive.getYaw() < (turnController.getSetpoint()-5)) {
+            //     output += feedForward;
+            // } else if (drive.getYaw() > (turnController.getSetpoint() +5)) {
+            //     output -= feedForward;
+            // }
 
             if (turnController.atSetpoint()) {
                 drive.setPower(0, 0);
@@ -61,10 +60,7 @@ public class TurnByAngle extends CommandBase {
 
     @Override
     public boolean isFinished() {
-            if (turnController.atSetpoint()) {
-                return true;
-            } else{
-                return false;
+            return turnController.atSetpoint();
             }
-        }
+        
 }

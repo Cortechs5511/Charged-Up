@@ -10,19 +10,21 @@ public class scoreCone extends CommandBase {
 private final Arm arm;
 private boolean reachedPosition = false; 
 private final double angle;
-   public scoreCone(Arm arm, double angle) {
+private final double passivePower;
+   public scoreCone(Arm arm, double angle, double passivePower) {
     this.arm = arm;
     this.angle = angle;
+    this.passivePower = passivePower;
     addRequirements(arm);
 }
 
 @Override
 public void execute() {
     if(Math.abs(arm.getArmPosition()) < angle && !reachedPosition) {
-        arm.setPower(-1.5);
+        arm.setPower(-2);
     }else{
         reachedPosition = true;
-        arm.setPower(-2.66*Math.cos(arm.getRadians()));
+        arm.setPower(passivePower);
     }
 }
 

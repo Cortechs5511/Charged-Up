@@ -28,7 +28,7 @@ public class stowArm extends CommandBase {
 
     @Override 
     public boolean isFinished() {
-        if (Math.abs(arm.getArmPosition()) <= 0.05) {
+        if (Math.abs(arm.getArmPosition()) <= 0.01) {
             return true;
         } else{
         return false;

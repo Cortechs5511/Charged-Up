@@ -86,7 +86,7 @@ public final class Constants {
 
         public static final double VOLTAGE_COMPENSATION = 3;
         public static final int CURRENT_LIMIT = 40;
-        public static final double RAMP_RATE = 0.05;
+        public static final double RAMP_RATE = 0.1;
         public static final IdleMode IDLE_MODE = IdleMode.kBrake;
 
         public static final double ROTATE_Kp = 0;
@@ -102,7 +102,8 @@ public final class Constants {
         public static final double EXTEND_Kp = 0;
         public static final double EXTEND_Kd = 0;
 
-        public static final double HIGH_CONE_ROTATIONS = 0.25;
+        public static final double MID_CONE_ROTATIONS = 0.25;
+        public static final double HIGH_CONE_ROTATIONS = 0.28;
         public static final double SUBSTATION_ROTATIONS = 0.24;
         public static final double EXTENDABLE_ROTATIONS = 0.2;
         public static final double INITIAL_ROTATE = 0.05;
