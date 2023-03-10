@@ -16,7 +16,7 @@ public final class Constants {
         public static final int RIGHT_FOLLOWER_ID = 11;
 
         public static final double VOLTAGE_COMPENSATION = 11;
-        public static final IdleMode IDLE_MODE = IdleMode.kBrake;
+        public static final IdleMode IDLE_MODE = IdleMode.kCoast;
         public static final double RAMP_RATE = 0.05;
         public static final int CURRENT_LIMIT = 80;
 
