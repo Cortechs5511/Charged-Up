@@ -7,6 +7,7 @@ import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -34,6 +35,7 @@ public class Drive extends SubsystemBase {
 
     private final AHRS gyro = new AHRS(Port.kMXP);
     private final DifferentialDriveOdometry odometry;
+    private final SimpleMotorFeedforward driveFeedforward = new SimpleMotorFeedforward(DriveConstants.Ks, DriveConstants.Kv, DriveConstants.Ka);
 
     private boolean inverted = false;
 
@@ -63,7 +65,16 @@ public class Drive extends SubsystemBase {
 
     } 
 
+    public void speedDrive(double leftSpeed, double rightSpeed) {
+        double leftVolts = driveFeedforward.calculate(leftSpeed);
+        double rightVolts = driveFeedforward.calculate(rightSpeed);
 
+        setVolts(leftVolts, rightVolts);
+    }
+
+    public void tankDrive(double leftSpeed, double rightSpeed) {
+        differentialDrive.tankDrive(leftSpeed, rightSpeed);
+    }
 
 
     /**

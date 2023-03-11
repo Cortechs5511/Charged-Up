@@ -44,20 +44,14 @@ import frc.robot.commands.drive.Flip;
 import frc.robot.commands.drive.SetMaxPower;
 import frc.robot.commands.drive.SetSpeed;
 import frc.robot.commands.drive.StartAutoAlign;
+import frc.robot.commands.drive.TurnByAngle;
 import frc.robot.subsystems.*;
-import frc.robot.commands.claw.closeClaw;
-import frc.robot.commands.claw.extenderForward;
-import frc.robot.commands.claw.extenderReverse;
-import frc.robot.commands.claw.gripperForward;
-import frc.robot.commands.claw.gripperReverse;
-import frc.robot.commands.claw.openClaw;
 import frc.robot.commands.arm.scoreHighCone;
 
 public class RobotContainer {
     private SendableChooser<Command> chooser = new SendableChooser<>();
 
     private final Drive drive = new Drive();
-    private final Claw claw = new Claw();
     private final Arm arm = new Arm();
     private final Extender extender = new Extender();
     private final Limelight limelight = new Limelight();
@@ -70,11 +64,11 @@ public class RobotContainer {
       //limelight.setDefaultCommand(new LimelightDisplay(limelight));
         configureButtonBindings();
 
-        chooser.addOption
-        ("Score+Balance", 
-        (new SequentialCommandGroup(new armExtend(extender, 0.8)).andThen(new closeClaw(claw)).andThen(new scoreHighCone(arm, ArmConstants.HIGH_CONE_ROTATIONS)).andThen(new autonExtend(extender)).andThen(new openClaw(claw)).andThen(new stowArm(arm))
-        .andThen(trajectoryFollower("pathplanner/generatedJSON/Leave+Balance.wpilib.json",drive,true)
-        .andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))))));
+        // chooser.addOption
+        // ("Score+Balance", 
+        // (new SequentialCommandGroup(new armExtend(extender, 0.8)).andThen(new closeClaw(claw)).andThen(new scoreHighCone(arm, ArmConstants.HIGH_CONE_ROTATIONS)).andThen(new autonExtend(extender)).andThen(new openClaw(claw)).andThen(new stowArm(arm))
+        // .andThen(trajectoryFollower("pathplanner/generatedJSON/Leave+Balance.wpilib.json",drive,true)
+        // .andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))))));
 
         chooser.addOption ("Leave+Balance (no score)", trajectoryFollower("pathplanner/generatedJSON/Leave+Balance.wpilib.json",drive,true)
         .andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
@@ -85,8 +79,6 @@ public class RobotContainer {
         //chooser.addOption("Score+Auto mobility", new SequentialCommandGroup(new armExtend(extender, 0.3)).andThen(new scoreHighCone(arm, ArmConstants.INITIAL_ROTATE)).andThen(new closeClaw(claw)).andThen(new scoreHighCone(arm, ArmConstants.EXTENDABLE_ROTATIONS).andThen(new autonExtend(extender)).andThen(new scoreHighCone(arm, ArmConstants.HIGH_CONE_ROTATIONS)).andThen(new DriveForTime(drive, 0.5)).andThen(new openClaw(claw)).andThen(new autonRetract(extender)).andThen
         //(new stowArm(arm)).andThen(trajectoryFollower("pathplanner/generatedJSON/Auto mobility.wpilib.json", drive, true))));
 
-
-        chooser.addOption("test", (new SequentialCommandGroup(new armExtend(extender, 0.8)).andThen(new closeClaw(claw)).andThen(new scoreHighCone(arm, ArmConstants.HIGH_CONE_ROTATIONS)).andThen(new autonExtend(extender)).andThen(new openClaw(claw)).andThen(new stowArm(arm))));
         Shuffleboard.getTab("Autonomous Selection").add(chooser);
 
     }
@@ -101,7 +93,7 @@ public class RobotContainer {
         .toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
 
         new JoystickButton(oi.rightStick, 1)
-        .toggleOnTrue(new SequentialCommandGroup(new armExtend(extender, 0.8)).andThen(new closeClaw(claw)).andThen(new scoreHighCone(arm, ArmConstants.HIGH_CONE_ROTATIONS)).andThen(new openClaw(claw)).andThen(new stowArm(arm)));
+        .toggleOnTrue(new TurnByAngle(drive, 10));
         //.toggleOnTrue(alignCommand(drive, limelight, 0.0));
         //.toggleOnTrue(new SequentialCommandGroup(new TurnByAngle(drive, -limelight.getPitch()).andThen(getCommand(drive, limelight, 0.0))));
 
@@ -111,13 +103,11 @@ public class RobotContainer {
         // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).b().onTrue(new gripperReverse(claw));
         // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().onTrue(new extenderReverse(claw));
 
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).rightTrigger().onTrue(new openClaw(claw));
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).leftTrigger().onTrue(new closeClaw(claw));
         
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).b().onTrue(new scoreCone(arm, ArmConstants.MID_CONE_ROTATIONS, -0.45));
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).y().onTrue(new scoreCone(arm, ArmConstants.HIGH_CONE_ROTATIONS, -0.78));
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().onTrue(new stowArm(arm));
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().whileTrue(Commands.run(() -> arm.setPower(-2*Math.cos(arm.getRadians())), arm));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().onTrue(new scoreCone(arm, ArmConstants.LOW_CONE_ROTATIONS, -0.25));
 
 
 
@@ -176,6 +166,9 @@ public class RobotContainer {
             limelight.setSideOffset(sideOffset);
             
             Trajectory trajectory = limelight.getTrajectory();
+            
+            limelight.setFlag();
+
 
             drive.reset(trajectory.getInitialPose());
         
@@ -190,7 +183,9 @@ public class RobotContainer {
             new PIDController(DriveConstants.Kp, 0, 0),
             new PIDController(DriveConstants.Kp, 0, 0),
             drive::setVolts, drive);
-//hi
+//hi        
+            limelight.setFlag();
+
             return ramseteCommand;
 
         }

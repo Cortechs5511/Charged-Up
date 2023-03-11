@@ -16,7 +16,7 @@ public final class Constants {
         public static final int RIGHT_FOLLOWER_ID = 11;
 
         public static final double VOLTAGE_COMPENSATION = 11;
-        public static final IdleMode IDLE_MODE = IdleMode.kCoast;
+        public static final IdleMode IDLE_MODE = IdleMode.kBrake;
         public static final double RAMP_RATE = 0.05;
         public static final int CURRENT_LIMIT = 80;
 
@@ -55,6 +55,8 @@ public final class Constants {
         public static final double Kv = 2.9383;
         public static final double Ka = 0.45516;
         public static final double Kp = 0.005668;
+
+        public static final double MAX_VELOCITY = Units.inchesToMeters(13);
     }
 
     public static class OIConstants {
@@ -76,7 +78,7 @@ public final class Constants {
     public static class LimelightConstants {
         public static final double ORIGIN_TO_LIMELIGHT_X = Units.inchesToMeters(2.0);
         public static final double ORIGIN_TO_LIMELIGHT_Y = Units.inchesToMeters(-4.5);
-        public static final double ORIGIN_TO_TAG_FINAL = Units.inchesToMeters(22);
+        public static final double ORIGIN_TO_TAG_FINAL = -Units.inchesToMeters(22);
     }
 
     public static class ArmConstants {
@@ -104,6 +106,8 @@ public final class Constants {
 
         public static final double MID_CONE_ROTATIONS = 0.25;
         public static final double HIGH_CONE_ROTATIONS = 0.28;
+        public static final double LOW_CONE_ROTATIONS = 0.11;
+
         public static final double SUBSTATION_ROTATIONS = 0.24;
         public static final double EXTENDABLE_ROTATIONS = 0.2;
         public static final double INITIAL_ROTATE = 0.05;

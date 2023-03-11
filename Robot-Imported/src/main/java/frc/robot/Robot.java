@@ -23,33 +23,33 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
-        m_visionThread =
-            new Thread(
-                () -> {
-                UsbCamera camera = CameraServer.startAutomaticCapture();
-                camera.setResolution(640, 480);
+        // m_visionThread =
+        //     new Thread(
+        //         () -> {
+        //         UsbCamera camera = CameraServer.startAutomaticCapture();
+        //         camera.setResolution(640, 480);
 
-                CvSink cvSink = CameraServer.getVideo();
-                CvSource outputStream = CameraServer.putVideo("Rectangle", 640, 480);
+        //         CvSink cvSink = CameraServer.getVideo();
+        //         CvSource outputStream = CameraServer.putVideo("Rectangle", 640, 480);
 
-                Mat mat = new Mat();
+        //         Mat mat = new Mat();
 
-                while (!Thread.interrupted()) {
-                    if (cvSink.grabFrame(mat) == 0) {
-                    // Send the output the error.
-                    outputStream.notifyError(cvSink.getError());
-                    // skip the rest of the current iteration
-                    continue;
-                    }
-                    // Put a rectangle on the image
-                    Imgproc.rectangle(
-                        mat, new Point(100, 100), new Point(400, 400), new Scalar(255, 255, 255), 5);
-                    // Give the output stream a new image to display
-                    outputStream.putFrame(mat);
-                }
-            });
-        m_visionThread.setDaemon(true);
-        m_visionThread.start();
+        //         while (!Thread.interrupted()) {
+        //             if (cvSink.grabFrame(mat) == 0) {
+        //             // Send the output the error.
+        //             outputStream.notifyError(cvSink.getError());
+        //             // skip the rest of the current iteration
+        //             continue;
+        //             }
+        //             // Put a rectangle on the image
+        //             Imgproc.rectangle(
+        //                 mat, new Point(100, 100), new Point(400, 400), new Scalar(255, 255, 255), 5);
+        //             // Give the output stream a new image to display
+        //             outputStream.putFrame(mat);
+        //         }
+        //     });
+        // m_visionThread.setDaemon(true);
+        // m_visionThread.start();
         robotContainer = new RobotContainer();
     }
 

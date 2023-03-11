@@ -22,8 +22,9 @@ public class Limelight extends SubsystemBase {
     private final double[] botPose = table.getEntry("botpose_targetspace").getDoubleArray(new double[6]);
     private final double[] tagId = table.getEntry("tid").getDoubleArray(new double[6]);
     private double sideOffset = 0;
+    private static boolean flag = true;
     private Trajectory trajectory = new Trajectory();
-    private Pose2d startingPose = new Pose2d(0,0, new Rotation2d());
+    private Pose2d startingPose = new Pose2d(0,0, new Rotation2d(180));
 
         
     public Limelight() {
@@ -74,7 +75,12 @@ public class Limelight extends SubsystemBase {
     }
 
     public Trajectory getTrajectory() {
-        return trajectory;
+        final Trajectory traj = trajectory;
+        return traj;
+    }
+
+    public void setFlag() {
+        flag = !flag;
     }
 
     @Override
@@ -89,10 +95,10 @@ public class Limelight extends SubsystemBase {
             //SmartDashboard.putNumber("Limelight/Latency", getLatency());
         
 
-        if (hasTargets()) {
+        if (hasTargets() && flag) {
 
                 double rotate = getPitch();
-                double xLL = -getZ();
+                double xLL = getZ();
                 double yLL = -getX();
                 
                 Rotation2d robotFinalToRobotInitial = new Rotation2d(Units.degreesToRadians(rotate));
