@@ -28,7 +28,8 @@ public class Limelight extends SubsystemBase {
 
         
     public Limelight() {
-
+        // setting in picture in picture mode main
+        table.getEntry("stream").setNumber(1);
     }
     public void takeSnapshot() {
         table.getEntry("snapshot").setNumber(1);
