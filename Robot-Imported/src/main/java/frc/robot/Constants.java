@@ -79,10 +79,10 @@ public final class Constants {
 
     public static class ArmConstants {
         public static final int LEFT_ID = 30;
-        public static final int RIGHT_ID = 31;
+        // public static final int RIGHT_ID = 31;
         public static final int EXTENDER_ID = 50;
 
-        public static final double VOLTAGE_COMPENSATION = 3;
+        public static final double VOLTAGE_COMPENSATION = 10;
         public static final int CURRENT_LIMIT = 40;
         public static final double RAMP_RATE = 0.1;
         public static final IdleMode IDLE_MODE = IdleMode.kBrake;
@@ -108,10 +108,14 @@ public final class Constants {
         public static final double EXTENDABLE_ROTATIONS = 0.2;
         public static final double INITIAL_ROTATE = 0.05;
 
+        public static final double HIGH_POWER = -0.08;
+        public static final double MID_POWER = -0.06;
+        public static final double LOW_POWER = -0.02;
+
         public static final double AUTON_EXTEND_POS = -0.2;
     }
 
     public static class ClawConstants {
-        public static final int CLAW_ID = 50;
+        public static final int CLAW_ID = 31;
     }
 }

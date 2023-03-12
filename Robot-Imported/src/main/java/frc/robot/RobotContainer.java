@@ -47,6 +47,7 @@ import frc.robot.commands.drive.StartAutoAlign;
 import frc.robot.commands.drive.TurnByAngle;
 import frc.robot.subsystems.*;
 import frc.robot.commands.arm.scoreHighCone;
+import frc.robot.commands.claw.manipulateClaw;
 
 public class RobotContainer {
     private SendableChooser<Command> chooser = new SendableChooser<>();
@@ -55,12 +56,14 @@ public class RobotContainer {
     private final Arm arm = new Arm();
     private final Extender extender = new Extender();
     private final Limelight limelight = new Limelight();
+    private final Claw claw = new Claw();
     private final OI oi = OI.getInstance();
 
     public RobotContainer() {
         drive.setDefaultCommand(new SetSpeed(drive));
         arm.setDefaultCommand(new setArmPower(arm));
         extender.setDefaultCommand(new extendArm(extender));
+        claw.setDefaultCommand(new manipulateClaw(claw, oi));
       //limelight.setDefaultCommand(new LimelightDisplay(limelight));
         configureButtonBindings();
 
@@ -104,12 +107,12 @@ public class RobotContainer {
         // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().onTrue(new extenderReverse(claw));
 
         
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).b().onTrue(new scoreCone(arm, ArmConstants.MID_CONE_ROTATIONS, -0.45));
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).y().onTrue(new scoreCone(arm, ArmConstants.HIGH_CONE_ROTATIONS, -0.78));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).b().onTrue(new scoreCone(arm, ArmConstants.MID_CONE_ROTATIONS, ArmConstants.MID_POWER));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).y().onTrue(new scoreCone(arm, ArmConstants.HIGH_CONE_ROTATIONS, ArmConstants.HIGH_POWER));
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().onTrue(new stowArm(arm));
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().onTrue(new scoreCone(arm, ArmConstants.LOW_CONE_ROTATIONS, -0.25));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().onTrue(new scoreCone(arm, ArmConstants.LOW_CONE_ROTATIONS, ArmConstants.LOW_POWER));
 
-
+        // Claw commands
 
     }
 
@@ -161,12 +164,11 @@ public class RobotContainer {
 
 
 
-    public Command alignCommand(Drive drive, Limelight limelight, Double sideOffset) {
-        
+    public Command alignCommand(Drive drive, Limelight limelight, Double sideOffset){
+            Trajectory trajectory;
             limelight.setSideOffset(sideOffset);
-            
-            Trajectory trajectory = limelight.getTrajectory();
-            
+            trajectory = limelight.getTrajectory();
+        
             limelight.setFlag();
 
 

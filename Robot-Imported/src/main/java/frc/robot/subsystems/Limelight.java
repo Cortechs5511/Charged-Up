@@ -24,7 +24,7 @@ public class Limelight extends SubsystemBase {
     private double sideOffset = 0;
     private static boolean flag = true;
     private Trajectory trajectory = new Trajectory();
-    private Pose2d startingPose = new Pose2d(0,0, new Rotation2d(180));
+    private Pose2d startingPose = new Pose2d(0,0, new Rotation2d(0));
 
         
     public Limelight() {

@@ -13,11 +13,11 @@ import frc.robot.Constants.ArmConstants;
 
 public class Arm extends SubsystemBase {
     private final CANSparkMax leftLeader = createArmController(ArmConstants.LEFT_ID, false);
-    private final CANSparkMax rightLeader = createArmController(ArmConstants.RIGHT_ID, true);
+    // private final CANSparkMax rightLeader = createArmController(ArmConstants.RIGHT_ID, true);
     //private final CANSparkMax extender = createArmController(ArmConstants.EXTENDER_ID, false);
 
     private final RelativeEncoder leftEncoder = createEncoder(leftLeader);
-    private final RelativeEncoder rightEncoder = createEncoder(rightLeader);
+    // private final RelativeEncoder rightEncoder = createEncoder(rightLeader);
     private final DutyCycleEncoder absoluteEncoder = new DutyCycleEncoder(9);
     //private final RelativeEncoder extenderEncoder = createEncoder(extender);
     private double maxPower = 0.5;
@@ -32,7 +32,7 @@ public class Arm extends SubsystemBase {
     
     public void zero() {
         leftEncoder.setPosition(0);
-        rightEncoder.setPosition(0);
+        // rightEncoder.setPosition(0);
         //absoluteEncoder.setPositionOffset(0.734);
     }
     
@@ -44,15 +44,15 @@ public class Arm extends SubsystemBase {
         return (leftEncoder.getPosition()/81);
     }
 
-    public double getRightPosition() {
-        return (rightEncoder.getPosition()/81);
-    }
+    // public double getRightPosition() {
+    //     return (rightEncoder.getPosition()/81);
+    // }
     public double getRadians() {
         return getArmPosition()*2*Math.PI;
     }
-    public double getRightRadians() {
-        return (2*Math.PI*getRightPosition());
-        }
+    // public double getRightRadians() {
+    //     return (2*Math.PI*getRightPosition());
+    //     }
 
     public double getLeftRadians() {
         return (2*Math.PI*getLeftPosition());
@@ -66,16 +66,16 @@ public class Arm extends SubsystemBase {
         return leftEncoder.getVelocity() ;
     }
 
-    public double getRightVelocity() {
-        return rightEncoder.getVelocity();
-    }
+    // public double getRightVelocity() {
+    //     return rightEncoder.getVelocity();
+    // }
 
     // public double getExtenderVelocity() {
     //     return extenderEncoder.getVelocity();
     // }
 
     public void setPower(double speed) {
-        rightLeader.set(speed * maxPower);
+        // rightLeader.set(speed * maxPower);
         leftLeader.set(speed * maxPower);
     }
 
@@ -111,21 +111,21 @@ public class Arm extends SubsystemBase {
        
         if (Constants.DIAGNOSTICS) {
             SmartDashboard.putNumber("Arm/Left Position", getLeftPosition());
-            SmartDashboard.putNumber("Arm/Right Position", getRightPosition());
-            SmartDashboard.putNumber("Arm/RighRadians", getRightRadians());
+            // SmartDashboard.putNumber("Arm/Right Position", getRightPosition());
+            // SmartDashboard.putNumber("Arm/RighRadians", getRightRadians());
             SmartDashboard.putNumber("Arm/LeftRadians", getLeftRadians());
             SmartDashboard.putNumber("Arm/TRUE Radians", getRadians());
 
             SmartDashboard.putNumber("Arm/Absolute Encoder Value", getArmPosition());
 
             SmartDashboard.putNumber("Arm/Left Velocity", getLeftVelocity());
-            SmartDashboard.putNumber("Arm/Right Velocity", getRightVelocity());
+            // SmartDashboard.putNumber("Arm/Right Velocity", getRightVelocity());
 
             SmartDashboard.putNumber("Arm/Left Temp", leftLeader.getMotorTemperature());
-            SmartDashboard.putNumber("Arm/Right Temp", rightLeader.getMotorTemperature());
+            // SmartDashboard.putNumber("Arm/Right Temp", rightLeader.getMotorTemperature());
 
             SmartDashboard.putNumber("Arm/Left Current", leftLeader.getOutputCurrent());
-            SmartDashboard.putNumber("Arm/Right Current", rightLeader.getOutputCurrent());
+            // SmartDashboard.putNumber("Arm/Right Current", rightLeader.getOutputCurrent());
         }
     }
 }

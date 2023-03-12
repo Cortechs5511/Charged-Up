@@ -23,11 +23,11 @@ import frc.robot.commands.drive.Zero;
 public class Drive extends SubsystemBase {
     private static final double DRIVE_TO_M = 0.0497;
     private static final double DRIVE_TO_V = .01;
-    private final CANSparkMax leftLeader = createDriveController(DriveConstants.LEFT_LEADER_ID, false);
-    private final CANSparkMax leftFollower = createDriveController(DriveConstants.LEFT_FOLLOWER_ID, false);
+    private final CANSparkMax rightLeader = createDriveController(DriveConstants.LEFT_LEADER_ID, true);
+    private final CANSparkMax rightFollower = createDriveController(DriveConstants.LEFT_FOLLOWER_ID, true);
 
-    private final CANSparkMax rightLeader = createDriveController(DriveConstants.RIGHT_LEADER_ID, true);
-    private final CANSparkMax rightFollower = createDriveController(DriveConstants.RIGHT_FOLLOWER_ID, true);
+    private final CANSparkMax leftLeader = createDriveController(DriveConstants.RIGHT_LEADER_ID, false);
+    private final CANSparkMax leftFollower = createDriveController(DriveConstants.RIGHT_FOLLOWER_ID, false);
 
     private final RelativeEncoder leftEncoder = createEncoder(leftFollower);
     private final RelativeEncoder rightEncoder = createEncoder(rightFollower);

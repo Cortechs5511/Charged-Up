@@ -65,6 +65,16 @@ public class OI {
         return power;
     }
 
+    public double leftTrigger() {
+        double power = controller.getLeftTriggerAxis();
+        return power;
+    }
+
+    public double rightTrigger() {
+        double power = controller.getRightTriggerAxis();
+        return power;
+    }
+
     /**
      * Returns the value of left joystick with values within deadband truncated
      *
