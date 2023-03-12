@@ -38,7 +38,6 @@ import frc.robot.commands.arm.scoreCone;
 import frc.robot.commands.arm.setArmPower;
 import frc.robot.commands.arm.stowArm;
 import frc.robot.commands.drive.AutoAlign;
-import frc.robot.commands.drive.DriveForTime;
 import frc.robot.commands.drive.Flip;
 import frc.robot.commands.drive.SetMaxPower;
 import frc.robot.commands.drive.SetSpeed;
@@ -95,8 +94,8 @@ public class RobotContainer {
         //.toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
 
         new JoystickButton(oi.rightStick, 1)
-        //.toggleOnTrue(new TurnByAngle(drive, 10));
-        .toggleOnTrue(new GoToTag().alignCommand(drive, limelight, 0));
+        .toggleOnTrue(new TurnByAngle(drive, 10));
+        //.toggleOnTrue(new GoToTag().alignCommand(drive, limelight, 0));
         //.toggleOnTrue(new SequentialCommandGroup(new TurnByAngle(drive, -limelight.getPitch()).andThen(getCommand(drive, limelight, 0.0))));
 
 
