@@ -35,6 +35,11 @@ public class Limelight extends SubsystemBase {
         table.getEntry("snapshot").setNumber(1);
     }
 
+    public void resetSnapshot() {
+        table.getEntry("snapshot").setNumber(0);
+    }
+
+
     public double getX() {
         //return botPose[0] doesn't even update periodically
         return table.getEntry("botpose_targetspace").getDoubleArray(new double[6])[0];

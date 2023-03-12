@@ -31,7 +31,6 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.arm.armExtend;
 import frc.robot.commands.arm.autonExtend;
 import frc.robot.commands.arm.autonRetract;
 import frc.robot.commands.arm.extendArm;
@@ -45,8 +44,8 @@ import frc.robot.commands.drive.SetMaxPower;
 import frc.robot.commands.drive.SetSpeed;
 import frc.robot.commands.drive.StartAutoAlign;
 import frc.robot.commands.drive.TurnByAngle;
+import frc.robot.commands.drive.Limelight.GoToTag;
 import frc.robot.subsystems.*;
-import frc.robot.commands.arm.scoreHighCone;
 import frc.robot.commands.claw.manipulateClaw;
 
 public class RobotContainer {
@@ -92,19 +91,14 @@ public class RobotContainer {
                 .onTrue(new SetMaxPower(drive, 0.5)).onFalse(new SetMaxPower(drive, 1.0));
 
         new JoystickButton(oi.leftStick, 1)
-        //.toggleOnTrue(new AutoAlign(drive));
-        .toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
+        .toggleOnTrue(new AutoAlign(drive));
+        //.toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
 
         new JoystickButton(oi.rightStick, 1)
-        .toggleOnTrue(new TurnByAngle(drive, 10));
-        //.toggleOnTrue(alignCommand(drive, limelight, 0.0));
+        //.toggleOnTrue(new TurnByAngle(drive, 10));
+        .toggleOnTrue(new GoToTag().alignCommand(drive, limelight, 0));
         //.toggleOnTrue(new SequentialCommandGroup(new TurnByAngle(drive, -limelight.getPitch()).andThen(getCommand(drive, limelight, 0.0))));
 
-        // Claw commands, open claw, grab cube, grab cone
-        // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().onTrue(new gripperForward(claw));
-        // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).b().onTrue(new extenderForward(claw));
-        // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).b().onTrue(new gripperReverse(claw));
-        // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().onTrue(new extenderReverse(claw));
 
         
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).b().onTrue(new scoreCone(arm, ArmConstants.MID_CONE_ROTATIONS, ArmConstants.MID_POWER));
@@ -164,33 +158,34 @@ public class RobotContainer {
 
 
 
-    public Command alignCommand(Drive drive, Limelight limelight, Double sideOffset){
-            Trajectory trajectory;
-            limelight.setSideOffset(sideOffset);
-            trajectory = limelight.getTrajectory();
+//     public Command alignCommand(Drive drive, Limelight limelight, Double sideOffset) {
         
-            limelight.setFlag();
+//             limelight.setSideOffset(sideOffset);
+            
+//             Trajectory trajectory = limelight.getTrajectory();
+            
+//             limelight.setFlag();
 
 
-            drive.reset(trajectory.getInitialPose());
+//             drive.reset(trajectory.getInitialPose());
         
-            // Push the trajectory to Field2d.
-            drive.getField2d().getObject("traj").setTrajectory(trajectory);
+//             // Push the trajectory to Field2d.
+//             //drive.getField2d().getObject("traj").setTrajectory(trajectory);
 
-            RamseteCommand ramseteCommand = new RamseteCommand(trajectory, drive::getPose,
-            new RamseteController(),
-            new SimpleMotorFeedforward(DriveConstants.Ks, DriveConstants.Kv, DriveConstants.Ka),
-            DriveConstants.DRIVE_KINEMATICS, 
-            drive::getWheelSpeeds,
-            new PIDController(DriveConstants.Kp, 0, 0),
-            new PIDController(DriveConstants.Kp, 0, 0),
-            drive::setVolts, drive);
-//hi        
-            limelight.setFlag();
+//             RamseteCommand ramseteCommand = new RamseteCommand(trajectory, drive::getPose,
+//             new RamseteController(),
+//             new SimpleMotorFeedforward(DriveConstants.Ks, DriveConstants.Kv, DriveConstants.Ka),
+//             DriveConstants.DRIVE_KINEMATICS, 
+//             drive::getWheelSpeeds,
+//             new PIDController(DriveConstants.Kp, 0, 0),
+//             new PIDController(DriveConstants.Kp, 0, 0),
+//             drive::setVolts, drive);
+// //hi        
+//             limelight.setFlag();
 
-            return ramseteCommand;
+//             return ramseteCommand;
 
-        }
+//         }
     
     }
     
