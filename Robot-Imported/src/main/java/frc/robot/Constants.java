@@ -84,6 +84,10 @@ public final class Constants {
 
         public static final double VOLTAGE_COMPENSATION = 10;
         public static final int CURRENT_LIMIT = 40;
+        public static final int CLAW_CURRENT_LIMIT = 20;
+        public static final int WINCH_CURRENT_LIMIT = 10;
+
+
         public static final double RAMP_RATE = 0.1;
         public static final IdleMode IDLE_MODE = IdleMode.kBrake;
 

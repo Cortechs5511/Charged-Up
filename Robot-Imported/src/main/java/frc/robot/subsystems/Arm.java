@@ -26,18 +26,16 @@ public class Arm extends SubsystemBase {
     public Arm() {
         zero();
         SmartDashboard.putNumber("Arm/Maxpower", 0.5);
-        //leftEncoder.setPositionConversionFactor((1/81));
-        //rightEncoder.setPositionConversionFactor((1/81));
+
     }
     
     public void zero() {
         leftEncoder.setPosition(0);
-        // rightEncoder.setPosition(0);
-        //absoluteEncoder.setPositionOffset(0.734);
+
     }
     
     public double getArmPosition() {
-        return Math.abs(absoluteEncoder.getAbsolutePosition()-0.735);
+        return Math.abs(absoluteEncoder.getAbsolutePosition()-0.895);
     }
 
     public double getLeftPosition() {

@@ -48,7 +48,7 @@ public class Claw extends SubsystemBase {
         controller.setOpenLoopRampRate(ArmConstants.RAMP_RATE);
         controller.setClosedLoopRampRate(ArmConstants.RAMP_RATE);
 
-        controller.setSmartCurrentLimit(ArmConstants.CURRENT_LIMIT);
+        controller.setSmartCurrentLimit(ArmConstants.CLAW_CURRENT_LIMIT);
         controller.setSecondaryCurrentLimit(100);
 
         controller.setInverted(isInverted);

@@ -43,7 +43,7 @@ import frc.robot.commands.drive.SetMaxPower;
 import frc.robot.commands.drive.SetSpeed;
 import frc.robot.commands.drive.StartAutoAlign;
 import frc.robot.commands.drive.TurnByAngle;
-import frc.robot.commands.drive.Limelight.GoToTag;
+//import frc.robot.commands.drive.Limelight.GoToTag;
 import frc.robot.subsystems.*;
 import frc.robot.commands.claw.manipulateClaw;
 
@@ -95,7 +95,7 @@ public class RobotContainer {
 
         new JoystickButton(oi.rightStick, 1)
         .toggleOnTrue(new TurnByAngle(drive, 10));
-        //.toggleOnTrue(new GoToTag().alignCommand(drive, limelight, 0));
+        //.toggleOnTrue(alignCommand(drive, limelight, 0.0));
         //.toggleOnTrue(new SequentialCommandGroup(new TurnByAngle(drive, -limelight.getPitch()).andThen(getCommand(drive, limelight, 0.0))));
 
 
@@ -157,34 +157,34 @@ public class RobotContainer {
 
 
 
-//     public Command alignCommand(Drive drive, Limelight limelight, Double sideOffset) {
+    public Command alignCommand(Drive drive, Limelight limelight, Double sideOffset) {
         
-//             limelight.setSideOffset(sideOffset);
+            limelight.setSideOffset(sideOffset);
             
-//             Trajectory trajectory = limelight.getTrajectory();
+            final Trajectory trajectory = limelight.getTrajectory();
             
-//             limelight.setFlag();
+            limelight.setFlag();
 
 
-//             drive.reset(trajectory.getInitialPose());
+            drive.reset(trajectory.getInitialPose());
         
-//             // Push the trajectory to Field2d.
-//             //drive.getField2d().getObject("traj").setTrajectory(trajectory);
+            // Push the trajectory to Field2d.
+            //drive.getField2d().getObject("traj").setTrajectory(trajectory);
 
-//             RamseteCommand ramseteCommand = new RamseteCommand(trajectory, drive::getPose,
-//             new RamseteController(),
-//             new SimpleMotorFeedforward(DriveConstants.Ks, DriveConstants.Kv, DriveConstants.Ka),
-//             DriveConstants.DRIVE_KINEMATICS, 
-//             drive::getWheelSpeeds,
-//             new PIDController(DriveConstants.Kp, 0, 0),
-//             new PIDController(DriveConstants.Kp, 0, 0),
-//             drive::setVolts, drive);
-// //hi        
-//             limelight.setFlag();
+            RamseteCommand ramseteCommand = new RamseteCommand(trajectory, drive::getPose,
+            new RamseteController(),
+            new SimpleMotorFeedforward(DriveConstants.Ks, DriveConstants.Kv, DriveConstants.Ka),
+            DriveConstants.DRIVE_KINEMATICS, 
+            drive::getWheelSpeeds,
+            new PIDController(DriveConstants.Kp, 0, 0),
+            new PIDController(DriveConstants.Kp, 0, 0),
+            drive::setVolts, drive);
+//hi        
+            limelight.setFlag();
 
-//             return ramseteCommand;
+            return ramseteCommand;
 
-//         }
+        }
     
     }
     

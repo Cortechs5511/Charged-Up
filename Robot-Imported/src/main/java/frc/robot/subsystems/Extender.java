@@ -34,6 +34,9 @@ public class Extender extends SubsystemBase {
         return extenderEncoder.getVelocity();
     }
 
+    public double getCurrent() {
+        return extender.getOutputCurrent();
+    }
     public void setExtendPower(double power) {
         extender.set(power*maxPower);
     }
@@ -47,7 +50,7 @@ public class Extender extends SubsystemBase {
         controller.setOpenLoopRampRate(ArmConstants.RAMP_RATE);
         controller.setClosedLoopRampRate(ArmConstants.RAMP_RATE);
 
-        controller.setSmartCurrentLimit(ArmConstants.CURRENT_LIMIT);
+        controller.setSmartCurrentLimit(ArmConstants.WINCH_CURRENT_LIMIT);
         controller.setSecondaryCurrentLimit(100);
 
         controller.setInverted(isInverted);
@@ -63,6 +66,7 @@ public class Extender extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Arm/Extension", getExtenderPostion());
+        SmartDashboard.putNumber("Arm/Winch Current", getCurrent());
         if (Constants.DIAGNOSTICS) {
             SmartDashboard.putNumber("Arm/Extension", getExtenderPostion());
         }

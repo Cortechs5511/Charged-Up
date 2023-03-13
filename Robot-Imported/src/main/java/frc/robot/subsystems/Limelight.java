@@ -81,8 +81,7 @@ public class Limelight extends SubsystemBase {
     }
 
     public Trajectory getTrajectory() {
-        final Trajectory traj = trajectory;
-        return traj;
+        return trajectory;
     }
 
     public void setFlag() {
