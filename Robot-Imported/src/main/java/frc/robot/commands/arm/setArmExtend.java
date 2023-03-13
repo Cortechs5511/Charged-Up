@@ -6,18 +6,22 @@ import frc.robot.subsystems.Extender;
 import frc.robot.Constants.ArmConstants;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class autonExtend extends CommandBase {
+public class setArmExtend extends CommandBase {
     private final Extender extender;
+    private double extension;
 
-    public autonExtend(Extender subsystem) {
+    public setArmExtend(Extender subsystem, double extension) {
         extender = subsystem;
+        this.extension = extension;
         addRequirements(subsystem);
     }
 
     @Override
     public void execute() {
-        if(Math.abs(extender.getExtenderPostion()) > ArmConstants.AUTON_EXTEND_POS) {
+        if(Math.abs(extender.getExtenderPostion()) > extension) {
             extender.setExtendPower(-1);
+        } else {
+            extender.setExtendPower(0);
         }
     }
 
@@ -28,11 +32,7 @@ public class autonExtend extends CommandBase {
 
     @Override 
     public boolean isFinished() {
-        if (Math.abs(extender.getExtenderPostion()) <= ArmConstants.AUTON_EXTEND_POS) {
-            return true;
-        } else{
-        return false;
-        }
+        return (extender.getExtenderPostion() >= extension-0.05);
     }
 
 }

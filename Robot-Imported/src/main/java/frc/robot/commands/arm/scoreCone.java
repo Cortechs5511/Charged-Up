@@ -21,7 +21,7 @@ private final double passivePower;
 @Override
 public void execute() {
     if(Math.abs(arm.getArmPosition()) < angle && !reachedPosition) {
-        arm.setPower(-2);
+        arm.setPower(-1);
     }else{
         reachedPosition = true;
         arm.setPower(passivePower);
