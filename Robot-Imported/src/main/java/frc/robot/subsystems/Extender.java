@@ -25,8 +25,12 @@ public class Extender extends SubsystemBase {
     }
     
 
-    public double getExtenderPostion() {
+    public double getExtenderEncoderPosition() {
         return extenderEncoder.getPosition();
+    }
+
+    public double getExtenderPosition() {
+        return (getExtenderEncoderPosition() / 25) * ArmConstants.AVERAGE_PULLEY_DIAMETER * Math.PI;
     }
 
 
@@ -65,10 +69,12 @@ public class Extender extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Arm/Extension", getExtenderPostion());
+        SmartDashboard.putNumber("Arm/Encoder Extension Position", getExtenderEncoderPosition());
+        SmartDashboard.putNumber("Arm/Extension", getExtenderPosition());
         SmartDashboard.putNumber("Arm/Winch Current", getCurrent());
         if (Constants.DIAGNOSTICS) {
-            SmartDashboard.putNumber("Arm/Extension", getExtenderPostion());
+            SmartDashboard.putNumber("Arm/Encoder Extension Position", getExtenderEncoderPosition());
+            SmartDashboard.putNumber("Arm/Extension", getExtenderPosition());
         }
     }
 }

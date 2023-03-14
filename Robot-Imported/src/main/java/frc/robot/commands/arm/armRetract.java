@@ -16,7 +16,7 @@ public class armRetract extends CommandBase {
 
     @Override
     public void execute() {
-        if(Math.abs(extender.getExtenderPostion()) > 0) {
+        if(Math.abs(extender.getExtenderEncoderPosition()) > 0) {
             extender.setExtendPower(1);
         } else {
             extender.setExtendPower(0);
@@ -30,7 +30,7 @@ public class armRetract extends CommandBase {
 
     @Override 
     public boolean isFinished() {
-        if (Math.abs(extender.getExtenderPostion()) <= 0.05) {
+        if (Math.abs(extender.getExtenderEncoderPosition()) <= 0.05) {
             return true;
         } else{
         return false;

@@ -100,10 +100,10 @@ public class RobotContainer {
 
 
         
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).b().onTrue(new scoreCone(arm, ArmConstants.MID_CONE_ROTATIONS, ArmConstants.MID_POWER));
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).y().onTrue(new scoreCone(arm, ArmConstants.HIGH_CONE_ROTATIONS, ArmConstants.HIGH_POWER));
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().onTrue(new stowArm(arm));
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().onTrue(new scoreCone(arm, ArmConstants.LOW_CONE_ROTATIONS, ArmConstants.LOW_POWER));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).y().toggleOnTrue(new scoreCone(extender, arm, ArmConstants.HIGH_CONE_ROTATIONS, ArmConstants.HIGH_POWER, ArmConstants.HIGH_EXTENSION));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).b().toggleOnTrue(new scoreCone(extender, arm, ArmConstants.MID_CONE_ROTATIONS, ArmConstants.MID_POWER, ArmConstants.MID_EXTENSION));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().toggleOnTrue(new scoreCone(extender, arm, ArmConstants.SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER, ArmConstants.SUBSTATION_EXTENSION));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().toggleOnTrue(new scoreCone(extender, arm, ArmConstants.LOW_CONE_ROTATIONS, ArmConstants.LOW_POWER, ArmConstants.LOW_EXTENSION));
 
         // Claw commands
 

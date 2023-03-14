@@ -85,7 +85,7 @@ public final class Constants {
         public static final double VOLTAGE_COMPENSATION = 10;
         public static final int CURRENT_LIMIT = 40;
         public static final int CLAW_CURRENT_LIMIT = 20;
-        public static final int WINCH_CURRENT_LIMIT = 10;
+        public static final int WINCH_CURRENT_LIMIT = 7;
 
 
         public static final double RAMP_RATE = 0.1;
@@ -104,17 +104,30 @@ public final class Constants {
         public static final double EXTEND_Kp = 0;
         public static final double EXTEND_Kd = 0;
 
+        public static final double AVERAGE_PULLEY_DIAMETER = 0.75;
+        
+        public static final double ARM_SCORE_TOLERANCE = 0.005;
+        public static final double EXTENDER_SCORE_TOLERANCE = 0.005;
+        // 0.25 rotations for holding without cone
+        public static final double HIGH_CONE_ROTATIONS = 0.29;
         public static final double MID_CONE_ROTATIONS = 0.25;
-        public static final double HIGH_CONE_ROTATIONS = 0.28;
-        public static final double LOW_CONE_ROTATIONS = 0.11;
+        public static final double LOW_CONE_ROTATIONS = 0.08;
 
-        public static final double SUBSTATION_ROTATIONS = 0.24;
+        public static final double SUBSTATION_ROTATIONS = 0.23;
         public static final double EXTENDABLE_ROTATIONS = 0.2;
         public static final double INITIAL_ROTATE = 0.05;
+        
+        // -0.1 power fully extended without cone
+        public static final double HIGH_POWER = 0.1;
+        public static final double MID_POWER = 0.1;
+        public static final double LOW_POWER = 0.01;
+        public static final double SUBSTATION_POWER = 0;
 
-        public static final double HIGH_POWER = -0.08;
-        public static final double MID_POWER = -0.06;
-        public static final double LOW_POWER = -0.02;
+        // Extension preset constants
+        public static final double HIGH_EXTENSION = 1.0;
+        public static final double MID_EXTENSION = 1.0;
+        public static final double LOW_EXTENSION = 1.0;
+        public static final double SUBSTATION_EXTENSION = 1.0;
 
         public static final double AUTON_EXTEND_POS = -0.2;
     }

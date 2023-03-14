@@ -18,7 +18,7 @@ public class setArmExtend extends CommandBase {
 
     @Override
     public void execute() {
-        if(Math.abs(extender.getExtenderPostion()) > extension) {
+        if(Math.abs(extender.getExtenderEncoderPosition()) > extension) {
             extender.setExtendPower(-1);
         } else {
             extender.setExtendPower(0);
@@ -32,7 +32,7 @@ public class setArmExtend extends CommandBase {
 
     @Override 
     public boolean isFinished() {
-        return (extender.getExtenderPostion() >= extension-0.05);
+        return (extender.getExtenderEncoderPosition() >= extension-0.05);
     }
 
 }
