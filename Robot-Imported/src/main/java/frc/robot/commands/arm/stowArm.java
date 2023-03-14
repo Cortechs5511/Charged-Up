@@ -19,6 +19,7 @@ public class stowArm extends CommandBase {
         if(Math.abs(arm.getArmPosition()) > 0) {
             arm.setPower(0.5);
         }
+
     }
 
     @Override

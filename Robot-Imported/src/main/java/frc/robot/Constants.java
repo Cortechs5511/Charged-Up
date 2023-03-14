@@ -106,12 +106,12 @@ public final class Constants {
 
         public static final double AVERAGE_PULLEY_DIAMETER = 0.75;
         
-        public static final double ARM_SCORE_TOLERANCE = 0.005;
-        public static final double EXTENDER_SCORE_TOLERANCE = 0.005;
-        // 0.25 rotations for holding without cone
-        public static final double HIGH_CONE_ROTATIONS = 0.29;
+        public static final double ARM_SCORE_TOLERANCE = 0.01;
+        public static final double EXTENDER_SCORE_TOLERANCE = 0.1;
+
+        public static final double HIGH_CONE_ROTATIONS = 0.30;
         public static final double MID_CONE_ROTATIONS = 0.25;
-        public static final double LOW_CONE_ROTATIONS = 0.08;
+        public static final double LOW_CONE_ROTATIONS = 0.1;
 
         public static final double SUBSTATION_ROTATIONS = 0.23;
         public static final double EXTENDABLE_ROTATIONS = 0.2;
@@ -124,10 +124,13 @@ public final class Constants {
         public static final double SUBSTATION_POWER = 0;
 
         // Extension preset constants
-        public static final double HIGH_EXTENSION = 1.0;
-        public static final double MID_EXTENSION = 1.0;
-        public static final double LOW_EXTENSION = 1.0;
-        public static final double SUBSTATION_EXTENSION = 1.0;
+        // Max -150
+        public static final double HIGH_EXTENSION = 14.8;
+        public static final double MID_EXTENSION = 8.6;
+        public static final double LOW_EXTENSION = 2.4;
+        public static final double SUBSTATION_EXTENSION = 0.0;
+
+        public static final double ZERO_EXTENSION = 5.6;
 
         public static final double AUTON_EXTEND_POS = -0.2;
     }

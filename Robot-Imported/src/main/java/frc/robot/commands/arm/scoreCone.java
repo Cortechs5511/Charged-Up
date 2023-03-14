@@ -26,7 +26,6 @@ public class scoreCone extends CommandBase {
 
     @Override
     public void initialize() {
-        extender.zero();
     }
 
     @Override
@@ -34,21 +33,22 @@ public class scoreCone extends CommandBase {
         if(Math.abs(arm.getArmPosition()) < angle + ArmConstants.ARM_SCORE_TOLERANCE && Math.abs(arm.getArmPosition()) > angle - ArmConstants.ARM_SCORE_TOLERANCE) {
             arm.setPower(passivePower);
         } else if (Math.abs(arm.getArmPosition()) < angle - ArmConstants.ARM_SCORE_TOLERANCE) {
-            arm.setPower(0.25);
+            arm.setPower(0.8);
         } else if(Math.abs(arm.getArmPosition()) > angle + ArmConstants.ARM_SCORE_TOLERANCE) {
             arm.setPower(-0.25);
         }
         if(Math.abs(extender.getExtenderPosition()) < extension + ArmConstants.EXTENDER_SCORE_TOLERANCE && Math.abs(extender.getExtenderPosition()) > extension - ArmConstants.EXTENDER_SCORE_TOLERANCE) {
             extender.setExtendPower(0);
-        } else if (Math.abs(extender.getExtenderPosition()) < angle - ArmConstants.ARM_SCORE_TOLERANCE) {
-            arm.setPower(0.8);
-        } else if(Math.abs(extender.getExtenderPosition()) > angle + ArmConstants.ARM_SCORE_TOLERANCE) {
-            arm.setPower(-0.8);
+        } else if (Math.abs(extender.getExtenderPosition()) < extension - ArmConstants.ARM_SCORE_TOLERANCE) {
+            extender.setExtendPower(-0.8);
+        } else if(Math.abs(extender.getExtenderPosition()) > extension + ArmConstants.ARM_SCORE_TOLERANCE) {
+            extender.setExtendPower(0.25);
         }
     }
 
     @Override
     public void end(boolean interrupted) {
         arm.setPower(0);
+        extender.setExtendPower(0);
     }
 }

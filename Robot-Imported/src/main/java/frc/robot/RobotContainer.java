@@ -76,7 +76,7 @@ public class RobotContainer {
 
         chooser.addOption("Only auto balance", new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
 
-        chooser.addOption("Auto mobility (side auto)", trajectoryFollower("pathplanner/generatedJSON/Auto mobility.wpilib.json", drive, true));
+        chooser.addOption("Auto mobility (side auto)", trajectoryFollower("pathplanner/generatedJSON/New Auto Mobility.wpilib.json", drive, true));
         //chooser.addOption("Score+Auto mobility", new SequentialCommandGroup(new armExtend(extender, 0.3)).andThen(new scoreHighCone(arm, ArmConstants.INITIAL_ROTATE)).andThen(new closeClaw(claw)).andThen(new scoreHighCone(arm, ArmConstants.EXTENDABLE_ROTATIONS).andThen(new autonExtend(extender)).andThen(new scoreHighCone(arm, ArmConstants.HIGH_CONE_ROTATIONS)).andThen(new DriveForTime(drive, 0.5)).andThen(new openClaw(claw)).andThen(new autonRetract(extender)).andThen
         //(new stowArm(arm)).andThen(trajectoryFollower("pathplanner/generatedJSON/Auto mobility.wpilib.json", drive, true))));
 
@@ -90,8 +90,8 @@ public class RobotContainer {
                 .onTrue(new SetMaxPower(drive, 0.5)).onFalse(new SetMaxPower(drive, 1.0));
 
         new JoystickButton(oi.leftStick, 1)
-        .toggleOnTrue(new AutoAlign(drive));
-        //.toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
+        //.toggleOnTrue(new AutoAlign(drive));
+        .toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
 
         new JoystickButton(oi.rightStick, 1)
         .toggleOnTrue(new TurnByAngle(drive, 10));
