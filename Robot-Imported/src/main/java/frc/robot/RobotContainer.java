@@ -31,12 +31,12 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.arm.setArmExtend;
-import frc.robot.commands.arm.armRetract;
 import frc.robot.commands.arm.extendArm;
+import frc.robot.commands.arm.scoreAuto;
 import frc.robot.commands.arm.scoreCone;
 import frc.robot.commands.arm.setArmPower;
 import frc.robot.commands.arm.stowArm;
+import frc.robot.commands.arm.retractArm;
 import frc.robot.commands.drive.AutoAlign;
 import frc.robot.commands.drive.Flip;
 import frc.robot.commands.drive.SetMaxPower;
@@ -46,6 +46,7 @@ import frc.robot.commands.drive.TurnByAngle;
 //import frc.robot.commands.drive.Limelight.GoToTag;
 import frc.robot.subsystems.*;
 import frc.robot.commands.claw.manipulateClaw;
+import frc.robot.commands.claw.runClawTime;
 
 public class RobotContainer {
     private SendableChooser<Command> chooser = new SendableChooser<>();
@@ -79,6 +80,11 @@ public class RobotContainer {
         chooser.addOption("Auto mobility (side auto)", trajectoryFollower("pathplanner/generatedJSON/New Auto Mobility.wpilib.json", drive, true));
         //chooser.addOption("Score+Auto mobility", new SequentialCommandGroup(new armExtend(extender, 0.3)).andThen(new scoreHighCone(arm, ArmConstants.INITIAL_ROTATE)).andThen(new closeClaw(claw)).andThen(new scoreHighCone(arm, ArmConstants.EXTENDABLE_ROTATIONS).andThen(new autonExtend(extender)).andThen(new scoreHighCone(arm, ArmConstants.HIGH_CONE_ROTATIONS)).andThen(new DriveForTime(drive, 0.5)).andThen(new openClaw(claw)).andThen(new autonRetract(extender)).andThen
         //(new stowArm(arm)).andThen(trajectoryFollower("pathplanner/generatedJSON/Auto mobility.wpilib.json", drive, true))));
+
+        chooser.addOption("Auto mobility + score", new SequentialCommandGroup(new retractArm(extender))
+        .andThen(new scoreAuto(extender, arm, ArmConstants.HIGH_CONE_ROTATIONS, ArmConstants.HIGH_POWER, ArmConstants.MID_EXTENSION))
+        .andThen(new runClawTime(claw, 0.2))
+        .andThen(new stowArm(arm, extender)).andThen(trajectoryFollower("pathplanner/generatedJSON/New Auto Mobility.wpilib.json", drive, true)));
 
         Shuffleboard.getTab("Autonomous Selection").add(chooser);
 

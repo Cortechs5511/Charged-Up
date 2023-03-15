@@ -1,38 +1,52 @@
 package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
-import frc.robot.subsystems.Arm;
 import frc.robot.Constants.ArmConstants;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Extender;
 
 public class stowArm extends CommandBase {
     private final Arm arm;
+    private final Extender extender;
 
-    public stowArm(Arm subsystem) {
-        arm = subsystem;
-        addRequirements(subsystem);
+    public stowArm(Arm arm, Extender extender) {
+        this.arm = arm;
+        this.extender = extender;
+        addRequirements(arm, extender);
+    }
+
+    @Override
+    public void initialize(){
     }
 
     @Override
     public void execute() {
-        if(Math.abs(arm.getArmPosition()) > 0) {
-            arm.setPower(0.5);
+
+        if (Math.abs(arm.getArmPosition()) < 0 - ArmConstants.ARM_SCORE_TOLERANCE) {
+            arm.setPower(0.25);
+        } else if(Math.abs(arm.getArmPosition()) > 0 + ArmConstants.ARM_SCORE_TOLERANCE) {
+            arm.setPower(-0.8);
+        }
+        if (extender.getExtenderPosition() < ArmConstants.ZERO_EXTENSION - ArmConstants.EXTENDER_SCORE_TOLERANCE) {
+            extender.setExtendPower(0.8);
+        } else if(extender.getExtenderPosition() > ArmConstants.ZERO_EXTENSION + ArmConstants.EXTENDER_SCORE_TOLERANCE) {
+            extender.setExtendPower(-0.25);
+        }
         }
 
-    }
 
+    
     @Override
     public void end(boolean interrupted) {
         arm.setPower(0);
+        extender.setExtendPower(0);
     }
 
-    @Override 
+    @Override
     public boolean isFinished() {
-        if (Math.abs(arm.getArmPosition()) <= 0.01) {
-            return true;
-        } else{
-        return false;
-        }
+        return ArmConstants.ZERO_EXTENSION - ArmConstants.EXTENDER_SCORE_TOLERANCE <= extender.getExtenderPosition() 
+        && extender.getExtenderPosition() <= ArmConstants.ZERO_EXTENSION + ArmConstants.EXTENDER_SCORE_TOLERANCE
+        &&  0 - ArmConstants.ARM_SCORE_TOLERANCE <= arm.getArmPosition() 
+        && arm.getArmPosition() <= 0 + ArmConstants.ARM_SCORE_TOLERANCE;
     }
 }

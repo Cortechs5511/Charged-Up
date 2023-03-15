@@ -130,7 +130,7 @@ public final class Constants {
         public static final double LOW_EXTENSION = 2.4;
         public static final double SUBSTATION_EXTENSION = 0.0;
 
-        public static final double ZERO_EXTENSION = 5.6;
+        public static final double ZERO_EXTENSION = 5.4;
 
         public static final double AUTON_EXTEND_POS = -0.2;
     }
