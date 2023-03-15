@@ -77,7 +77,7 @@ public class RobotContainer {
 
         chooser.addOption("Only auto balance", new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
 
-        chooser.addOption("Auto mobility (side auto)", trajectoryFollower("pathplanner/generatedJSON/New Auto Mobility.wpilib.json", drive, true));
+        chooser.addOption("Auto mobility (side auto)", new SequentialCommandGroup(trajectoryFollower("pathplanner/generatedJSON/New Auto Mobility.wpilib.json", drive, true).andThen(Commands.runOnce(() -> drive.setPower(0,0)))));
         //chooser.addOption("Score+Auto mobility", new SequentialCommandGroup(new armExtend(extender, 0.3)).andThen(new scoreHighCone(arm, ArmConstants.INITIAL_ROTATE)).andThen(new closeClaw(claw)).andThen(new scoreHighCone(arm, ArmConstants.EXTENDABLE_ROTATIONS).andThen(new autonExtend(extender)).andThen(new scoreHighCone(arm, ArmConstants.HIGH_CONE_ROTATIONS)).andThen(new DriveForTime(drive, 0.5)).andThen(new openClaw(claw)).andThen(new autonRetract(extender)).andThen
         //(new stowArm(arm)).andThen(trajectoryFollower("pathplanner/generatedJSON/Auto mobility.wpilib.json", drive, true))));
 
@@ -100,8 +100,8 @@ public class RobotContainer {
         .toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
 
         new JoystickButton(oi.rightStick, 1)
-        .toggleOnTrue(new TurnByAngle(drive, 10));
-        //.toggleOnTrue(alignCommand(drive, limelight, 0.0));
+       .toggleOnTrue(new TurnByAngle(drive, 10));
+        //.toggleOnTrue(new GoToTag(drive, limelight, 0));
         //.toggleOnTrue(new SequentialCommandGroup(new TurnByAngle(drive, -limelight.getPitch()).andThen(getCommand(drive, limelight, 0.0))));
 
 
@@ -162,36 +162,5 @@ public class RobotContainer {
     }
 
 
-
-    public Command alignCommand(Drive drive, Limelight limelight, Double sideOffset) {
-        
-            limelight.setSideOffset(sideOffset);
-            
-            final Trajectory trajectory = limelight.getTrajectory();
-            
-            limelight.setFlag();
-
-
-            drive.reset(trajectory.getInitialPose());
-        
-            // Push the trajectory to Field2d.
-            //drive.getField2d().getObject("traj").setTrajectory(trajectory);
-
-            RamseteCommand ramseteCommand = new RamseteCommand(trajectory, drive::getPose,
-            new RamseteController(),
-            new SimpleMotorFeedforward(DriveConstants.Ks, DriveConstants.Kv, DriveConstants.Ka),
-            DriveConstants.DRIVE_KINEMATICS, 
-            drive::getWheelSpeeds,
-            new PIDController(DriveConstants.Kp, 0, 0),
-            new PIDController(DriveConstants.Kp, 0, 0),
-            drive::setVolts, drive);
-//hi        
-            limelight.setFlag();
-
-            return ramseteCommand;
-
-        }
-    
-    }
-    
+}
 

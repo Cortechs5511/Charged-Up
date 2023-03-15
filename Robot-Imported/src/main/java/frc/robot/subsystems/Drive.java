@@ -303,6 +303,10 @@ public class Drive extends SubsystemBase {
             SmartDashboard.putNumber("Drivetrain/Left Current", leftLeader.getOutputCurrent());
             SmartDashboard.putNumber("Drivetrain/Right Current", rightLeader.getOutputCurrent());
 
+            SmartDashboard.putNumber("Drivetrain/Left Volts", leftLeader.getAppliedOutput());
+            SmartDashboard.putNumber("Drivetrain/Right Volts", rightLeader.getAppliedOutput());
+
+
             SmartDashboard.putNumber("Drivetrain/Yaw", gyro.getYaw());
         }
     }

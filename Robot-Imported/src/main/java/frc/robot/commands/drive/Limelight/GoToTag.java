@@ -28,34 +28,78 @@
 // import frc.robot.subsystems.Limelight;
 
 // public class GoToTag extends CommandBase {   
-//     // Drive drive;
-//     // Limelight limelight;
-//     // double sideOffset;
-//     // RamseteController ramseteController = new RamseteController();
+//     Drive drive;
+//     Limelight limelight;
+//     double sideOffset;
+//     RamseteController ramseteController = new RamseteController();
+//     RamseteCommand ramseteCommand;
+//     private Pose2d startingPose = new Pose2d(0,0, new Rotation2d(0));
 
-//     // public GoToTag(Drive drive, Limelight limelight, double sideOffset) {
-//     //     this.limelight = limelight;
-//     //     this.drive = drive;
-//     //     this.sideOffset = sideOffset;
-//     //     addRequirements(drive, limelight);
-//     // }
 
-//     public RamseteCommand alignCommand(Drive drive, Limelight limelight, double sideOffset) {
-//         limelight.setSideOffset(sideOffset);
+//     public GoToTag(Drive drive, Limelight limelight, double sideOffset) {
+//         this.limelight = limelight;
+//         this.drive = drive;
+//         this.sideOffset = sideOffset;
+//         addRequirements(drive, limelight);
+//     }
+
+//     @Override
+//     public void initialize(){
+
+// }
+
+//     @Override
+//     public void execute(){
+
+//         if (limelight.hasTargets()) {
+
+//             double rotate = limelight.getPitch();
+//             double xLL = limelight.getZ();
+//             double yLL = -limelight.getX();
             
-//         Trajectory trajectory = limelight.getTrajectory();
-        
-//         limelight.setFlag();
+//             Rotation2d robotFinalToRobotInitial = new Rotation2d(Units.degreesToRadians(rotate));
+
+//             Translation2d originFinalToTag = new Translation2d(LimelightConstants.ORIGIN_TO_TAG_FINAL, Units.inchesToMeters(sideOffset));
+
+//             Translation2d limelightToTag = new Translation2d(xLL, yLL);
+
+//             Translation2d originToLimelight = new Translation2d(
+//             LimelightConstants.ORIGIN_TO_LIMELIGHT_X, 
+//             LimelightConstants.ORIGIN_TO_LIMELIGHT_Y);
+
+//             Translation2d originToTag = limelightToTag.plus(originToLimelight);
+
+//             Translation2d finalTranslation = originToTag.minus(originFinalToTag.rotateBy(robotFinalToRobotInitial));
+
+//             SmartDashboard.putNumber("Limelight/rotate", -limelight.getPitch());
+//             SmartDashboard.putNumber("Limelight/translateX", finalTranslation.getX());
+//             SmartDashboard.putNumber("Limelight/translateY", finalTranslation.getX());
 
 
-//         drive.reset(trajectory.getInitialPose());
-    
-//         // Push the trajectory to Field2d.
-//         drive.getField2d().getObject("traj").setTrajectory(trajectory);
 
+
+//             Pose2d endingPose = new Pose2d(finalTranslation.getX(), finalTranslation.getY(), new Rotation2d());
+
+//             SmartDashboard.putString("Limelight/Endingpose", endingPose.toString());
+//             SmartDashboard.putString("Limelight/Startpose", startingPose.toString());
+
+//             var interiorWaypoints = new ArrayList<Translation2d>();
+//             interiorWaypoints.add(new Translation2d(endingPose.getX() / 3.0, endingPose.getY() / 3.0));
+//             interiorWaypoints.add(new Translation2d(2.0 * endingPose.getX() / 3.0, 2.0 * endingPose.getY() / 3.0));
+
+//             TrajectoryConfig config = new TrajectoryConfig(0.5, 0.25);
+//             config.setReversed(false);
             
-//             return new RamseteCommand(trajectory, drive::getPose,
-//             new RamseteController(),
+//             Trajectory traj = TrajectoryGenerator.generateTrajectory(
+//                 startingPose,
+//                 interiorWaypoints,
+//                 endingPose,
+//                 config);
+
+
+
+//             ramseteCommand = new RamseteCommand(traj, drive::getPose,
+//             ramseteController,
 //             new SimpleMotorFeedforward(DriveConstants.Ks, DriveConstants.Kv, DriveConstants.Ka),
 //             DriveConstants.DRIVE_KINEMATICS, 
 //             drive::getWheelSpeeds,
@@ -63,8 +107,19 @@
 //             new PIDController(DriveConstants.Kp, 0, 0),
 //             drive::setVolts, drive);
 
+//             ramseteCommand.execute();
+//     }
+//     }
 
 
-        
+//     @Override
+//     public void end(boolean interrupted) {
+//         drive.setPower(0,0);
+
+//     }
+
+//     @Override
+//     public boolean isFinished() {
+//         return ramseteCommand.isFinished();
 //     }
 // }
