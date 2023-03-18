@@ -25,7 +25,7 @@ public class runClawTime extends CommandBase {
         timer.reset();
         timer.start();
         if (!timer.hasElapsed(time)){
-            claw.setClawPower(-1);
+            claw.setClawPower(1);
         } else {
             claw.setClawPower(0);
         }

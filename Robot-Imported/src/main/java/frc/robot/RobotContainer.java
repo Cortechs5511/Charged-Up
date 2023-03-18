@@ -47,6 +47,7 @@ import frc.robot.commands.drive.TurnByAngle;
 import frc.robot.subsystems.*;
 import frc.robot.commands.claw.manipulateClaw;
 import frc.robot.commands.claw.runClawTime;
+import frc.robot.commands.claw.stallClaw;
 
 public class RobotContainer {
     private SendableChooser<Command> chooser = new SendableChooser<>();
@@ -83,8 +84,8 @@ public class RobotContainer {
         //chooser.addOption("Score+Auto mobility", new SequentialCommandGroup(new armExtend(extender, 0.3)).andThen(new scoreHighCone(arm, ArmConstants.INITIAL_ROTATE)).andThen(new closeClaw(claw)).andThen(new scoreHighCone(arm, ArmConstants.EXTENDABLE_ROTATIONS).andThen(new autonExtend(extender)).andThen(new scoreHighCone(arm, ArmConstants.HIGH_CONE_ROTATIONS)).andThen(new DriveForTime(drive, 0.5)).andThen(new openClaw(claw)).andThen(new autonRetract(extender)).andThen
         //(new stowArm(arm)).andThen(trajectoryFollower("pathplanner/generatedJSON/Auto mobility.wpilib.json", drive, true))));
 
-        chooser.addOption("Auto mobility + score", new SequentialCommandGroup(new scoreAuto(extender, arm, ArmConstants.HIGH_CONE_ROTATIONS, ArmConstants.HIGH_POWER, ArmConstants.MID_EXTENSION))
-        .andThen(new runClawTime(claw, 0.2).withTimeout(0.2))
+        chooser.addOption("Auto mobility + score", new SequentialCommandGroup(new retractArm(extender)).andThen(new scoreAuto(extender, arm, ArmConstants.HIGH_CONE_ROTATIONS, ArmConstants.HIGH_POWER, ArmConstants.MID_EXTENSION))
+        .andThen(new runClawTime(claw, 1).withTimeout(1))
         .andThen(new stowArm(arm, extender)).andThen(trajectoryFollower("pathplanner/generatedJSON/New Auto Mobility.wpilib.json", drive, true)));
 
         Shuffleboard.getTab("Autonomous Selection").add(chooser);
@@ -113,6 +114,8 @@ public class RobotContainer {
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().toggleOnTrue(new scoreCone( arm, ArmConstants.LOW_CONE_ROTATIONS, ArmConstants.LOW_POWER));
 
         // Claw commands
+
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).rightBumper().toggleOnTrue(new stallClaw(claw));
 
     }
 

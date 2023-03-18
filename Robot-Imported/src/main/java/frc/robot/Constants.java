@@ -120,7 +120,7 @@ public final class Constants {
         // -0.1 power fully extended without cone
         public static final double HIGH_POWER = 0.1;
         public static final double MID_POWER = 0.1;
-        public static final double LOW_POWER = 0.01;
+        public static final double LOW_POWER = 0.045;
         public static final double SUBSTATION_POWER = 0;
 
         // Extension preset constants

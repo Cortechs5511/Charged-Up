@@ -70,6 +70,7 @@ public class Drive extends SubsystemBase {
         double rightVolts = driveFeedforward.calculate(rightSpeed);
 
         setVolts(leftVolts, rightVolts);
+        differentialDrive.feed();
     }
 
     public void tankDrive(double leftSpeed, double rightSpeed) {
