@@ -17,7 +17,7 @@ public class runClawTime extends CommandBase {
 
     @Override
     public void initialize() {
-        timer.reset();
+        
     }
 
     @Override
