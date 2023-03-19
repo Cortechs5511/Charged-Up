@@ -63,8 +63,9 @@ public class Claw extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Claw/State", getClawPostion());
+        // SmartDashboard.putNumber("Claw/State", getClawPostion());
         if (Constants.DIAGNOSTICS) {
+            SmartDashboard.putNumber("Claw/State", getClawPostion());
             SmartDashboard.putNumber("Claw/State", getClawPostion());
         }
     }

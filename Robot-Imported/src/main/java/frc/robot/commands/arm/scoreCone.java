@@ -33,7 +33,7 @@ public class scoreCone extends CommandBase {
         if(Math.abs(arm.getArmPosition()) < angle + ArmConstants.ARM_SCORE_TOLERANCE && Math.abs(arm.getArmPosition()) > angle - ArmConstants.ARM_SCORE_TOLERANCE) {
             arm.setPower(passivePower);
         } else if (Math.abs(arm.getArmPosition()) < angle - ArmConstants.ARM_SCORE_TOLERANCE) {
-            arm.setPower(0.8);
+            arm.setPower(0.5);
         } else if(Math.abs(arm.getArmPosition()) > angle + ArmConstants.ARM_SCORE_TOLERANCE) {
             arm.setPower(-0.25);
         }

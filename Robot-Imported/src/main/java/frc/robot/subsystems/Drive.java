@@ -280,18 +280,24 @@ public class Drive extends SubsystemBase {
 
     @Override
     public void periodic() {
-        odometry.update(gyro.getRotation2d(), leftEncoder.getPosition(),
-                rightEncoder.getPosition());
-        SmartDashboard.putNumber("Drivetrain/Power", getLeftPower());
-        SmartDashboard.putNumber("Drivetrain/Pitch", getPitch());
-        SmartDashboard.putNumber("Drivetrain/Yaw", getYaw());
-        SmartDashboard.putNumber("Drivetrain/Roll", getRoll());
-        SmartDashboard.putNumber("Drivetrain/GyroHeadin", gyro.getRotation2d().getDegrees());
-        SmartDashboard.putString("Drivetrain/Pose", getPose().toString());
-        field.setRobotPose(getPose());
+        // odometry.update(gyro.getRotation2d(), leftEncoder.getPosition(),
+        //         rightEncoder.getPosition());
+        // SmartDashboard.putNumber("Drivetrain/Power", getLeftPower());
+        // SmartDashboard.putNumber("Drivetrain/Pitch", getPitch());
+        // SmartDashboard.putNumber("Drivetrain/Yaw", getYaw());
+        // SmartDashboard.putNumber("Drivetrain/Roll", getRoll());
+        // SmartDashboard.putNumber("Drivetrain/GyroHeadin", gyro.getRotation2d().getDegrees());
+        // SmartDashboard.putString("Drivetrain/Pose", getPose().toString());
+        
 
 
         if (Constants.DIAGNOSTICS) {
+            SmartDashboard.putNumber("Drivetrain/Power", getLeftPower());
+            SmartDashboard.putNumber("Drivetrain/Pitch", getPitch());
+            SmartDashboard.putNumber("Drivetrain/Yaw", getYaw());
+            SmartDashboard.putNumber("Drivetrain/Roll", getRoll());
+            SmartDashboard.putNumber("Drivetrain/GyroHeadin", gyro.getRotation2d().getDegrees());
+            SmartDashboard.putString("Drivetrain/Pose", getPose().toString());
             SmartDashboard.putNumber("Drivetrain/Left Position", getLeftPosition());
             SmartDashboard.putNumber("Drivetrain/Right Position", getRightPosition());
 

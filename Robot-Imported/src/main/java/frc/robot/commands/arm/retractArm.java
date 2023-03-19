@@ -18,6 +18,7 @@ public class retractArm extends CommandBase {
 
     @Override
     public void initialize() {
+        extender.zero();
     }
 
     @Override

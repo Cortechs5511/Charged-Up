@@ -38,11 +38,12 @@ import frc.robot.commands.arm.setArmPower;
 import frc.robot.commands.arm.stowArm;
 import frc.robot.commands.arm.retractArm;
 import frc.robot.commands.drive.AutoAlign;
+import frc.robot.commands.drive.DriveForTime;
 import frc.robot.commands.drive.Flip;
 import frc.robot.commands.drive.SetMaxPower;
 import frc.robot.commands.drive.SetSpeed;
 import frc.robot.commands.drive.StartAutoAlign;
-import frc.robot.commands.drive.TurnByAngle;
+//import frc.robot.commands.drive.TurnByAngle;
 //import frc.robot.commands.drive.Limelight.GoToTag;
 import frc.robot.subsystems.*;
 import frc.robot.commands.claw.manipulateClaw;
@@ -55,7 +56,7 @@ public class RobotContainer {
     private final Drive drive = new Drive();
     private final Arm arm = new Arm();
     private final Extender extender = new Extender();
-    private final Limelight limelight = new Limelight();
+    //private final Limelight limelight = new Limelight();
     private final Claw claw = new Claw();
     private final OI oi = OI.getInstance();
 
@@ -73,14 +74,15 @@ public class RobotContainer {
         // .andThen(trajectoryFollower("pathplanner/generatedJSON/Leave+Balance.wpilib.json",drive,true)
         // .andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))))));
 
-        chooser.addOption ("Leave+Balance (no score)", trajectoryFollower("pathplanner/generatedJSON/Leave+Balance.wpilib.json",drive,true)
-        .andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
+        chooser.addOption ("Leave+Balance (no score)", new SequentialCommandGroup(new DriveForTime(drive, 3, -0.4)).andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
 
         chooser.addOption("Score+ balance", new SequentialCommandGroup(new retractArm(extender)).andThen(new scoreAuto(extender, arm, ArmConstants.HIGH_CONE_ROTATIONS, ArmConstants.HIGH_POWER, ArmConstants.MID_EXTENSION))
         .andThen(new runClawTime(claw, 0.2).withTimeout(0.2))
         .andThen(new stowArm(arm, extender)).andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
-
-        chooser.addOption("Auto mobility (side auto)", new SequentialCommandGroup(trajectoryFollower("pathplanner/generatedJSON/New Auto Mobility.wpilib.json", drive, true).andThen(Commands.runOnce(() -> drive.setPower(0,0)))));
+        
+        chooser.addOption("Nothing", new InstantCommand());
+        chooser.addOption("Balance", new SequentialCommandGroup(new StartAutoAlign(drive)).andThen(new AutoAlign(drive)));
+        chooser.addOption("Auto mobility", new DriveForTime(drive, 3, 0.2).withTimeout(3));
         //chooser.addOption("Score+Auto mobility", new SequentialCommandGroup(new armExtend(extender, 0.3)).andThen(new scoreHighCone(arm, ArmConstants.INITIAL_ROTATE)).andThen(new closeClaw(claw)).andThen(new scoreHighCone(arm, ArmConstants.EXTENDABLE_ROTATIONS).andThen(new autonExtend(extender)).andThen(new scoreHighCone(arm, ArmConstants.HIGH_CONE_ROTATIONS)).andThen(new DriveForTime(drive, 0.5)).andThen(new openClaw(claw)).andThen(new autonRetract(extender)).andThen
         //(new stowArm(arm)).andThen(trajectoryFollower("pathplanner/generatedJSON/Auto mobility.wpilib.json", drive, true))));
 
@@ -101,8 +103,8 @@ public class RobotContainer {
         //.toggleOnTrue(new AutoAlign(drive));
         .toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
 
-        new JoystickButton(oi.rightStick, 1)
-       .toggleOnTrue(new TurnByAngle(drive, 10));
+       // new JoystickButton(oi.rightStick, 1)
+       //.toggleOnTrue(new TurnByAngle(drive, 10));
         //.toggleOnTrue(new GoToTag(drive, limelight, 0));
         //.toggleOnTrue(new SequentialCommandGroup(new TurnByAngle(drive, -limelight.getPitch()).andThen(getCommand(drive, limelight, 0.0))));
 
@@ -115,7 +117,7 @@ public class RobotContainer {
 
         // Claw commands
 
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).rightBumper().toggleOnTrue(new stallClaw(claw));
+        //new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).rightBumper().toggleOnTrue(new stallClaw(claw));
 
     }
 
@@ -151,10 +153,10 @@ public class RobotContainer {
         
     }
     public void diagnostics() {
-        SmartDashboard.putNumber("leftDistance", drive.getLeftPosition());
-        SmartDashboard.putNumber("rightDistance", drive.getRightPosition());
-        SmartDashboard.putNumber("leftVelocity", drive.getLeftVelocity());
-        SmartDashboard.putNumber("rightVelocity", drive.getRightVelocity());
+        // SmartDashboard.putNumber("leftDistance", drive.getLeftPosition());
+        // SmartDashboard.putNumber("rightDistance", drive.getRightPosition());
+        // SmartDashboard.putNumber("leftVelocity", drive.getLeftVelocity());
+        // SmartDashboard.putNumber("rightVelocity", drive.getRightVelocity());
       }
 
     public Command getAutonomousCommand() {

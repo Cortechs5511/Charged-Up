@@ -21,7 +21,7 @@ public class StartAutoAlign extends CommandBase {
     @Override
     public void execute() {
         if (Math.abs(drive.getPitch()) < Math.abs(DriveConstants.ALIGN_INIT_ANGLE)) {
-            drive.setPower(-0.3, -0.3);          
+            drive.setPower(0.3, 0.3);          
         } else {
         drive.setPower(0,0); }
 

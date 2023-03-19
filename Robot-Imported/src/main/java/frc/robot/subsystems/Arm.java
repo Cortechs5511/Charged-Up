@@ -35,7 +35,7 @@ public class Arm extends SubsystemBase {
     }
     
     public double getArmPosition() {
-        return Math.abs(absoluteEncoder.getAbsolutePosition()-0.895);
+        return Math.abs(absoluteEncoder.getAbsolutePosition()-0.899);
     }
 
     public double getLeftPosition() {
@@ -105,9 +105,11 @@ public class Arm extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.getNumber("Arm/Maxpower", maxPower);
+        // SmartDashboard.getNumber("Arm/Maxpower", maxPower);
        
         if (Constants.DIAGNOSTICS) {
+            SmartDashboard.getNumber("Arm/Maxpower", maxPower);
+
             SmartDashboard.putNumber("Arm/Left Position", getLeftPosition());
             // SmartDashboard.putNumber("Arm/Right Position", getRightPosition());
             // SmartDashboard.putNumber("Arm/RighRadians", getRightRadians());
