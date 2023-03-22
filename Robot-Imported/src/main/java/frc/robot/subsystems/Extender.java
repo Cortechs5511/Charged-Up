@@ -70,7 +70,7 @@ public class Extender extends SubsystemBase {
     @Override
     public void periodic() {
         // SmartDashboard.putNumber("Arm/Encoder Extension Position", getExtenderEncoderPosition());
-        // SmartDashboard.putNumber("Arm/Extension", getExtenderPosition());
+        SmartDashboard.putNumber("Arm/Extension", getExtenderPosition());
         // SmartDashboard.putNumber("Arm/Winch Current", getCurrent());
         if (Constants.DIAGNOSTICS) {
             SmartDashboard.putNumber("Arm/Encoder Extension Position", getExtenderEncoderPosition());
