@@ -26,8 +26,10 @@ public class manipulateClaw extends CommandBase {
         }
         else if (oi.rightTrigger()> 0) {
             claw.setClawPower(-1 * oi.rightTrigger());
-        } else{
+        } else  if (oi.controller.getRightBumper()) {
+            claw.setClawPower(-0.05);
+        } else {
             claw.setClawPower(0);
         }
-    }
+}
 }

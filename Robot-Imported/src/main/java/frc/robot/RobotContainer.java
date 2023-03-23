@@ -36,6 +36,7 @@ import frc.robot.commands.arm.scoreAuto;
 import frc.robot.commands.arm.scoreCone;
 import frc.robot.commands.arm.setArmPower;
 import frc.robot.commands.arm.stowArm;
+import frc.robot.commands.arm.stowExtender;
 import frc.robot.commands.arm.retractArm;
 import frc.robot.commands.drive.AutoAlign;
 import frc.robot.commands.drive.DriveForTime;
@@ -78,7 +79,7 @@ public class RobotContainer {
 
         chooser.addOption("Score+ balance", new SequentialCommandGroup(new retractArm(extender).withTimeout(1)).andThen(new scoreAuto(extender, arm, ArmConstants.HIGH_CONE_ROTATIONS, ArmConstants.HIGH_POWER, ArmConstants.MID_EXTENSION).withTimeout(4))
         .andThen(new runClawTime(claw, 0.2).withTimeout(0.2))
-        .andThen(new stowArm(arm, extender).withTimeout(4)).andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
+        .andThen(new stowExtender(extender)).andThen(new stowArm(arm).withTimeout(4)).andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
         
         chooser.addOption("Nothing", new InstantCommand());
         chooser.addOption("Balance", new SequentialCommandGroup(new StartAutoAlign(drive)).andThen(new AutoAlign(drive)));
@@ -87,8 +88,8 @@ public class RobotContainer {
         //(new stowArm(arm)).andThen(trajectoryFollower("pathplanner/generatedJSON/Auto mobility.wpilib.json", drive, true))));
 
         chooser.addOption("Auto mobility + score", new SequentialCommandGroup(new retractArm(extender).withTimeout(1)).andThen(new scoreAuto(extender, arm, ArmConstants.HIGH_CONE_ROTATIONS, ArmConstants.HIGH_POWER, ArmConstants.MID_EXTENSION).withTimeout(4))
-        .andThen(new runClawTime(claw, 1).withTimeout(1))
-        .andThen(new stowArm(arm, extender).withTimeout(4)).andThen(new DriveForTime(drive, 3, 0.5).withTimeout(3)));
+        .andThen(new runClawTime(claw, 1).withTimeout(1)).andThen(new stowExtender(extender))
+        .andThen(new stowArm(arm).withTimeout(4)).andThen(new DriveForTime(drive, 3, 0.5).withTimeout(3)));
         Shuffleboard.getTab("Autonomous Selection").add(chooser);
 
     }

@@ -7,9 +7,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class stallClaw extends CommandBase {
     private final Claw claw;
+    private final OI oi;
     
-    public stallClaw(Claw claw) {
+    public stallClaw(Claw claw, OI oi) {
         this.claw = claw;
+        this.oi = oi;
         addRequirements(claw);
     }
 
@@ -19,7 +21,11 @@ public class stallClaw extends CommandBase {
 
     @Override
     public void execute() {
+        if (oi.controller.getRightBumper()) {
         claw.setClawPower(-0.05);
+        } else {
+        claw.setClawPower(0);
+        }
     }
 
     @Override

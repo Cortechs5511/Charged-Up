@@ -34,7 +34,7 @@
 //     Limelight limelight;
 //     double sideOffset;
 //     RamseteController ramseteController = new RamseteController();
-//     // LimelightHelpers.LimelightResults llresults = LimelightHelpers.getLatestResults("");
+//     //LimelightHelpers.LimelightResults llresults = LimelightHelpers.getLatestResults("");
 //     RamseteCommand ramseteCommand;
 //     private Pose2d startingPose = new Pose2d(0,0, new Rotation2d(0));
 
@@ -53,7 +53,6 @@
 
 //     @Override
 //     public void execute(){
-
 //         if (limelight.hasTargets()) {
 
 //             double rotate = limelight.getPitch();

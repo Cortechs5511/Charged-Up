@@ -1,5 +1,6 @@
 package frc.robot.commands.arm;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.Arm;
@@ -12,6 +13,7 @@ public class scoreCone extends CommandBase {
     //private final Extender extender;
     private final double angle;
     private final double passivePower;
+    private final PIDController armController = new PIDController(ArmConstants.ROTATE_Kp, 0, ArmConstants.ROTATE_Kd);
     // private final double extension;
     
     public scoreCone(Arm arm, double angle, double passivePower) {
@@ -26,6 +28,8 @@ public class scoreCone extends CommandBase {
 
     @Override
     public void initialize() {
+        armController.setSetpoint(angle);
+        armController.setTolerance(0.01);
     }
 
     @Override
@@ -37,6 +41,13 @@ public class scoreCone extends CommandBase {
         } else if(Math.abs(arm.getArmPosition()) > angle + ArmConstants.ARM_SCORE_TOLERANCE) {
             arm.setPower(-0.25);
         }
+        //else {
+      //      arm.setPower(armController.calculate(arm.getArmPosition()));
+
+        //}
+
+
+        
         // if(Math.abs(extender.getExtenderPosition()) < extension + ArmConstants.EXTENDER_SCORE_TOLERANCE && Math.abs(extender.getExtenderPosition()) > extension - ArmConstants.EXTENDER_SCORE_TOLERANCE) {
         //     extender.setExtendPower(0);
         // } else if (Math.abs(extender.getExtenderPosition()) < extension - ArmConstants.ARM_SCORE_TOLERANCE) {

@@ -89,7 +89,7 @@
 
 //     @Override
 //     public void periodic() {
-//         SmartDashboard.putBoolean("Limelight/HasTargets", hasTargets());++
+//         SmartDashboard.putBoolean("Limelight/HasTargets", hasTargets());
 //             SmartDashboard.putNumber("Limelight/X", getX());
 //             SmartDashboard.putNumber("Limelight/Y", getY());
 //             SmartDashboard.putNumber("Limelight/Z", getZ());
