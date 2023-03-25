@@ -44,6 +44,7 @@ import frc.robot.commands.drive.Flip;
 import frc.robot.commands.drive.SetMaxPower;
 import frc.robot.commands.drive.SetSpeed;
 import frc.robot.commands.drive.StartAutoAlign;
+import frc.robot.commands.drive.goToSubstation;
 //import frc.robot.commands.drive.TurnByAngle;
 //import frc.robot.commands.drive.Limelight.GoToTag;
 import frc.robot.subsystems.*;
@@ -100,8 +101,12 @@ public class RobotContainer {
                 .onTrue(new SetMaxPower(drive, 0.5)).onFalse(new SetMaxPower(drive, 1.0));
 
         new JoystickButton(oi.leftStick, 1)
+        
         //.toggleOnTrue(new AutoAlign(drive));
         .toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
+
+        new JoystickButton(oi.rightStick, 1)
+        .toggleOnTrue(new goToSubstation(drive, claw));
 
        // new JoystickButton(oi.rightStick, 1)
        //.toggleOnTrue(new TurnByAngle(drive, 10));
@@ -110,10 +115,10 @@ public class RobotContainer {
 
 
         
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).y().toggleOnTrue(new scoreCone( arm, ArmConstants.HIGH_CONE_ROTATIONS, ArmConstants.HIGH_POWER));
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).b().toggleOnTrue(new scoreCone( arm, ArmConstants.MID_CONE_ROTATIONS, ArmConstants.MID_POWER));
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().toggleOnTrue(new scoreCone(arm, ArmConstants.SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER));
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().toggleOnTrue(new scoreCone( arm, ArmConstants.LOW_CONE_ROTATIONS, ArmConstants.LOW_POWER));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).y().toggleOnTrue(new scoreCone( arm, extender, ArmConstants.HIGH_CONE_ROTATIONS, ArmConstants.HIGH_POWER, 15));
+        // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).b().toggleOnTrue(new scoreCone( arm, ArmConstants.MID_CONE_ROTATIONS, ArmConstants.MID_POWER));
+        // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().toggleOnTrue(new scoreCone(arm, ArmConstants.SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER));
+        // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().toggleOnTrue(new scoreCone( arm, ArmConstants.LOW_CONE_ROTATIONS, ArmConstants.LOW_POWER));
 
         // Claw commands
 

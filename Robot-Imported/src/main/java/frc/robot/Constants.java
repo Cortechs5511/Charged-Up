@@ -81,6 +81,9 @@ public final class Constants {
         public static final int LEFT_ID = 30;
         // public static final int RIGHT_ID = 31;
         public static final int EXTENDER_ID = 50;
+        public static final int STRING_POT_ID = 0;
+
+        public static final int STRING_POT_RANGE = 27;
 
         public static final double VOLTAGE_COMPENSATION = 10;
         public static final int CURRENT_LIMIT = 40;
@@ -113,7 +116,7 @@ public final class Constants {
         public static final double MID_CONE_ROTATIONS = 0.25;
         public static final double LOW_CONE_ROTATIONS = 0.12;
 
-        public static final double SUBSTATION_ROTATIONS = 0.256;
+        public static final double SUBSTATION_ROTATIONS = 0.245;
         public static final double EXTENDABLE_ROTATIONS = 0.2;
         public static final double INITIAL_ROTATE = 0.05;
         
@@ -121,7 +124,7 @@ public final class Constants {
         public static final double HIGH_POWER = 0.1;
         public static final double MID_POWER = 0.1;
         public static final double LOW_POWER = 0.045;
-        public static final double SUBSTATION_POWER = 0.078;
+        public static final double SUBSTATION_POWER = 0.065;
 
         // Extension preset constants
         // Max -150

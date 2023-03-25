@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
 
@@ -14,7 +15,8 @@ public class Extender extends SubsystemBase {
 
     private final RelativeEncoder extenderEncoder = createEncoder(extender);
     private double maxPower = 1.0;
-    
+
+    AnalogPotentiometer stringPot = new AnalogPotentiometer(ArmConstants.STRING_POT_ID, ArmConstants.STRING_POT_RANGE, 0);
 
     public Extender() {
         zero();
@@ -24,6 +26,24 @@ public class Extender extends SubsystemBase {
         extenderEncoder.setPosition(0);
     }
     
+    public void goToPosition(double power, double target) {
+        // while(stringPot.get() < target || stringPot.get() > target) {
+        //     if(stringPot.get() < target) {
+        //         extender.set(power*maxPower);
+        //     }
+        //     else {
+        //         extender.set(-power*maxPower);
+        //     }
+        // }
+        // extender.set(0);
+
+        if(stringPot.get() < target) {
+            extender.set(power*maxPower);
+        }
+        else {
+            extender.set(-power*maxPower);
+        }
+    }
 
     public double getExtenderEncoderPosition() {
         return extenderEncoder.getPosition();
@@ -33,6 +53,9 @@ public class Extender extends SubsystemBase {
         return (getExtenderEncoderPosition() / 25) * ArmConstants.AVERAGE_PULLEY_DIAMETER * Math.PI;
     }
 
+    public double getStringPotPosition() {
+        return stringPot.get();
+    }
 
     public double getExtenderVelocity() {
         return extenderEncoder.getVelocity();
@@ -71,6 +94,7 @@ public class Extender extends SubsystemBase {
     public void periodic() {
         // SmartDashboard.putNumber("Arm/Encoder Extension Position", getExtenderEncoderPosition());
         SmartDashboard.putNumber("Arm/Extension", getExtenderPosition());
+        // SmartDashboard.putNumber("Arm/String Potentiometer", getStringPotPosition());
         // SmartDashboard.putNumber("Arm/Winch Current", getCurrent());
         if (Constants.DIAGNOSTICS) {
             SmartDashboard.putNumber("Arm/Encoder Extension Position", getExtenderEncoderPosition());
