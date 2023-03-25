@@ -5,12 +5,16 @@
 
 // import javax.xml.crypto.dsig.Transform;
 
+// import org.photonvision.*;
+// import org.photonvision.targeting.PhotonTrackedTarget;
+
 // import edu.wpi.first.math.controller.PIDController;
 // import edu.wpi.first.math.controller.RamseteController;
 // import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 // import edu.wpi.first.math.geometry.Pose2d;
 // import edu.wpi.first.math.geometry.Rotation2d;
 // import edu.wpi.first.math.geometry.Transform2d;
+// import edu.wpi.first.math.geometry.Transform3d;
 // import edu.wpi.first.math.geometry.Translation2d;
 // import edu.wpi.first.math.trajectory.Trajectory;
 // import edu.wpi.first.math.trajectory.TrajectoryConfig;
@@ -27,7 +31,6 @@
 // import frc.robot.Constants.LimelightConstants;
 // import frc.robot.subsystems.Drive;
 // import frc.robot.subsystems.Limelight;
-// import frc.robot.LimelightHelpers;
 
 // public class GoToTag extends CommandBase {   
 //     Drive drive;
@@ -37,6 +40,7 @@
 //     //LimelightHelpers.LimelightResults llresults = LimelightHelpers.getLatestResults("");
 //     RamseteCommand ramseteCommand;
 //     private Pose2d startingPose = new Pose2d(0,0, new Rotation2d(0));
+//     PhotonCamera camera = new PhotonCamera("limeilght");
 
 
 //     public GoToTag(Drive drive, Limelight limelight, double sideOffset) {
@@ -53,20 +57,29 @@
 
 //     @Override
 //     public void execute(){
-//         if (limelight.hasTargets()) {
+//         // if (limelight.hasTargets()) {
 
-//             double rotate = limelight.getPitch();
-//             double xLL = limelight.getZ();
-//             double yLL = -limelight.getX();
+//         //     double rotate = limelight.getPitch();
+//         //     double xLL = limelight.getZ();
+//         //     double yLL = -limelight.getX();
+
 
 //             //1
+//         var result = camera.getLatestResult();
+
+//         if (result.hasTargets()) {
+
+//             PhotonTrackedTarget target = result.getBestTarget();
+//             Transform3d camToTag = target.getBestCameraToTarget();
+//             double yaw = target.getYaw();
+
 //             System.out.print("1");
 
-//             Rotation2d robotFinalToRobotInitial = new Rotation2d(Units.degreesToRadians(rotate));
+//             Rotation2d robotFinalToRobotInitial = new Rotation2d(Units.degreesToRadians(yaw));
 
 //             Translation2d originFinalToTag = new Translation2d(LimelightConstants.ORIGIN_TO_TAG_FINAL, Units.inchesToMeters(sideOffset));
 
-//             Translation2d limelightToTag = new Translation2d(xLL, yLL);
+//             Translation2d limelightToTag = new Translation2d(camToTag.getX(), camToTag.getY());
 
 //             Translation2d originToLimelight = new Translation2d(
 //             LimelightConstants.ORIGIN_TO_LIMELIGHT_X, 
