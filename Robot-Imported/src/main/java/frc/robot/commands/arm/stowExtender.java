@@ -21,15 +21,11 @@ public class stowExtender extends CommandBase {
     public void execute() {
 
 
-        if (extender.getExtenderPosition() < ArmConstants.ZERO_EXTENSION - ArmConstants.EXTENDER_SCORE_TOLERANCE) {
-            extender.setExtendPower(0.8);
-        } else if(extender.getExtenderPosition() > ArmConstants.ZERO_EXTENSION + ArmConstants.EXTENDER_SCORE_TOLERANCE) {
-            extender.setExtendPower(-0.25);
-        }
-        }
+        extender.goToPosition(1, 0);
 
 
-    
+    }
+
     @Override
     public void end(boolean interrupted) {
         extender.setExtendPower(0);
@@ -37,8 +33,8 @@ public class stowExtender extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return ArmConstants.ZERO_EXTENSION - ArmConstants.EXTENDER_SCORE_TOLERANCE <= extender.getExtenderPosition() 
-        && extender.getExtenderPosition() <= ArmConstants.ZERO_EXTENSION + ArmConstants.EXTENDER_SCORE_TOLERANCE;
+        return ArmConstants.ZERO_EXTENSION - ArmConstants.EXTENDER_SCORE_TOLERANCE <= extender.getStringPotPosition()
+        && extender.getStringPotPosition() <= ArmConstants.ZERO_EXTENSION + ArmConstants.EXTENDER_SCORE_TOLERANCE;
 
     }
 

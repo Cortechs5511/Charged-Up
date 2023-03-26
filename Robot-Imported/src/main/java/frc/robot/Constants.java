@@ -119,6 +119,8 @@ public final class Constants {
         public static final double SUBSTATION_ROTATIONS = 0.245;
         public static final double EXTENDABLE_ROTATIONS = 0.2;
         public static final double INITIAL_ROTATE = 0.05;
+        public static final double STOW_ROTATIONS = 0.066;
+
         
         // -0.1 power fully extended without cone
         public static final double HIGH_POWER = 0.1;
@@ -127,13 +129,14 @@ public final class Constants {
         public static final double SUBSTATION_POWER = 0.065;
 
         // Extension preset constants
-        // Max -150
-        public static final double HIGH_EXTENSION = 14.8+5.4-3.5;
-        public static final double MID_EXTENSION = 8.6+5.4-3.5;
+        // Max 27
+        public static final double HIGH_EXTENSION = 17.83;
+        public static final double MID_EXTENSION = 15;
         public static final double LOW_EXTENSION = 2.4;
-        public static final double SUBSTATION_EXTENSION = 3.5;
+        public static final double SUBSTATION_EXTENSION = 0;
 
-        public static final double ZERO_EXTENSION = 0.65;
+        public static final double ZERO_EXTENSION = 0;
+
 
 
         public static final double AUTON_EXTEND_POS = -0.2;

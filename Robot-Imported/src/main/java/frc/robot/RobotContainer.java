@@ -46,7 +46,7 @@ import frc.robot.commands.drive.SetSpeed;
 import frc.robot.commands.drive.StartAutoAlign;
 import frc.robot.commands.drive.goToSubstation;
 //import frc.robot.commands.drive.TurnByAngle;
-//import frc.robot.commands.drive.Limelight.GoToTag;
+import frc.robot.commands.drive.Limelight.GoToTag;
 import frc.robot.subsystems.*;
 import frc.robot.commands.claw.manipulateClaw;
 import frc.robot.commands.claw.runClawTime;
@@ -58,7 +58,7 @@ public class RobotContainer {
     private final Drive drive = new Drive();
     private final Arm arm = new Arm();
     private final Extender extender = new Extender();
-    //private final Limelight limelight = new Limelight();
+    private final Limelight limelight = new Limelight();
     private final Claw claw = new Claw();
     private final OI oi = OI.getInstance();
 
@@ -80,7 +80,7 @@ public class RobotContainer {
 
         chooser.addOption("Score+ balance", new SequentialCommandGroup(new retractArm(extender).withTimeout(1)).andThen(new scoreAuto(extender, arm, ArmConstants.HIGH_CONE_ROTATIONS, ArmConstants.HIGH_POWER, ArmConstants.MID_EXTENSION).withTimeout(4))
         .andThen(new runClawTime(claw, 0.2).withTimeout(0.2))
-        .andThen(new stowExtender(extender)).andThen(new stowArm(arm).withTimeout(4)).andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
+        .andThen(new stowArm(arm,extender).withTimeout(4)).andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
         
         chooser.addOption("Nothing", new InstantCommand());
         chooser.addOption("Balance", new SequentialCommandGroup(new StartAutoAlign(drive)).andThen(new AutoAlign(drive)));
@@ -89,8 +89,8 @@ public class RobotContainer {
         //(new stowArm(arm)).andThen(trajectoryFollower("pathplanner/generatedJSON/Auto mobility.wpilib.json", drive, true))));
 
         chooser.addOption("Auto mobility + score", new SequentialCommandGroup(new retractArm(extender).withTimeout(1)).andThen(new scoreAuto(extender, arm, ArmConstants.HIGH_CONE_ROTATIONS, ArmConstants.HIGH_POWER, ArmConstants.MID_EXTENSION).withTimeout(4))
-        .andThen(new runClawTime(claw, 1).withTimeout(1)).andThen(new stowExtender(extender))
-        .andThen(new stowArm(arm).withTimeout(4)).andThen(new DriveForTime(drive, 3, 0.5).withTimeout(3)));
+        .andThen(new runClawTime(claw, 1).withTimeout(1))
+        .andThen(new stowArm(arm,extender).withTimeout(4)).andThen(new DriveForTime(drive, 3, 0.5).withTimeout(3)));
         Shuffleboard.getTab("Autonomous Selection").add(chooser);
 
     }
@@ -107,18 +107,19 @@ public class RobotContainer {
 
         new JoystickButton(oi.rightStick, 1)
         .toggleOnTrue(new goToSubstation(drive, claw));
+        //.toggleOnTrue(new GoToTag(drive, limelight, 0));
 
-       // new JoystickButton(oi.rightStick, 1)
+       //new JoystickButton(oi.rightStick, 1)
        //.toggleOnTrue(new TurnByAngle(drive, 10));
         //.toggleOnTrue(new GoToTag(drive, limelight, 0));
         //.toggleOnTrue(new SequentialCommandGroup(new TurnByAngle(drive, -limelight.getPitch()).andThen(getCommand(drive, limelight, 0.0))));
 
 
         
-        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).y().toggleOnTrue(new scoreCone( arm, extender, ArmConstants.HIGH_CONE_ROTATIONS, ArmConstants.HIGH_POWER, 15));
-        // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).b().toggleOnTrue(new scoreCone( arm, ArmConstants.MID_CONE_ROTATIONS, ArmConstants.MID_POWER));
-        // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().toggleOnTrue(new scoreCone(arm, ArmConstants.SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER));
-        // new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().toggleOnTrue(new scoreCone( arm, ArmConstants.LOW_CONE_ROTATIONS, ArmConstants.LOW_POWER));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).y().toggleOnTrue(new scoreCone(arm, extender, ArmConstants.HIGH_CONE_ROTATIONS, ArmConstants.HIGH_POWER, ArmConstants.HIGH_EXTENSION));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).b().toggleOnTrue(new scoreCone(arm, extender, ArmConstants.MID_CONE_ROTATIONS, ArmConstants.MID_POWER, ArmConstants.MID_EXTENSION));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).x().toggleOnTrue(new scoreCone(arm, extender, ArmConstants.SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER, ArmConstants.SUBSTATION_EXTENSION));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).a().toggleOnTrue(new scoreCone(arm, extender, ArmConstants.LOW_CONE_ROTATIONS, ArmConstants.LOW_POWER, ArmConstants.LOW_EXTENSION));
 
         // Claw commands
 

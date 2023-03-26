@@ -12,6 +12,7 @@ import frc.robot.Constants.ArmConstants;
 
 public class Extender extends SubsystemBase {
     private final CANSparkMax extender = createArmController(ArmConstants.EXTENDER_ID, false);
+    private static double stringPotOffset;
 
     private final RelativeEncoder extenderEncoder = createEncoder(extender);
     private double maxPower = 1.0;
@@ -40,8 +41,10 @@ public class Extender extends SubsystemBase {
         if(stringPot.get() < target) {
             extender.set(power*maxPower);
         }
-        else {
+        else if (stringPot.get() > target) {
             extender.set(-power*maxPower);
+        } else {
+            extender.set(0);
         }
     }
 
@@ -49,12 +52,19 @@ public class Extender extends SubsystemBase {
         return extenderEncoder.getPosition();
     }
 
+    public void setOffset(double offset) {
+        stringPotOffset = offset;
+    }
+
+    public double getOffset() {
+        return stringPotOffset;
+    }
     public double getExtenderPosition() {
         return (getExtenderEncoderPosition() / 25) * ArmConstants.AVERAGE_PULLEY_DIAMETER * Math.PI;
     }
 
     public double getStringPotPosition() {
-        return stringPot.get();
+        return Math.abs(stringPot.get());
     }
 
     public double getExtenderVelocity() {
@@ -93,7 +103,8 @@ public class Extender extends SubsystemBase {
     @Override
     public void periodic() {
         // SmartDashboard.putNumber("Arm/Encoder Extension Position", getExtenderEncoderPosition());
-        SmartDashboard.putNumber("Arm/Extension", getExtenderPosition());
+        SmartDashboard.putNumber("Arm/Extension", getStringPotPosition());
+        SmartDashboard.putNumber("Arm/Offset", getOffset());
         // SmartDashboard.putNumber("Arm/String Potentiometer", getStringPotPosition());
         // SmartDashboard.putNumber("Arm/Winch Current", getCurrent());
         if (Constants.DIAGNOSTICS) {

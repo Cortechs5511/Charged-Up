@@ -7,11 +7,13 @@ import frc.robot.subsystems.Extender;
 
 public class stowArm extends CommandBase {
     private final Arm arm;
+    private final Extender extender;
 
 
-    public stowArm(Arm arm) {
+    public stowArm(Arm arm, Extender extender) {
         this.arm = arm;
-        addRequirements(arm);
+        this.extender = extender;
+        addRequirements(arm, extender);
     }
 
     @Override
@@ -21,17 +23,12 @@ public class stowArm extends CommandBase {
     @Override
     public void execute() {
 
-        if (Math.abs(arm.getArmPosition()) < 0 - ArmConstants.ARM_SCORE_TOLERANCE) {
+        if (Math.abs(arm.getArmPosition()) < ArmConstants.STOW_ROTATIONS - ArmConstants.ARM_SCORE_TOLERANCE) {
             arm.setPower(0.25);
-        } else if(Math.abs(arm.getArmPosition()) > 0 + ArmConstants.ARM_SCORE_TOLERANCE) {
-            arm.setPower(-0.8);
+        } else if(Math.abs(arm.getArmPosition()) > ArmConstants.STOW_ROTATIONS + ArmConstants.ARM_SCORE_TOLERANCE) {
+            arm.setPower(-0.3);
         }
-        // if (extender.getExtenderPosition() < ArmConstants.ZERO_EXTENSION - ArmConstants.EXTENDER_SCORE_TOLERANCE) {
-        //     extender.setExtendPower(0.8);
-        // } else if(extender.getExtenderPosition() > ArmConstants.ZERO_EXTENSION + ArmConstants.EXTENDER_SCORE_TOLERANCE) {
-        //     extender.setExtendPower(-0.25);
-        // }
-        // }
+        extender.goToPosition(0.8, 0);
         }
 
     
@@ -42,11 +39,11 @@ public class stowArm extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return //ArmConstants.ZERO_EXTENSION - ArmConstants.EXTENDER_SCORE_TOLERANCE <= extender.getExtenderPosition() 
-        // && extender.getExtenderPosition() <= ArmConstants.ZERO_EXTENSION + ArmConstants.EXTENDER_SCORE_TOLERANCE
-        // && 
-        0 - ArmConstants.ARM_SCORE_TOLERANCE <= arm.getArmPosition() 
-        && arm.getArmPosition() <= 0 + ArmConstants.ARM_SCORE_TOLERANCE;
+        return ArmConstants.ZERO_EXTENSION - ArmConstants.EXTENDER_SCORE_TOLERANCE <= extender.getStringPotPosition() 
+        && extender.getStringPotPosition() <= ArmConstants.ZERO_EXTENSION + ArmConstants.EXTENDER_SCORE_TOLERANCE
+        && 
+        ArmConstants.STOW_ROTATIONS - ArmConstants.ARM_SCORE_TOLERANCE <= arm.getArmPosition() 
+        && arm.getArmPosition() <= ArmConstants.STOW_ROTATIONS + ArmConstants.ARM_SCORE_TOLERANCE;
     }
 }
 

@@ -37,13 +37,7 @@ public class scoreAuto extends CommandBase {
         } else if(Math.abs(arm.getArmPosition()) > angle + ArmConstants.ARM_SCORE_TOLERANCE) {
             arm.setPower(-0.25);
         }
-        if(Math.abs(extender.getExtenderPosition()) < extension + ArmConstants.EXTENDER_SCORE_TOLERANCE && Math.abs(extender.getExtenderPosition()) > extension - ArmConstants.EXTENDER_SCORE_TOLERANCE) {
-            extender.setExtendPower(0);
-        } else if (Math.abs(extender.getExtenderPosition()) < extension - ArmConstants.ARM_SCORE_TOLERANCE) {
-            extender.setExtendPower(-0.8);
-        } else if(Math.abs(extender.getExtenderPosition()) > extension + ArmConstants.ARM_SCORE_TOLERANCE) {
-            extender.setExtendPower(0.25);
-        }
+        extender.goToPosition(0.8, extension);
     }
 
     @Override
@@ -54,8 +48,8 @@ public class scoreAuto extends CommandBase {
 
     @Override 
     public boolean isFinished() {
-        return extension - ArmConstants.EXTENDER_SCORE_TOLERANCE <= Math.abs(extender.getExtenderPosition())
-        && Math.abs(extender.getExtenderPosition()) <= extension + ArmConstants.EXTENDER_SCORE_TOLERANCE
+        return extension - ArmConstants.EXTENDER_SCORE_TOLERANCE <= extender.getStringPotPosition()
+        && extender.getStringPotPosition() <= extension + ArmConstants.EXTENDER_SCORE_TOLERANCE
         &&  angle - ArmConstants.ARM_SCORE_TOLERANCE <= arm.getArmPosition() 
         && arm.getArmPosition() <= angle + ArmConstants.ARM_SCORE_TOLERANCE;
     }
