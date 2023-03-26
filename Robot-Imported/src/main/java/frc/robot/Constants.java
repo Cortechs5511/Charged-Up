@@ -83,7 +83,7 @@ public final class Constants {
         public static final int EXTENDER_ID = 50;
         public static final int STRING_POT_ID = 0;
 
-        public static final int STRING_POT_RANGE = 27;
+        public static final int STRING_POT_RANGE = 100;
 
         public static final double VOLTAGE_COMPENSATION = 10;
         public static final int CURRENT_LIMIT = 40;

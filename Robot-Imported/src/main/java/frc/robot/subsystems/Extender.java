@@ -30,7 +30,7 @@ public class Extender extends SubsystemBase {
     public void goToPosition(double power, double target) {
         // while(stringPot.get() < target || stringPot.get() > target) {
         //     if(stringPot.get() < target) {
-        //         extender.set(power*maxPower);
+        //         exter.set(power*maxPower);
         //     }
         //     else {
         //         extender.set(-power*maxPower);
@@ -103,13 +103,13 @@ public class Extender extends SubsystemBase {
     @Override
     public void periodic() {
         // SmartDashboard.putNumber("Arm/Encoder Extension Position", getExtenderEncoderPosition());
-        SmartDashboard.putNumber("Arm/Extension", getStringPotPosition());
+        SmartDashboard.putNumber("Arm/String Extension", getStringPotPosition());
         SmartDashboard.putNumber("Arm/Offset", getOffset());
         // SmartDashboard.putNumber("Arm/String Potentiometer", getStringPotPosition());
         // SmartDashboard.putNumber("Arm/Winch Current", getCurrent());
         if (Constants.DIAGNOSTICS) {
             SmartDashboard.putNumber("Arm/Encoder Extension Position", getExtenderEncoderPosition());
-            SmartDashboard.putNumber("Arm/Extension", getExtenderPosition());
+            SmartDashboard.putNumber("Arm/String Extension", getStringPotPosition());
             SmartDashboard.putNumber("Arm/Winch Current", getCurrent());
             SmartDashboard.putNumber("Arm/Encoder Extension Position", getExtenderEncoderPosition());
             SmartDashboard.putNumber("Arm/Extension", getExtenderPosition());
