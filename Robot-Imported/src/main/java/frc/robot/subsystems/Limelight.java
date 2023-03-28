@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LimelightConstants;
 
@@ -24,6 +25,8 @@ public class Limelight extends SubsystemBase {
     private double sideOffset = 0;
     private static boolean flag = true;
     private static Trajectory trajectory = new Trajectory();
+    private Pose2d startingPose = new Pose2d(0,0, new Rotation2d(0));
+
 
         
     public Limelight() {
@@ -85,6 +88,74 @@ public class Limelight extends SubsystemBase {
 
     public void setTrajectory(Trajectory traj) {
         trajectory = traj;
+    }
+
+    public void GoToTag(double sideOffset) {
+        if (hasTargets()) {
+
+            double rotate = getPitch();
+            double xLL = getZ();
+            double yLL = -getX();
+
+
+            //1
+
+
+            System.out.print("1");
+
+            Rotation2d robotFinalToRobotInitial = new Rotation2d(Units.degreesToRadians(rotate));
+
+            Translation2d originFinalToTag = new Translation2d(LimelightConstants.ORIGIN_TO_TAG_FINAL, Units.inchesToMeters(sideOffset));
+
+            Translation2d limelightToTag = new Translation2d(xLL, yLL);
+
+            Translation2d originToLimelight = new Translation2d(
+            LimelightConstants.ORIGIN_TO_LIMELIGHT_X, 
+            LimelightConstants.ORIGIN_TO_LIMELIGHT_Y);
+
+            Translation2d originToTag = limelightToTag.plus(originToLimelight);
+
+            Translation2d finalTranslation = originToTag.minus(originFinalToTag.rotateBy(robotFinalToRobotInitial));
+
+            SmartDashboard.putNumber("Limelight/rotate", -getPitch());
+            SmartDashboard.putNumber("Limelight/translateX", finalTranslation.getX());
+            SmartDashboard.putNumber("Limelight/translateY", finalTranslation.getX());
+
+            //2
+            System.out.print("2");
+
+            Pose2d endingPose = new Pose2d(-finalTranslation.getX(), finalTranslation.getY(), new Rotation2d());
+
+            SmartDashboard.putString("Limelight/Endingpose", endingPose.toString());
+            SmartDashboard.putString("Limelight/Startpose", startingPose.toString());
+
+            //3
+            System.out.print("3");
+
+            var interiorWaypoints = new ArrayList<Translation2d>();
+            interiorWaypoints.add(new Translation2d(endingPose.getX() / 3.0, endingPose.getY() / 3.0));
+            interiorWaypoints.add(new Translation2d(2.0 * endingPose.getX() / 3.0, 2.0 * endingPose.getY() / 3.0));
+
+            //4
+            System.out.print("4");
+
+            TrajectoryConfig config = new TrajectoryConfig(0.5, 0.25);
+            config.setReversed(false);
+            
+            Trajectory traj = TrajectoryGenerator.generateTrajectory(
+                startingPose,
+                interiorWaypoints,
+                endingPose,
+                config);
+
+            setTrajectory(traj);
+
+            //5
+            System.out.print("5");
+    
+
+        }
+
     }
 
     @Override

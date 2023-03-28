@@ -46,7 +46,6 @@ import frc.robot.commands.drive.SetSpeed;
 import frc.robot.commands.drive.StartAutoAlign;
 import frc.robot.commands.drive.goToSubstation;
 //import frc.robot.commands.drive.TurnByAngle;
-import frc.robot.commands.drive.Limelight.GoToTag;
 import frc.robot.subsystems.*;
 import frc.robot.commands.claw.manipulateClaw;
 import frc.robot.commands.claw.runClawTime;
@@ -101,13 +100,12 @@ public class RobotContainer {
                 .onTrue(new SetMaxPower(drive, 0.5)).onFalse(new SetMaxPower(drive, 1.0));
 
         new JoystickButton(oi.leftStick, 1)
-        
-        //.toggleOnTrue(new AutoAlign(drive));
         .toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
 
         new JoystickButton(oi.rightStick, 1)
-        .toggleOnTrue(new goToSubstation(drive, claw));
-        //.toggleOnTrue(new GoToTag(drive, limelight, 0));
+        //.toggleOnTrue(new goToSubstation(drive, claw));
+        .toggleOnTrue(Commands.runOnce(() -> limelight.GoToTag(0)));
+       // .toggleOnTrue(new SequentialCommandGroup(Commands.runOnce(() -> limelight.GoToTag(0))).andThen(tagTrajectoryCommand(limelight.getTrajectory(), drive)));
 
        //new JoystickButton(oi.rightStick, 1)
        //.toggleOnTrue(new TurnByAngle(drive, 10));
@@ -157,6 +155,24 @@ public class RobotContainer {
         }
     
         
+    }
+
+
+    public Command tagTrajectoryCommand(Trajectory traj, Drive drive) {
+
+        RamseteCommand ramseteCommand = new RamseteCommand(traj, drive::getPose,
+        new RamseteController(),
+        new SimpleMotorFeedforward(DriveConstants.Ks, DriveConstants.Kv,
+                DriveConstants.Ka),
+        DriveConstants.DRIVE_KINEMATICS, drive::getWheelSpeeds,
+        new PIDController(DriveConstants.Kp, 0, 0),
+        new PIDController(DriveConstants.Kp, 0, 0),
+        drive::setVolts, drive);
+
+        return new SequentialCommandGroup(new InstantCommand(() -> drive.reset(traj.getInitialPose())), ramseteCommand);
+
+
+
     }
     public void diagnostics() {
         // SmartDashboard.putNumber("leftDistance", drive.getLeftPosition());
