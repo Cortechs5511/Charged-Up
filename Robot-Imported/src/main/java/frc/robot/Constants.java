@@ -94,8 +94,8 @@ public final class Constants {
         public static final double RAMP_RATE = 0.1;
         public static final IdleMode IDLE_MODE = IdleMode.kBrake;
 
-        public static final double ROTATE_Kp = 0;
-        public static final double ROTATE_Kd = 0;
+        public static final double ROTATE_Kp = 10;
+        public static final double ROTATE_Kd = 1;
 
         public static final double ROTATE_Kg = 2.66;
         public static final double ROTATE_Ks = 0;
@@ -116,7 +116,7 @@ public final class Constants {
         public static final double MID_CONE_ROTATIONS = 0.25;
         public static final double LOW_CONE_ROTATIONS = 0.12;
 
-        public static final double SUBSTATION_ROTATIONS = 0.245;
+        public static final double SUBSTATION_ROTATIONS = 0.26;
         public static final double EXTENDABLE_ROTATIONS = 0.2;
         public static final double INITIAL_ROTATE = 0.05;
         public static final double STOW_ROTATIONS = 0.066;

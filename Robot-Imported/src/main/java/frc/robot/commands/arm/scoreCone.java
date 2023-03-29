@@ -29,22 +29,19 @@ public class scoreCone extends CommandBase {
     @Override
     public void initialize() {
         armController.setSetpoint(angle);
-        armController.setTolerance(0.01);
+        armController.setTolerance(0);
     }
 
     @Override
     public void execute() {
-        if(Math.abs(arm.getArmPosition()) < angle + ArmConstants.ARM_SCORE_TOLERANCE && Math.abs(arm.getArmPosition()) > angle - ArmConstants.ARM_SCORE_TOLERANCE) {
-            arm.setPower(passivePower);
-        } else if (Math.abs(arm.getArmPosition()) < angle - ArmConstants.ARM_SCORE_TOLERANCE) {
-            arm.setPower(0.5);
-        } else if(Math.abs(arm.getArmPosition()) > angle + ArmConstants.ARM_SCORE_TOLERANCE) {
-            arm.setPower(-0.25);
-        }
-        //else {
-      //      arm.setPower(armController.calculate(arm.getArmPosition()));
-
-        //}
+        // if(Math.abs(arm.getArmPosition()) < angle + ArmConstants.ARM_SCORE_TOLERANCE && Math.abs(arm.getArmPosition()) > angle - ArmConstants.ARM_SCORE_TOLERANCE) {
+        //     arm.setPower(passivePower);
+        // } else if (Math.abs(arm.getArmPosition()) < angle - ArmConstants.ARM_SCORE_TOLERANCE) {
+        //     arm.setPower(0.5);
+        // } else if(Math.abs(arm.getArmPosition()) > angle + ArmConstants.ARM_SCORE_TOLERANCE) {
+        //     arm.setPower(-0.25);
+        // }
+        arm.setPower(armController.calculate(arm.getArmPosition()));
         extender.goToPosition(0.8, extension);
     }
 
