@@ -21,6 +21,12 @@ public class extendArm extends CommandBase {
 
     @Override
     public void execute() {
-        extender.setExtendPower(oi.controller.getRightY());
+        if (extender.getStringPotPosition() <= 6.24 && oi.controller.getRightY() < 0) {
+            extender.setExtendPower(0);
+        } else if (extender.getStringPotPosition() >= 80 && oi.controller.getRightY() > 0) {
+            extender.setExtendPower(0);
+        } else {
+            extender.setExtendPower(oi.controller.getRightY());
+        }
 }
 }

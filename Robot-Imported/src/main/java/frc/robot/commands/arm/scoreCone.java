@@ -45,16 +45,6 @@ public class scoreCone extends CommandBase {
       //      arm.setPower(armController.calculate(arm.getArmPosition()));
 
         //}
-
-
-        
-        // if(Math.abs(extender.getExtenderPosition()) < extension + ArmConstants.EXTENDER_SCORE_TOLERANCE && Math.abs(extender.getExtenderPosition()) > extension - ArmConstants.EXTENDER_SCORE_TOLERANCE) {
-        //     extender.setExtendPower(0);
-        // } else if (Math.abs(extender.getExtenderPosition()) < extension - ArmConstants.ARM_SCORE_TOLERANCE) {
-        //     extender.setExtendPower(-0.8);
-        // } else if(Math.abs(extender.getExtenderPosition()) > extension + ArmConstants.ARM_SCORE_TOLERANCE) {
-        //     extender.setExtendPower(0.25);
-        // }
         extender.goToPosition(0.8, extension);
     }
 

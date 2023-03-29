@@ -22,7 +22,7 @@ public class goToSubstation extends CommandBase {
 
     @Override
     public void execute() {
-        claw.setClawPower(-0.5);
+        claw.setClawPower(-1);
         drive.setPower(-0.1, -0.1);
     }
 

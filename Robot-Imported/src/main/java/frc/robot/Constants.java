@@ -112,7 +112,7 @@ public final class Constants {
         public static final double ARM_SCORE_TOLERANCE = 0.01;
         public static final double EXTENDER_SCORE_TOLERANCE = 0.1;
 
-        public static final double HIGH_CONE_ROTATIONS = 0.30;
+        public static final double HIGH_CONE_ROTATIONS = 0.305;
         public static final double MID_CONE_ROTATIONS = 0.25;
         public static final double LOW_CONE_ROTATIONS = 0.12;
 
@@ -130,10 +130,10 @@ public final class Constants {
 
         // Extension preset constants
         // Max 27
-        public static final double HIGH_EXTENSION = 17.83;
-        public static final double MID_EXTENSION = 15;
+        public static final double HIGH_EXTENSION = 6.23;
+        public static final double MID_EXTENSION = 46.8;
         public static final double LOW_EXTENSION = 2.4;
-        public static final double SUBSTATION_EXTENSION = 0;
+        public static final double SUBSTATION_EXTENSION = 78;
 
         public static final double ZERO_EXTENSION = 0;
 

@@ -103,9 +103,9 @@ public class RobotContainer {
         .toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
 
         new JoystickButton(oi.rightStick, 1)
-        //.toggleOnTrue(new goToSubstation(drive, claw));
-        //.toggleOnTrue(Commands.runOnce(() -> limelight.GoToTag(0)));
-       .toggleOnTrue(new SequentialCommandGroup(Commands.runOnce(() -> limelight.GoToTag(0))).andThen(tagTrajectoryCommand(limelight.getTrajectory(), drive)));
+        .toggleOnTrue(new goToSubstation(drive, claw));
+        // .toggleOnTrue(Commands.runOnce(() -> limelight.GoToTag(0)));
+        // .toggleOnTrue(new SequentialCommandGroup(Commands.runOnce(() -> limelight.GoToTag(0))).andThen(tagTrajectoryCommand(limelight.getTrajectory(), drive)));
 
        //new JoystickButton(oi.rightStick, 1)
        //.toggleOnTrue(new TurnByAngle(drive, 10));

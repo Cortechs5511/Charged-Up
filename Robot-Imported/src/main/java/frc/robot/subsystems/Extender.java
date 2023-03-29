@@ -28,20 +28,11 @@ public class Extender extends SubsystemBase {
     }
     
     public void goToPosition(double power, double target) {
-        // while(stringPot.get() < target || stringPot.get() > target) {
-        //     if(stringPot.get() < target) {
-        //         exter.set(power*maxPower);
-        //     }
-        //     else {
-        //         extender.set(-power*maxPower);
-        //     }
-        // }
-        // extender.set(0);
-
-        if(stringPot.get() < target) {
+        
+        if(stringPot.get() < target - 2) {
             extender.set(power*maxPower);
         }
-        else if (stringPot.get() > target) {
+        else if (stringPot.get() > target + 2) {
             extender.set(-power*maxPower);
         } else {
             extender.set(0);
