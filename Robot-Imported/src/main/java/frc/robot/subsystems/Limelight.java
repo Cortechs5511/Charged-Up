@@ -82,13 +82,15 @@ public class Limelight extends SubsystemBase {
         sideOffset = newSideOffset;
     }
 
-    public Trajectory getTrajectory() {
-        return trajectory;
-    }
 
     public void setTrajectory(Trajectory traj) {
         trajectory = traj;
     }
+
+    public Trajectory getTrajectory() {
+        return trajectory;
+    }
+
 
     public void GoToTag(double sideOffset) {
         if (hasTargets()) {
@@ -149,6 +151,7 @@ public class Limelight extends SubsystemBase {
                 config);
 
             setTrajectory(traj);
+
 
             //5
             System.out.print("5");

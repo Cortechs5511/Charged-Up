@@ -104,8 +104,8 @@ public class RobotContainer {
 
         new JoystickButton(oi.rightStick, 1)
         //.toggleOnTrue(new goToSubstation(drive, claw));
-        .toggleOnTrue(Commands.runOnce(() -> limelight.GoToTag(0)));
-       // .toggleOnTrue(new SequentialCommandGroup(Commands.runOnce(() -> limelight.GoToTag(0))).andThen(tagTrajectoryCommand(limelight.getTrajectory(), drive)));
+        //.toggleOnTrue(Commands.runOnce(() -> limelight.GoToTag(0)));
+       .toggleOnTrue(new SequentialCommandGroup(Commands.runOnce(() -> limelight.GoToTag(0))).andThen(tagTrajectoryCommand(limelight.getTrajectory(), drive)));
 
        //new JoystickButton(oi.rightStick, 1)
        //.toggleOnTrue(new TurnByAngle(drive, 10));
@@ -169,7 +169,9 @@ public class RobotContainer {
         new PIDController(DriveConstants.Kp, 0, 0),
         drive::setVolts, drive);
 
-        return new SequentialCommandGroup(new InstantCommand(() -> drive.reset(traj.getInitialPose())), ramseteCommand);
+        drive.reset(new Pose2d());
+
+        return ramseteCommand;
 
 
 
