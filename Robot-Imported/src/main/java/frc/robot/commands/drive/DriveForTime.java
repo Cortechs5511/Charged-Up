@@ -7,13 +7,15 @@ import frc.robot.subsystems.Drive;
 public class DriveForTime extends CommandBase {
     private final Drive drive;
     private final double time;
-    private final double power;
+    private final double leftPower;
+    private final double rightPower;
     private final Timer timer = new Timer();
 
-    public DriveForTime(Drive drive, double time, double power) {
+    public DriveForTime(Drive drive, double time, double leftPower, double rightPower) {
         this.drive = drive;
         this.time = time;
-        this.power = power;
+        this.leftPower = leftPower;
+        this.rightPower = rightPower;
         addRequirements(drive);
     }
 
@@ -27,7 +29,7 @@ public class DriveForTime extends CommandBase {
     timer.reset();
     timer.start();
     if (!timer.hasElapsed(time)) {
-        drive.setPower(power, power);
+        drive.setPower(leftPower, rightPower);
     } else {
         drive.setPower(0,0);
     }

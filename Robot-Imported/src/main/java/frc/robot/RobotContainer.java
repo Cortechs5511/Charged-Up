@@ -46,6 +46,7 @@ import frc.robot.commands.drive.SetMaxPower;
 import frc.robot.commands.drive.SetSpeed;
 import frc.robot.commands.drive.StartAutoAlign;
 import frc.robot.commands.drive.goToSubstation;
+import frc.robot.commands.drive.Limelight.GoToTag;
 //import frc.robot.commands.drive.TurnByAngle;
 import frc.robot.subsystems.*;
 import frc.robot.commands.claw.manipulateClaw;
@@ -76,23 +77,39 @@ public class RobotContainer {
         // .andThen(trajectoryFollower("pathplanner/generatedJSON/Leave+Balance.wpilib.json",drive,true)
         // .andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))))));
 
-        chooser.addOption("test", new DriveForTime(drive, 2.307, 0.5).withTimeout(2.307));
+        chooser.addOption("2 score", new SequentialCommandGroup(new DriveForTime(drive, 0.5, 0.2, 0.2).withTimeout(0.0769)).andThen(new retractArm(extender).withTimeout(1)).andThen(new scoreAuto(extender, arm, ArmConstants.CONE_SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER, ArmConstants.SUBSTATION_EXTENSION).withTimeout(3))
+        .andThen(new runClawTime(claw, 1).withTimeout(1))
+        .andThen(new stowArm(arm,extender).withTimeout(4))
+        .andThen(new DriveForTime(drive, 3, -0.5,0.5).withTimeout(0.02670326923))
+        .andThen(new DriveForTime(drive, 3, 0.5, 0.5).withTimeout(0.7015))
+        .andThen(new DriveForTime(drive, 3, 0.5, -0.5).withTimeout(0.02670326923))
+        .andThen(new DriveForTime(drive, 3, 0.15, 0.15).withTimeout(2.0512))
+        .andThen(new DriveForTime(drive, 3, 0.5, 0.5).withTimeout(0.7693))
+        .andThen(new DriveForTime(drive, 3, 0.5, -0.5).withTimeout(0.4748846154))
+        .andThen(new scoreAuto(extender, arm, ArmConstants.LOW_CONE_ROTATIONS, ArmConstants.LOW_POWER, ArmConstants.LOW_EXTENSION))
+        .andThen(new goToSubstation(drive, claw).withTimeout(1))
+        .andThen(Commands.run(() -> extender.goToPosition(0.8, ArmConstants.ZERO_EXTENSION)))
+        .andThen(new DriveForTime(drive, 3, 0.5, -0.5).withTimeout(0.5033))
+        .andThen(new DriveForTime(drive, 3, -0.5, -0.5).withTimeout(1.0968))
+        .andThen(new DriveForTime(drive, 3, -0.5, 0.5).withTimeout(0.0267032692))
+        .andThen(new DriveForTime(drive, 3, -0.25, -0.25).withTimeout(1.2308))
+        .andThen(new DriveForTime(drive, 3, -0.5, -0.5).withTimeout(0.6615)));
 
-        chooser.addOption ("Leave+Balance (no score)", new SequentialCommandGroup(new DriveForTime(drive, 3, -0.6).withTimeout(2.5)).andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
+        chooser.addOption ("Leave+Balance (no score)", new SequentialCommandGroup(new DriveForTime(drive, 3, -0.6, -0.6).withTimeout(2.5)).andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
 
-        chooser.addOption("Score+ balance", new SequentialCommandGroup(new DriveForTime(drive, 0.5, 0.2).withTimeout(0.5)).andThen(new retractArm(extender).withTimeout(1)).andThen(new scoreAuto(extender, arm, ArmConstants.CONE_SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER, ArmConstants.SUBSTATION_EXTENSION).withTimeout(3))
+        chooser.addOption("Score+ balance", new SequentialCommandGroup(new DriveForTime(drive, 0.5, 0.2, 0.2).withTimeout(0.5)).andThen(new retractArm(extender).withTimeout(1)).andThen(new scoreAuto(extender, arm, ArmConstants.CONE_SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER, ArmConstants.SUBSTATION_EXTENSION).withTimeout(3))
         .andThen(new runClawTime(claw, 0.2).withTimeout(0.2))
         .andThen(new stowArm(arm,extender).withTimeout(4)).andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
         
         chooser.addOption("Nothing", new InstantCommand());
         chooser.addOption("Balance", new SequentialCommandGroup(new StartAutoAlign(drive)).andThen(new AutoAlign(drive)));
-        chooser.addOption("Auto mobility", new DriveForTime(drive, 3, 0.2).withTimeout(3));
+        chooser.addOption("Auto mobility", new DriveForTime(drive, 3, 0.2, 0.2).withTimeout(3));
         //chooser.addOption("Score+Auto mobility", new SequentialCommandGroup(new armExtend(extender, 0.3)).andThen(new scoreHighCone(arm, ArmConstants.INITIAL_ROTATE)).andThen(new closeClaw(claw)).andThen(new scoreHighCone(arm, ArmConstants.EXTENDABLE_ROTATIONS).andThen(new autonExtend(extender)).andThen(new scoreHighCone(arm, ArmConstants.HIGH_CONE_ROTATIONS)).andThen(new DriveForTime(drive, 0.5)).andThen(new openClaw(claw)).andThen(new autonRetract(extender)).andThen
         //(new stowArm(arm)).andThen(trajectoryFollower("pathplanner/generatedJSON/Auto mobility.wpilib.json", drive, true))));
 
-        chooser.addOption("Auto mobility + score", new SequentialCommandGroup(new DriveForTime(drive, 0.5, 0.2).withTimeout(0.5)).andThen(new retractArm(extender).withTimeout(1)).andThen(new scoreAuto(extender, arm, ArmConstants.CONE_SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER, ArmConstants.SUBSTATION_EXTENSION).withTimeout(3))
+        chooser.addOption("Auto mobility + score", new SequentialCommandGroup(new DriveForTime(drive, 0.5, 0.2, 0.2).withTimeout(0.5)).andThen(new retractArm(extender).withTimeout(1)).andThen(new scoreAuto(extender, arm, ArmConstants.CONE_SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER, ArmConstants.SUBSTATION_EXTENSION).withTimeout(3))
         .andThen(new runClawTime(claw, 1).withTimeout(1))
-        .andThen(new stowArm(arm,extender).withTimeout(4)).andThen(new DriveForTime(drive, 3, 0.5).withTimeout(3)));
+        .andThen(new stowArm(arm,extender).withTimeout(4)).andThen(new DriveForTime(drive, 3, 0.5, 0.5).withTimeout(3)));
         Shuffleboard.getTab("Autonomous Selection").add(chooser);
 
     }
@@ -108,7 +125,7 @@ public class RobotContainer {
         new JoystickButton(oi.rightStick, 1)
         .toggleOnTrue(new goToSubstation(drive, claw));
         // .toggleOnTrue(Commands.runOnce(() -> limelight.GoToTag(0)));
-        // .toggleOnTrue(new SequentialCommandGroup(Commands.runOnce(() -> limelight.GoToTag(0))).andThen(tagTrajectoryCommand(limelight.getTrajectory(), drive)));
+       //.toggleOnTrue(new SequentialCommandGroup(Commands.runOnce(() -> limelight.GoToTag(0))).andThen(new GoToTag(drive, limelight, limelight.getTrajectory())));
 
        //new JoystickButton(oi.rightStick, 1)
        //.toggleOnTrue(new TurnByAngle(drive, 10));
@@ -124,6 +141,7 @@ public class RobotContainer {
 
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).povLeft().toggleOnTrue(new scoreCone(arm, extender, ArmConstants.CONE_SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER, ArmConstants.SUBSTATION_EXTENSION));
         new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).povRight().toggleOnTrue(new scoreCone(arm, extender, ArmConstants.CUBE_SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER, ArmConstants.SUBSTATION_EXTENSION));
+        new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).povDown().onTrue(new SequentialCommandGroup(Commands.run(() -> arm.setPower(0.1)).withTimeout(0.5)).andThen(Commands.runOnce(()-> arm.setPower(0)).withTimeout(0.1)).andThen(new runClawTime(claw, 0.5).withTimeout(0.5)));
         // Claw commands
 
         //new CommandXboxController(OIConstants.XBOX_CONTROLLER_PORT).rightBumper().toggleOnTrue(new stallClaw(claw));
@@ -163,24 +181,24 @@ public class RobotContainer {
     }
 
 
-    public Command tagTrajectoryCommand(Trajectory traj, Drive drive) {
+    // public Command tagTrajectoryCommand(Trajectory traj, Drive drive) {
 
-        RamseteCommand ramseteCommand = new RamseteCommand(traj, drive::getPose,
-        new RamseteController(),
-        new SimpleMotorFeedforward(DriveConstants.Ks, DriveConstants.Kv,
-                DriveConstants.Ka),
-        DriveConstants.DRIVE_KINEMATICS, drive::getWheelSpeeds,
-        new PIDController(DriveConstants.Kp, 0, 0),
-        new PIDController(DriveConstants.Kp, 0, 0),
-        drive::setVolts, drive);
+    //     RamseteCommand ramseteCommand = new RamseteCommand(traj, drive::getPose,
+    //     new RamseteController(),
+    //     new SimpleMotorFeedforward(DriveConstants.Ks, DriveConstants.Kv,
+    //             DriveConstants.Ka),
+    //     DriveConstants.DRIVE_KINEMATICS, drive::getWheelSpeeds,
+    //     new PIDController(DriveConstants.Kp, 0, 0),
+    //     new PIDController(DriveConstants.Kp, 0, 0),
+    //     drive::setVolts, drive);
 
-        drive.reset(new Pose2d());
+    //     drive.reset(new Pose2d());
 
-        return ramseteCommand;
+    //     return ramseteCommand;
 
 
 
-    }
+   // }
     public void diagnostics() {
         // SmartDashboard.putNumber("leftDistance", drive.getLeftPosition());
         // SmartDashboard.putNumber("rightDistance", drive.getRightPosition());
