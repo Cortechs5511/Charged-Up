@@ -85,7 +85,7 @@ public class RobotContainer {
         .andThen(new DriveForTime(drive, 3, 0.5, -0.5).withTimeout(0.02670326923))
         .andThen(new DriveForTime(drive, 3, 0.15, 0.15).withTimeout(2.0512))
         .andThen(new DriveForTime(drive, 3, 0.5, 0.5).withTimeout(0.7693))
-        .andThen(new DriveForTime(drive, 3, 0.5, -0.5).withTimeout(0.4748846154))
+        .andThen(new DriveForTime(drive, 3, -0.5, 0.5).withTimeout(0.4748846154))
         .andThen(new scoreAuto(extender, arm, ArmConstants.LOW_CONE_ROTATIONS, ArmConstants.LOW_POWER, ArmConstants.LOW_EXTENSION))
         .andThen(new goToSubstation(drive, claw).withTimeout(1))
         .andThen(Commands.run(() -> extender.goToPosition(0.8, ArmConstants.ZERO_EXTENSION)))
