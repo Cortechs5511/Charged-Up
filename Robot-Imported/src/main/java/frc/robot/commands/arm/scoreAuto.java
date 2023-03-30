@@ -48,9 +48,10 @@ public class scoreAuto extends CommandBase {
 
     @Override 
     public boolean isFinished() {
-        return extension - ArmConstants.EXTENDER_SCORE_TOLERANCE <= extender.getStringPotPosition()
-        && extender.getStringPotPosition() <= extension + ArmConstants.EXTENDER_SCORE_TOLERANCE
-        &&  angle - ArmConstants.ARM_SCORE_TOLERANCE <= arm.getArmPosition() 
+        return //extension - ArmConstants.EXTENDER_SCORE_TOLERANCE <= extender.getStringPotPosition()
+        //&& extender.getStringPotPosition() <= extension + ArmConstants.EXTENDER_SCORE_TOLERANCE
+        //&&  
+        angle - ArmConstants.ARM_SCORE_TOLERANCE <= arm.getArmPosition() 
         && arm.getArmPosition() <= angle + ArmConstants.ARM_SCORE_TOLERANCE;
     }
 }

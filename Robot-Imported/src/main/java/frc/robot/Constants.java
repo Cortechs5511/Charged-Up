@@ -6,7 +6,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
 
 public final class Constants {
-    public static final boolean DIAGNOSTICS = true;
+    public static final boolean DIAGNOSTICS = false;
     public static final double DWELL_PERIOD = 0.5;
 
     public static class DriveConstants {
@@ -114,7 +114,7 @@ public final class Constants {
 
         public static final double HIGH_CONE_ROTATIONS = 0.305;
         public static final double MID_CONE_ROTATIONS = 0.25;
-        public static final double LOW_CONE_ROTATIONS = 0.12;
+        public static final double LOW_CONE_ROTATIONS = 0.109;
 
         public static final double SUBSTATION_ROTATIONS = 0.26;
         public static final double EXTENDABLE_ROTATIONS = 0.2;
@@ -125,17 +125,17 @@ public final class Constants {
         // -0.1 power fully extended without cone
         public static final double HIGH_POWER = 0.1;
         public static final double MID_POWER = 0.1;
-        public static final double LOW_POWER = 0.045;
+        public static final double LOW_POWER = 0.07;
         public static final double SUBSTATION_POWER = 0.065;
 
         // Extension preset constants
         // Max 27
         public static final double HIGH_EXTENSION = 6.23;
         public static final double MID_EXTENSION = 46.8;
-        public static final double LOW_EXTENSION = 2.4;
+        public static final double LOW_EXTENSION = 51.4;
         public static final double SUBSTATION_EXTENSION = 78;
 
-        public static final double ZERO_EXTENSION = 0;
+        public static final double ZERO_EXTENSION = 80;
 
 
 

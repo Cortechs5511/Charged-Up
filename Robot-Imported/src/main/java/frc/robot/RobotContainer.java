@@ -75,9 +75,11 @@ public class RobotContainer {
         // .andThen(trajectoryFollower("pathplanner/generatedJSON/Leave+Balance.wpilib.json",drive,true)
         // .andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))))));
 
+        chooser.addOption("test", new DriveForTime(drive, 2.307, 0.5).withTimeout(2.307));
+
         chooser.addOption ("Leave+Balance (no score)", new SequentialCommandGroup(new DriveForTime(drive, 3, -0.6).withTimeout(2.5)).andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
 
-        chooser.addOption("Score+ balance", new SequentialCommandGroup(new retractArm(extender).withTimeout(1)).andThen(new scoreAuto(extender, arm, ArmConstants.HIGH_CONE_ROTATIONS, ArmConstants.HIGH_POWER, ArmConstants.MID_EXTENSION).withTimeout(4))
+        chooser.addOption("Score+ balance", new SequentialCommandGroup(new DriveForTime(drive, 0.5, 0.2).withTimeout(0.5)).andThen(new retractArm(extender).withTimeout(1)).andThen(new scoreAuto(extender, arm, ArmConstants.SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER, ArmConstants.SUBSTATION_EXTENSION).withTimeout(3))
         .andThen(new runClawTime(claw, 0.2).withTimeout(0.2))
         .andThen(new stowArm(arm,extender).withTimeout(4)).andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
         
@@ -87,7 +89,7 @@ public class RobotContainer {
         //chooser.addOption("Score+Auto mobility", new SequentialCommandGroup(new armExtend(extender, 0.3)).andThen(new scoreHighCone(arm, ArmConstants.INITIAL_ROTATE)).andThen(new closeClaw(claw)).andThen(new scoreHighCone(arm, ArmConstants.EXTENDABLE_ROTATIONS).andThen(new autonExtend(extender)).andThen(new scoreHighCone(arm, ArmConstants.HIGH_CONE_ROTATIONS)).andThen(new DriveForTime(drive, 0.5)).andThen(new openClaw(claw)).andThen(new autonRetract(extender)).andThen
         //(new stowArm(arm)).andThen(trajectoryFollower("pathplanner/generatedJSON/Auto mobility.wpilib.json", drive, true))));
 
-        chooser.addOption("Auto mobility + score", new SequentialCommandGroup(new retractArm(extender).withTimeout(1)).andThen(new scoreAuto(extender, arm, ArmConstants.HIGH_CONE_ROTATIONS, ArmConstants.HIGH_POWER, ArmConstants.MID_EXTENSION).withTimeout(4))
+        chooser.addOption("Auto mobility + score", new SequentialCommandGroup(new DriveForTime(drive, 0.5, 0.2).withTimeout(0.5)).andThen(new retractArm(extender).withTimeout(1)).andThen(new scoreAuto(extender, arm, ArmConstants.SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER, ArmConstants.SUBSTATION_EXTENSION).withTimeout(3))
         .andThen(new runClawTime(claw, 1).withTimeout(1))
         .andThen(new stowArm(arm,extender).withTimeout(4)).andThen(new DriveForTime(drive, 3, 0.5).withTimeout(3)));
         Shuffleboard.getTab("Autonomous Selection").add(chooser);

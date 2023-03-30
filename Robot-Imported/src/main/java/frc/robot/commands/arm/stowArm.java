@@ -26,9 +26,9 @@ public class stowArm extends CommandBase {
         if (Math.abs(arm.getArmPosition()) < ArmConstants.STOW_ROTATIONS - ArmConstants.ARM_SCORE_TOLERANCE) {
             arm.setPower(0.25);
         } else if(Math.abs(arm.getArmPosition()) > ArmConstants.STOW_ROTATIONS + ArmConstants.ARM_SCORE_TOLERANCE) {
-            arm.setPower(-0.3);
+            arm.setPower(-0.8);
         }
-        extender.goToPosition(0.8, 0);
+        extender.goToPosition(0.8, ArmConstants.ZERO_EXTENSION);
         }
 
     
@@ -39,9 +39,9 @@ public class stowArm extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return ArmConstants.ZERO_EXTENSION - ArmConstants.EXTENDER_SCORE_TOLERANCE <= extender.getStringPotPosition() 
-        && extender.getStringPotPosition() <= ArmConstants.ZERO_EXTENSION + ArmConstants.EXTENDER_SCORE_TOLERANCE
-        && 
+        return //ArmConstants.ZERO_EXTENSION - ArmConstants.EXTENDER_SCORE_TOLERANCE <= extender.getStringPotPosition() 
+        //&& extender.getStringPotPosition() <= ArmConstants.ZERO_EXTENSION + ArmConstants.EXTENDER_SCORE_TOLERANCE
+        //&& 
         ArmConstants.STOW_ROTATIONS - ArmConstants.ARM_SCORE_TOLERANCE <= arm.getArmPosition() 
         && arm.getArmPosition() <= ArmConstants.STOW_ROTATIONS + ArmConstants.ARM_SCORE_TOLERANCE;
     }

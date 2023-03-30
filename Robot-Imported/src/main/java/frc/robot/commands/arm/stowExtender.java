@@ -21,7 +21,7 @@ public class stowExtender extends CommandBase {
     public void execute() {
 
 
-        extender.goToPosition(1, 0);
+        extender.goToPosition(1, ArmConstants.ZERO_EXTENSION);
 
 
     }
