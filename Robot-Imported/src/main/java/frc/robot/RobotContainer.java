@@ -38,6 +38,7 @@ import frc.robot.commands.arm.setArmPower;
 import frc.robot.commands.arm.stowArm;
 import frc.robot.commands.arm.stowExtender;
 import frc.robot.commands.arm.retractArm;
+import frc.robot.commands.arm.autonExtend;
 import frc.robot.commands.drive.AutoAlign;
 import frc.robot.commands.drive.DriveForTime;
 import frc.robot.commands.drive.Flip;
@@ -70,8 +71,8 @@ public class RobotContainer {
         configureButtonBindings();
 
         // chooser.addOption
-        // ("Score+Balance", 
-        // (new SequentialCommandGroup(new armExtend(extender, 0.8)).andThen(new closeClaw(claw)).andThen(new scoreHighCone(arm, ArmConstants.HIGH_CONE_ROTATIONS)).andThen(new autonExtend(extender)).andThen(new openClaw(claw)).andThen(new stowArm(arm))
+        // ("test", 
+        // (new SequentialCommandGroup(new autonExtend(extender, 0.8)).andThen(new runClawTime(claw, 0.2)).andThen(new scoreHighCone(arm, ArmConstants.HIGH_CONE_ROTATIONS)).andThen(new autonExtend(extender, 0)).andThen(new openClaw(claw)).andThen(new stowArm(arm))
         // .andThen(trajectoryFollower("pathplanner/generatedJSON/Leave+Balance.wpilib.json",drive,true)
         // .andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))))));
 

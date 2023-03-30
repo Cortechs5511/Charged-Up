@@ -106,6 +106,7 @@ public class Arm extends SubsystemBase {
     @Override
     public void periodic() {
         // SmartDashboard.getNumber("Arm/Maxpower", maxPower);
+        SmartDashboard.putNumber("Arm/Absolute Encoder Value", getArmPosition());
        
         if (Constants.DIAGNOSTICS) {
             SmartDashboard.getNumber("Arm/Maxpower", maxPower);
