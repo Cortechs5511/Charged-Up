@@ -112,14 +112,15 @@ public final class Constants {
         public static final double ARM_SCORE_TOLERANCE = 0.01;
         public static final double EXTENDER_SCORE_TOLERANCE = 0.1;
 
-        public static final double HIGH_CONE_ROTATIONS = 0.305;
-        public static final double MID_CONE_ROTATIONS = 0.25;
+        public static final double HIGH_CONE_ROTATIONS = 0.32;
+        public static final double MID_CONE_ROTATIONS = 0.255;
         public static final double LOW_CONE_ROTATIONS = 0.109;
 
-        public static final double SUBSTATION_ROTATIONS = 0.26;
+        public static final double CONE_SUBSTATION_ROTATIONS = 0.26;
+        public static final double CUBE_SUBSTATION_ROTATIONS = 0.24;
         public static final double EXTENDABLE_ROTATIONS = 0.2;
         public static final double INITIAL_ROTATE = 0.05;
-        public static final double STOW_ROTATIONS = 0.066;
+        public static final double STOW_ROTATIONS = 0.06;
 
         
         // -0.1 power fully extended without cone
