@@ -4,9 +4,9 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.Drive;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class StartAutoAlign extends CommandBase {
+public class StartAutoAlignReverse extends CommandBase {
     private final Drive drive;
-    public StartAutoAlign(Drive subsystem) {
+    public StartAutoAlignReverse(Drive subsystem) {
         drive = subsystem;
         addRequirements(subsystem);
     }
@@ -18,9 +18,9 @@ public class StartAutoAlign extends CommandBase {
     @Override
     public void execute() {
         if (Math.abs(drive.getPitch()) < Math.abs(DriveConstants.ALIGN_INIT_ANGLE)) {
-            drive.setPower(0.4, 0.4);          
+            drive.setPower(-0.3, -0.3);          
         } else {
-            drive.setPower(0,0); }
+        drive.setPower(0,0); }
 
     }
     @Override

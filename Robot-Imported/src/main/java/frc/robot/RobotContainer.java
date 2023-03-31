@@ -52,6 +52,8 @@ import frc.robot.subsystems.*;
 import frc.robot.commands.claw.manipulateClaw;
 import frc.robot.commands.claw.runClawTime;
 import frc.robot.commands.claw.stallClaw;
+import frc.robot.commands.drive.StartAutoAlignReverse;
+import frc.robot.commands.drive.AutoAlignReverse;
 
 public class RobotContainer {
     private SendableChooser<Command> chooser = new SendableChooser<>();
@@ -85,15 +87,17 @@ public class RobotContainer {
         .andThen(new DriveForTime(drive, 3, 0.5, -0.5).withTimeout(0.02670326923))
         .andThen(new DriveForTime(drive, 3, 0.15, 0.15).withTimeout(2.0512))
         .andThen(new DriveForTime(drive, 3, 0.5, 0.5).withTimeout(0.7693))
-        .andThen(new DriveForTime(drive, 3, -0.5, 0.5).withTimeout(0.4748846154))
-        .andThen(new scoreAuto(extender, arm, ArmConstants.LOW_CONE_ROTATIONS, ArmConstants.LOW_POWER, ArmConstants.LOW_EXTENSION))
-        .andThen(new goToSubstation(drive, claw).withTimeout(1))
-        .andThen(Commands.run(() -> extender.goToPosition(0.8, ArmConstants.ZERO_EXTENSION)))
-        .andThen(new DriveForTime(drive, 3, 0.5, -0.5).withTimeout(0.5033))
-        .andThen(new DriveForTime(drive, 3, -0.5, -0.5).withTimeout(1.0968))
-        .andThen(new DriveForTime(drive, 3, -0.5, 0.5).withTimeout(0.0267032692))
-        .andThen(new DriveForTime(drive, 3, -0.25, -0.25).withTimeout(1.2308))
-        .andThen(new DriveForTime(drive, 3, -0.5, -0.5).withTimeout(0.6615)));
+        .andThen(new DriveForTime(drive, 3, -0.5, 0.5).withTimeout(0.75)));
+        
+        
+        // .andThen(new scoreAuto(extender, arm, ArmConstants.LOW_CONE_ROTATIONS, ArmConstants.LOW_POWER, ArmConstants.LOW_EXTENSION))
+        // .andThen(new goToSubstation(drive, claw).withTimeout(1))
+        // .andThen(Commands.run(() -> extender.goToPosition(0.8, ArmConstants.ZERO_EXTENSION)))
+        // .andThen(new DriveForTime(drive, 3, 0.5, -0.5).withTimeout(0.5033))
+        // .andThen(new DriveForTime(drive, 3, -0.5, -0.5).withTimeout(1.0968))
+        // .andThen(new DriveForTime(drive, 3, -0.5, 0.5).withTimeout(0.0267032692))
+        // .andThen(new DriveForTime(drive, 3, -0.25, -0.25).withTimeout(1.2308))
+        // .andThen(new DriveForTime(drive, 3, -0.5, -0.5).withTimeout(0.6615)));
 
         chooser.addOption ("Leave+Balance (no score)", new SequentialCommandGroup(new DriveForTime(drive, 3, -0.6, -0.6).withTimeout(2.5)).andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));
 
@@ -110,6 +114,18 @@ public class RobotContainer {
         chooser.addOption("Auto mobility + score", new SequentialCommandGroup(new DriveForTime(drive, 0.5, 0.2, 0.2).withTimeout(0.5)).andThen(new retractArm(extender).withTimeout(1)).andThen(new scoreAuto(extender, arm, ArmConstants.CONE_SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER, ArmConstants.SUBSTATION_EXTENSION).withTimeout(3))
         .andThen(new runClawTime(claw, 1).withTimeout(1))
         .andThen(new stowArm(arm,extender).withTimeout(4)).andThen(new DriveForTime(drive, 3, 0.5, 0.5).withTimeout(3)));
+
+        chooser.addOption("Score + mobility + balance", new SequentialCommandGroup(new DriveForTime(drive, 0.5, 0.2, 0.2).withTimeout(0.0769))
+        .andThen(new retractArm(extender).withTimeout(1))
+        .andThen(new scoreAuto(extender, arm, ArmConstants.CONE_SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER, ArmConstants.SUBSTATION_EXTENSION).withTimeout(3))
+        .andThen(new runClawTime(claw, 1).withTimeout(1))
+        .andThen(new stowArm(arm,extender).withTimeout(4))
+        .andThen(new StartAutoAlign(drive))
+        .andThen(new DriveForTime(drive, 1, 0.35, 0.35).withTimeout(1))
+        .andThen(new StartAutoAlignReverse(drive))
+        .andThen(new DriveForTime(drive, 0.2, 0.35, 0.35).withTimeout(0.2))
+        .andThen(new AutoAlignReverse(drive)));
+
         Shuffleboard.getTab("Autonomous Selection").add(chooser);
 
     }
