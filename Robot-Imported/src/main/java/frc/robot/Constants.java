@@ -136,7 +136,7 @@ public final class Constants {
         public static final double LOW_EXTENSION = 51.4;
         public static final double SUBSTATION_EXTENSION = 78;
 
-        public static final double ZERO_EXTENSION = 80;
+        public static final double ZERO_EXTENSION = 76;
 
 
 
