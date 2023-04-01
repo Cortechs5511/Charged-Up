@@ -121,10 +121,17 @@ public class RobotContainer {
         .andThen(new runClawTime(claw, 1).withTimeout(1))
         .andThen(new stowArm(arm,extender).withTimeout(4))
         .andThen(new StartAutoAlign(drive))
-        .andThen(new DriveForTime(drive, 1, 0.35, 0.35).withTimeout(1))
+        .andThen(new DriveForTime(drive, 2.5, 0.35, 0.35).withTimeout(1))
         .andThen(new StartAutoAlignReverse(drive))
         .andThen(new DriveForTime(drive, 0.2, 0.35, 0.35).withTimeout(0.2))
         .andThen(new AutoAlignReverse(drive)));
+
+        chooser.addOption("Score 2 Barrier", new SequentialCommandGroup(new retractArm(extender).withTimeout(1))
+        .andThen(new scoreAuto(extender, arm, ArmConstants.CONE_SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER, ArmConstants.SUBSTATION_EXTENSION).withTimeout(3))
+        .andThen(new runClawTime(claw, 1).withTimeout(1))
+        .andThen(new stowArm(arm,extender).withTimeout(4))
+        .andThen(trajectoryFollower("path/planner/generatedJSON/Score 2, Barrier Forward.wpilib.json", drive, true)));
+
 
         Shuffleboard.getTab("Autonomous Selection").add(chooser);
 
