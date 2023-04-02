@@ -24,7 +24,7 @@ public class retractArm extends CommandBase {
     @Override
     public void execute() {
         // if (Math.abs(extender.getExtenderPosition()) < ArmConstants.ZERO_EXTENSION - ArmConstants.EXTENDER_SCORE_TOLERANCE) {
-            extender.setExtendPower(0.8);
+            extender.goToPosition(0.8, 80);
         // } else if(Math.abs(extender.getExtenderPosition()) > ArmConstants.ZERO_EXTENSION + ArmConstants.EXTENDER_SCORE_TOLERANCE) {
         //     extender.setExtendPower(-0.25);
         // }

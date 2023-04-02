@@ -35,7 +35,7 @@ public class Arm extends SubsystemBase {
     }
     
     public double getArmPosition() {
-        return Math.abs(absoluteEncoder.getAbsolutePosition()-0.899);
+        return Math.abs(absoluteEncoder.getAbsolutePosition()-0.899-0.079);
     }
 
     public double getLeftPosition() {
