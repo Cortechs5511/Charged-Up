@@ -79,15 +79,15 @@ public class RobotContainer {
         // .andThen(trajectoryFollower("pathplanner/generatedJSON/Leave+Balance.wpilib.json",drive,true)
         // .andThen(new StartAutoAlign(drive).andThen(new AutoAlign(drive))))));
 
-        chooser.addOption("2 score", new SequentialCommandGroup(new DriveForTime(drive, 0.5, 0.2, 0.2).withTimeout(0.0769)).andThen(new retractArm(extender).withTimeout(1)).andThen(new scoreAuto(extender, arm, ArmConstants.CONE_SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER, ArmConstants.SUBSTATION_EXTENSION).withTimeout(3))
-        .andThen(new runClawTime(claw, 1).withTimeout(1))
-        .andThen(new stowArm(arm,extender).withTimeout(4))
-        .andThen(new DriveForTime(drive, 3, -0.5,0.5).withTimeout(0.02670326923))
-        .andThen(new DriveForTime(drive, 3, 0.5, 0.5).withTimeout(0.7015))
-        .andThen(new DriveForTime(drive, 3, 0.5, -0.5).withTimeout(0.02670326923))
-        .andThen(new DriveForTime(drive, 3, 0.15, 0.15).withTimeout(2.0512))
-        .andThen(new DriveForTime(drive, 3, 0.5, 0.5).withTimeout(0.7693))
-        .andThen(new DriveForTime(drive, 3, -0.5, 0.5).withTimeout(0.75)));
+        // chooser.addOption("Score + Taxi Non barrier", new SequentialCommandGroup(new DriveForTime(drive, 0.5, 0.2, 0.2).withTimeout(0.0769)).andThen(new retractArm(extender).withTimeout(1)).andThen(new scoreAuto(extender, arm, ArmConstants.CONE_SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER, ArmConstants.SUBSTATION_EXTENSION).withTimeout(3))
+        // .andThen(new runClawTime(claw, 1).withTimeout(1))
+        // .andThen(new stowArm(arm,extender).withTimeout(4))
+        // .andThen(new DriveForTime(drive, 3, -0.5,0.5).withTimeout(0.02670326923))
+        // .andThen(new DriveForTime(drive, 3, 0.5, 0.5).withTimeout(0.7015))
+        // .andThen(new DriveForTime(drive, 3, 0.5, -0.5).withTimeout(0.02670326923))
+        // .andThen(new DriveForTime(drive, 3, 0.15, 0.15).withTimeout(2.0512))
+        // .andThen(new DriveForTime(drive, 3, 0.5, 0.5).withTimeout(0.7693))
+        // .andThen(new DriveForTime(drive, 3, -0.5, 0.5).withTimeout(0.75)));
         
         
         // .andThen(new scoreAuto(extender, arm, ArmConstants.LOW_CONE_ROTATIONS, ArmConstants.LOW_POWER, ArmConstants.LOW_EXTENSION))
@@ -115,32 +115,279 @@ public class RobotContainer {
         .andThen(new runClawTime(claw, 1).withTimeout(1))
         .andThen(new stowArm(arm,extender).withTimeout(4)).andThen(new DriveForTime(drive, 3, 0.5, 0.5).withTimeout(3)));
 
-        chooser.addOption("Score + mobility + balance", new SequentialCommandGroup(new DriveForTime(drive, 0.5, 0.2, 0.2).withTimeout(0.0769))
-        .andThen(new retractArm(extender).withTimeout(1))
-        .andThen(new scoreAuto(extender, arm, ArmConstants.CONE_SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER, ArmConstants.SUBSTATION_EXTENSION).withTimeout(3))
-        .andThen(new runClawTime(claw, 1).withTimeout(1))
-        .andThen(new stowArm(arm,extender).withTimeout(4))
-        .andThen(new StartAutoAlign(drive))
-        .andThen(new DriveForTime(drive, 2.5, 0.35, 0.35).withTimeout(1))
-        .andThen(new StartAutoAlignReverse(drive))
-        .andThen(new DriveForTime(drive, 0.2, 0.35, 0.35).withTimeout(0.2))
-        .andThen(new AutoAlignReverse(drive)));
+        // chooser.addOption("Score + mobility + balance", new SequentialCommandGroup(new DriveForTime(drive, 0.5, 0.2, 0.2).withTimeout(0.0769))
+        // .andThen(new retractArm(extender).withTimeout(1))
+        // .andThen(new scoreAuto(extender, arm, ArmConstants.CONE_SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER, ArmConstants.SUBSTATION_EXTENSION).withTimeout(3))
+        // .andThen(new runClawTime(claw, 1).withTimeout(1))
+        // .andThen(new stowArm(arm,extender).withTimeout(4))
+        // .andThen(new StartAutoAlign(drive))
+        // .andThen(new DriveForTime(drive, 2, 0.35, 0.35).withTimeout(1))
+        // .andThen(new StartAutoAlignReverse(drive))
+        // .andThen(new DriveForTime(drive, 0.3, 0.35, 0.35).withTimeout(0.3))
+        // .andThen(new AutoAlignReverse(drive)));
 
-        chooser.addOption("Score 2 Barrier", new SequentialCommandGroup(new retractArm(extender).withTimeout(1))
-        .andThen(new scoreAuto(extender, arm, ArmConstants.CONE_SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER, ArmConstants.SUBSTATION_EXTENSION).withTimeout(3))
-        .andThen(new runClawTime(claw, 1).withTimeout(1))
-        .andThen(new stowArm(arm,extender).withTimeout(4))
-        .andThen(trajectoryFollower("path/planner/generatedJSON/Score 2, Barrier Forward.wpilib.json", drive, true)));
+        // chooser.addOption("Score 2 Barrier", new SequentialCommandGroup(new retractArm(extender).withTimeout(1))
+        // .andThen(new scoreAuto(extender, arm, ArmConstants.CONE_SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER, ArmConstants.SUBSTATION_EXTENSION).withTimeout(3))
+        // .andThen(new runClawTime(claw, 1).withTimeout(1))
+        // .andThen(new stowArm(arm,extender).withTimeout(4))
+        // .andThen(trajectoryFollower("path/planner/generatedJSON/Score 2, Barrier Forward.wpilib.json", drive, true)));
 
+        chooser.addOption("test", trajectoryFollower("path/planner/generatedJSON/Score 2, Barrier Forward.wpilib.json", drive, true));
 
         Shuffleboard.getTab("Autonomous Selection").add(chooser);
+        //Sai is the best driver on god
+        //on god we winning worlds this year 
+        //Felix shold be captain next year
+        //its everyday bro with the disney channel flow
+        //5 mill on youtube in 6 months never done before
+        //past all the competition man, pewdiepie is next
+        //man im passing all these checks got the brand new rolex
+        //and I copped the lambo too and im hitting it with the crew
+        //this is team 10 bit*h who the hell are flippin you
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        //aaditya on top
+        
+
 
     }
  
     private void configureButtonBindings() {
         new JoystickButton(oi.leftStick, Constants.OIConstants.FLIP_BUTTON).onTrue(new Flip(drive));
         new JoystickButton(oi.rightStick, Constants.OIConstants.HALF_SPEED_BUTTON)
-                .onTrue(new SetMaxPower(drive, 0.5)).onFalse(new SetMaxPower(drive, 1.0));
+                .onTrue(new SetMaxPower(drive, 1.0)).onFalse(new SetMaxPower(drive, 1.0));
 
         new JoystickButton(oi.leftStick, 1)
         .toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));

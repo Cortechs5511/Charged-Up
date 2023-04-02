@@ -112,7 +112,7 @@ public final class Constants {
         public static final double ARM_SCORE_TOLERANCE = 0.01;
         public static final double EXTENDER_SCORE_TOLERANCE = 0.1;
 
-        public static final double HIGH_CONE_ROTATIONS = 0.31;
+        public static final double HIGH_CONE_ROTATIONS = 0.315;
         public static final double MID_CONE_ROTATIONS = 0.26;
         public static final double LOW_CONE_ROTATIONS = 0.109;
 

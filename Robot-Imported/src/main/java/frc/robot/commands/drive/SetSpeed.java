@@ -26,14 +26,15 @@ public class SetSpeed extends CommandBase {
 
        drive.tankDrive(oi.getLeftYDeadband(), oi.getRightYDeadband());
 
-        //speed control, untested, and we need to find out max velocity
-       //drive.speedDrive(DriveConstants.MAX_VELOCITY*oi.getLeftYDeadband(), DriveConstants.MAX_VELOCITY*oi.getRightYDeadband());
+       //untested
+       //drive.speedDrive(oi.getLeftYDeadband(), oi.getRightYDeadband());
+
 
     }
 
     @Override
     public void end(boolean interrupted) {
-        drive.setPower(0.0, 0.0);
+        drive.tankDrive(0,0);
     }
 
     @Override
