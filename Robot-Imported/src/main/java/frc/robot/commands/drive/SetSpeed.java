@@ -24,7 +24,7 @@ public class SetSpeed extends CommandBase {
         // drive.arcadeDrive(oi.getLeftYDeadband(), oi.getRightXDeadband());
         //drive.setPower(oi.getLeftYDeadband(), oi.getRightYDeadband());
 
-       drive.tankDrive(oi.getLeftYDeadband(), oi.getRightYDeadband());
+       drive.tankDrive(oi.getLeftYDeadband() * 0.35, oi.getRightYDeadband() * 0.35);
 
        //untested
        //drive.speedDrive(oi.getLeftYDeadband(), oi.getRightYDeadband());
