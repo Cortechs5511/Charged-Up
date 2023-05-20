@@ -110,7 +110,7 @@ public class RobotContainer {
         chooser.addOption("Auto mobility", new DriveForTime(drive, 3, 0.2, 0.2).withTimeout(3));
         //chooser.addOption("Score+Auto mobility", new SequentialCommandGroup(new armExtend(extender, 0.3)).andThen(new scoreHighCone(arm, ArmConstants.INITIAL_ROTATE)).andThen(new closeClaw(claw)).andThen(new scoreHighCone(arm, ArmConstants.EXTENDABLE_ROTATIONS).andThen(new autonExtend(extender)).andThen(new scoreHighCone(arm, ArmConstants.HIGH_CONE_ROTATIONS)).andThen(new DriveForTime(drive, 0.5)).andThen(new openClaw(claw)).andThen(new autonRetract(extender)).andThen
         //(new stowArm(arm)).andThen(trajectoryFollower("pathplanner/generatedJSON/Auto mobility.wpilib.json", drive, true))));
-
+        
         chooser.addOption("Auto mobility + score", new SequentialCommandGroup(new DriveForTime(drive, 0.5, 0.2, 0.2).withTimeout(0.5)).andThen(new retractArm(extender).withTimeout(1)).andThen(new scoreAuto(extender, arm, ArmConstants.CONE_SUBSTATION_ROTATIONS, ArmConstants.SUBSTATION_POWER, ArmConstants.SUBSTATION_EXTENSION).withTimeout(3))
         .andThen(new runClawTime(claw, 1).withTimeout(1))
         .andThen(new stowArm(arm,extender).withTimeout(4)).andThen(new DriveForTime(drive, 3, 0.5, 0.5).withTimeout(3)));
@@ -387,7 +387,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         new JoystickButton(oi.leftStick, Constants.OIConstants.FLIP_BUTTON).onTrue(new Flip(drive));
         new JoystickButton(oi.rightStick, Constants.OIConstants.HALF_SPEED_BUTTON)
-                .onTrue(new SetMaxPower(drive, 1.0)).onFalse(new SetMaxPower(drive, 1.0));
+                .onTrue(new SetMaxPower(drive, 0.4)).onFalse(new SetMaxPower(drive, 0.4));
 
         new JoystickButton(oi.leftStick, 1)
         .toggleOnTrue(new SequentialCommandGroup(new StartAutoAlign(drive).andThen(new AutoAlign(drive))));

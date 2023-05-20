@@ -31,7 +31,7 @@ public class Drive extends SubsystemBase {
 
     private final RelativeEncoder leftEncoder = createEncoder(leftFollower);
     private final RelativeEncoder rightEncoder = createEncoder(rightFollower);
-    private double maxPower = 1.0;
+    private double maxPower = 0.4;
 
     private final AHRS gyro = new AHRS(Port.kMXP);
     private final DifferentialDriveOdometry odometry;
